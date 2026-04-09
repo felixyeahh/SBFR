@@ -1,37 +1,20 @@
-import { db } from "../components/firebase";
-import { Users } from "../components/constants";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { OnSubmitHandler } from "~/components/onSubmitHandler";
 
-function Leaderboard() {
-    const [leaderboard, setLeaderboard] = useState<{[key: string]: number}>({});
-    console.warn("leaderboard");
-
-    useEffect(() => {
-        console.warn(".");
-        db.collection(Users.COLLECTION).get().then(
-            (snapshot) => {
-                const newLeaderboard: {[key: string]: number} = {};
-                snapshot.forEach((doc) => {
-                    newLeaderboard[doc.id] = doc.data()[Users.POINTS];
-                });
-                setLeaderboard(newLeaderboard);
-                console.log(leaderboard);
-            }
-        );
-    }, []);
-
+function Leaderboard({ leaderboard }: { leaderboard: {[key: string]: number} }) {
     return ( 
         <div id="Leaderboard" className="Leaderboard">
             <h1>Leaderboard:</h1>
-            {Object.entries(leaderboard).map(([userId, points], index) => (
+            {Object.entries(leaderboard)
+                .sort(([, pointsA], [, pointsB]) => pointsB - pointsA)
+                .map(([userId, points], index) => (
                 <p key={userId}>{index+1}. {userId}: {points}</p>
             ))}
         </div>
     )
 }
 
-export function Main() {        
+export function Main({ leaderboard }: { leaderboard: {[key: string]: number} }) {
     return ( 
         <div className="main">     
             <h1>Sports Betting For Retards</h1>
@@ -53,7 +36,7 @@ export function Main() {
                 <input type="submit" value="Submit Wager" className="Submit" onChange={(event) => {}}/>
             </form>
 
-            <Leaderboard />
+            <Leaderboard leaderboard={leaderboard} />
         </div>
     );
 }
