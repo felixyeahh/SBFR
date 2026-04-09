@@ -5,11 +5,140 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+* {
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+    box-sizing: border-box;
+    transition: 0.5s ease-in-out;
+}
+
+@media (min-width: 600px) {
+    .wrap {
+        width: 50%;
+        float: left;
+    }
+}
+
+@font-face {
+    font-family: Cyber;
+    src: "/assets/Blender-Pro-Bold.otf";
+    font-display: swap;
+}
+
+body {
+  font-size: 18px;
+  line-height: 1.0;
+  min-height: var(--viewport-height);
+  max-width: fit-content;
+  background-image: linear-gradient(to top, rgba(24, 13, 105, 0.471), rgba(24, 13, 105, 0.471));
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  /* min-height: 100vh;*/ 
+  font-family: 'Cyber', sans-serif;
+}
+
+html, div, span, iframe, h1, h2, h3, h4, h5, p, i, a, input{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    font-family: 'Nova Square', sans-serif;
+    vertical-align: baseline;
+}
+
+.text {
+  color: white;
+  margin-top: 20px;
+  position: relative;
+  background-color: #0000;
+  color: black;
+  text-align: center;
+  box-sizing: 45px;
+  font-size: 40px;
+  height: 60px;
+}
+
+.Table {
+    display: flex;
+    margin: 10%;
+}
+
+.Input {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  height: 100%;      
+  width: 100%;
+  transform:translatex(-50%) translatey(0);
+  font-size: 30px;
+}
+
+body {
+  width:100vh;
+  height:100vh;
+ transform:translatex(0px) translatey(0px);
+ text-align:center;
+ letter-spacing:0.2px;
+ background-image:linear-gradient(to right, #355c7d 0%, #6c5b7b 33%, #c06c84 100%);
+ background-size: 400%;
+}
+
+#Bet input[type=number]{
+ text-align:center;
+ padding-top:3px;
+ width: 300%;
+ margin-bottom:6px;
+}
+input[type="checkbox"] {
+  transform: scale(2);
+  margin-top: 10px;
+}
+#Bet {
+  margin-top: 25px;
+  
+ transform:translatex(20px) translatey(130px);
+}
+
+#Table{
+ margin-top:113px;
+ transform:translatex(60px) translatey(117px);
+}
+
+.main h1{
+ font-size:56px;
+ transform:translatex(608px) translatey(-58px);
+}
+.main form{
+ transform:translatex(-4px) translatey(109px);
+ width:817px !important;
+ min-height:497px;
+}
+
+.Submit {
+  transform:translatex(278px) translatey(-11px);
+}
+#Table .Submit{
+ transform:translatex(-354px) translatey(105px);
+}
+#Bet > p:nth-child(1) {
+  margin-left: 10px;
+  margin-top: 70px;
+}
+#Bet input {
+  width:10%;
+  transform: translatex(-350px) translatey(-10px);
+}
+
+#Leaderboard {
+  transform:translatex(60px) translatey(500px);
 }
