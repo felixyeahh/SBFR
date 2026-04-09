@@ -1,26 +1,26 @@
 import type { Dispatch, SetStateAction } from "react";
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { Popup } from "reactjs-popup";
 import type { SubmitEvent } from "react";
 
-export type OnSubmitContext = {
+export type onSubmitContextType = {
     isOpen: boolean,
     setIsOpen: Dispatch<SetStateAction<boolean>> 
 }
 
-export const OnSubmitContext = createContext<OnSubmitContext>({
+export const onSubmitContext = createContext<onSubmitContextType>({
     isOpen: false,
     setIsOpen: () => {}
 });
 
-type OnSubmitHandlerProps = {
+type onSubmitPopupComponentProps = {
     open: boolean, 
     onClose : () => void,
     onSubmit: (event: SubmitEvent<HTMLFormElement>) => void
 }
 
 
-export function OnSubmitHandler(props: OnSubmitHandlerProps) {
+export function onSubmitPopupComponent(props: onSubmitPopupComponentProps) {
     return <Popup open={props.open} onClose={props.onClose}>
         <div id="SubmitPopup" className="popup-container">
             <form onSubmit={(event) => {props.onSubmit(event)}}> 
@@ -30,4 +30,10 @@ export function OnSubmitHandler(props: OnSubmitHandlerProps) {
             </form>
         </div>
     </Popup>
+}
+
+export function OnSubmitHandler(event: SubmitEvent<HTMLFormElement>) {
+    const {isOpen, setIsOpen} = useContext(onSubmitContext);
+
+
 }
