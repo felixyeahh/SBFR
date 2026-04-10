@@ -40,7 +40,7 @@
   grid-area: bet;
 }
 
-.submit {
+.liquid-container {
   grid-area: submit;
 }
 
@@ -194,4 +194,32 @@ body {
 
 .bet input {
   margin-left: 10%;
+}
+
+.liquid-button {
+  flex: 1;
+  padding: 10px 50px;
+  margin: 20px;
+  border-radius: 999px;
+  border: 1px solid black;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  text-shadow: 0 3px 5px rgba(#000, 0.25);
+  white-space: nowrap;
+  color: #000000;
+  background: transparent;
+  background-image: linear-gradient(red, url(https://web.archive.org/web/20160312084140im_/http://splatoon.nintendo.com/assets/img/nav-bg-fill-blue.png?1443460871));
+  background-repeat: repeat-x;
+  background-position: 0 -100%;
+  transition: 1.5s ease;
+  &:hover {
+    background-color: #60fbcf;
+    background-position: 500% 100%;
+  }
+}
+
+#WagerBox {
+  display:flex;
+  flex-direction: column;
+  max-width: 100 vh;
 }

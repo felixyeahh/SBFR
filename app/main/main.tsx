@@ -1,28 +1,59 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, type FormEvent } from "react";
 import { OnSubmitHandler, OnSubmitPopupComponent, onSubmitContext } from "~/main/onSubmitHandler";
+import { Leaderboard } from "./leaderboard";
 import { Users } from "~/components/constants";
 import { readUser } from "~/components/firebase";
-import { Leaderboard } from "./leaderboard";
-import type { leaderboardType } from "./leaderboard";
 import { Checkbox } from "./checkbox";
 
-export function Main({ leaderboard }: { leaderboard: leaderboardType }) {
+export function Main() {
     const [bet, setBet] = useState(0);
+    const [betName, setBetName] = useState("Default Wager");
     const {isOpen, setIsOpen} = useContext(onSubmitContext);
+
+    const [users, setUsers] = useState<[string, number][]>([]);
+
+    // 1. Extract fetchUsers so it can be called from multiple places
+    const fetchUsers = async () => {
+        const promises = Users.USERS.map(async (user) => {
+            const data = await readUser(user);  
+            return [user, data.points] as [string, number];
+        });
+        const fetchedUsers = await Promise.all(promises);
+
+        fetchedUsers.sort((a, b) => b[1] - a[1]);
+        setUsers(fetchedUsers);
+    };
+
+    const _cleanUp = () => {
+        setBet(0);
+        setBetName("Default Wager");
+    }
+
+    const _onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        await OnSubmitHandler(event, isOpen, setIsOpen, bet, betName);
+        _cleanUp();
+        // 2. Refresh the leaderboard after the submission!
+        await fetchUsers(); 
+    }
+
+    // 3. Call fetchUsers on the initial render
+    useEffect(() => {        
+        fetchUsers();
+    }, []);
 
     return (
         <div className="page">
             <h1 className="title">Sports Betting For Retards</h1>
 
-            <Leaderboard leaderboard={leaderboard} />
+            <Leaderboard users={users}/>
 
             <div className="new-wager">
                 <h1 className="new-wager-h1">New Wager:</h1>
 
-                <form id="NewWager" key={"NewWager"} onSubmit={(event) => {OnSubmitHandler(event, isOpen, setIsOpen) }}>
+                <form id="NewWager" key={"NewWager"} onSubmit={_onSubmit}>
 
                     <div id="names" className="names">
-                        {Object.entries(leaderboard).map(([userId, points], index) => (
+                        {users.map(([userId, points]) => (
                             <Checkbox key={userId} label={userId} />
                         ))}
                     </div>
@@ -30,8 +61,8 @@ export function Main({ leaderboard }: { leaderboard: leaderboardType }) {
                     <div id="Bet" className="bet">
                         <p>Bet: </p><input type="number" value={bet} onChange={(event) => setBet(Number(event.target.value))} />
                     </div>
-
-                    <input type="submit" key={"submit-btn"} value="Submit Wager" disabled={false} className="submit" />
+                    <input type="text" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)} />
+                    <input type="submit" key={"submit-btn"} value="Submit Wager" className="liquid-button" onClick={() => {console.log("clicked")}} />
                 </form>
             </div>
 
