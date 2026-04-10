@@ -23,12 +23,12 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
+export default function HomePage() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <onSubmitContext.Provider value={{isOpen, setIsOpen}}>
-      <Main leaderboard={loaderData} />
+      <Main />
     </onSubmitContext.Provider>
   );
 }

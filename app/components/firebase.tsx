@@ -1,12 +1,13 @@
 import { getFirestore as getClientFirestore} from "firebase/firestore";
-import { collection, addDoc, setDoc, updateDoc, doc, getDoc } from "firebase/firestore";
-import { Users } from "./constants";
-import type { User } from "./constants";
+import { collection, addDoc, setDoc, updateDoc, doc, getDoc, getDocs } from "firebase/firestore";
+import { Users, Wagers } from "./constants";
+import type { User, Wager } from "./constants";
 import { initializeApp } from "firebase/app";
+
 
 // #TODO: Replace with environment variables
 const firebaseConfig = {
-  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  apiKey: "AIzaSyB4xxp6nCR4pJlpGfDSpxVFja1h3",
   authDomain: "sbfr-47acd.firebaseapp.com",
   projectId: "sbfr-47acd",
   storageBucket: "sbfr-47acd.firebasestorage.app",
@@ -20,31 +21,67 @@ export const db = getClientFirestore(clientApp);
 
 export const readUser = async (user: string) => {
   const snapshot = await getDoc(doc(db, Users.COLLECTION, user));
-  return snapshot.data();
+  const data = snapshot.data();
+
+
+  return snapshot.data() as User;
 }
 
 export const addUser = async (user: User) => {
-    await addDoc(collection(db, Users.COLLECTION), {
-        name: user.name,
-        points: user.points,
-        wagers: user.wagers,
-        wins: user.wins,
-    });
-};
+    const _user: User = {name: user.name, points: user.points, wagers: user.wagers, wins: user.wins, password: user.password};
+    await addDoc(collection(db, Users.COLLECTION), _user);
+
+    return _user;
+}
 
 export const setUser = async (user: User) => {
-    await setDoc(doc(db, Users.COLLECTION, user.name), {
-        name: user.name,
-        points: user.points,
-        wagers: user.wagers,
-        wins: user.wins,
-    });
+    const _user: User = {name: user.name, points: user.points, wagers: user.wagers, wins: user.wins, password: user.password};
+    await setDoc(doc(db, Users.COLLECTION, user.name), _user);
+
+    return _user;
 };
 
-export const updateField = async (user: User, field: string, value: number) => {
-    await updateDoc(doc(db, Users.COLLECTION, user.name), {
+export const updateField = async (user: string, field: string, value: number) => {
+    await updateDoc(doc(db, Users.COLLECTION, user), {
         [field]: value,
     });
 };
 
+export const addWager = async (users: string[], bet: number, betName: string) => {
+    const _id = String(globalThis.crypto.randomUUID());
+
+    if (users.length === 0) { throw new Error("No users selected"); }
+
+    const _wager: Wager = {
+        id: _id,
+        bet: bet,
+        betName: betName,
+        players: users, 
+        date_created: new Date(), 
+        finished: false
+    }
+
+    try {
+        await addDoc(collection(db, Wagers.COLLECTION), _wager);
+    } catch (error) {
+        throw new Error("Failed to add wager: " + error);
+    }
+
+    return _wager;
+}
+
+export const updateWager = async (wager_id: string, field: string, value: any) => {
+    await updateDoc(doc(db, Wagers.COLLECTION, wager_id), {
+        [field]: value,
+    });
+}
+
+export const getAllWagers = async () => {
+    const snapshot = await getDocs(collection(db, Wagers.COLLECTION));
+    const wagers: Wager[] = [];
+    snapshot.forEach((doc) => {
+        wagers.push(doc.data() as Wager);
+    });
+    return wagers;
+}
 

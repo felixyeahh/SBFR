@@ -13,6 +13,7 @@ export interface User {
     points: number;
     wagers: number;
     wins: number;
+    password: string;
 }
 
 export class Wagers {
@@ -20,11 +21,16 @@ export class Wagers {
     static readonly WINNER = "winner";
     static readonly BET = "bet";
     static readonly LOSERS = "losers";
+    static readonly BET_NAME = "betName";
 }
 
 export interface Wager {
-    id: string;
-    winner: string;
+    id?: string;
     bet: number;
-    losers: string[];
+    betName: string;
+    players: string[];
+    date_created: Date;
+    finished: boolean;
+    winner?: string;
+    date_finished?: Date;
 }
