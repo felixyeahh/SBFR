@@ -9,10 +9,10 @@ export function Main() {
     const [bet, setBet] = useState(0);
     const [betName, setBetName] = useState("Default Wager");
     const {isOpen, setIsOpen} = useContext(onSubmitContext);
+    const [isChecked, setIsChecked] = useState([false, false, false]);
 
     const [users, setUsers] = useState<[string, number][]>([]);
 
-    // 1. Extract fetchUsers so it can be called from multiple places
     const fetchUsers = async () => {
         const promises = Users.USERS.map(async (user) => {
             const data = await readUser(user);  
@@ -27,16 +27,15 @@ export function Main() {
     const _cleanUp = () => {
         setBet(0);
         setBetName("Default Wager");
+        setIsChecked([false, false, false]);
     }
 
     const _onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         await OnSubmitHandler(event, isOpen, setIsOpen, bet, betName);
         _cleanUp();
-        // 2. Refresh the leaderboard after the submission!
         await fetchUsers(); 
     }
 
-    // 3. Call fetchUsers on the initial render
     useEffect(() => {        
         fetchUsers();
     }, []);
@@ -53,8 +52,17 @@ export function Main() {
                 <form id="NewWager" key={"NewWager"} onSubmit={_onSubmit}>
 
                     <div id="names" className="names">
-                        {users.map(([userId, points]) => (
-                            <Checkbox key={userId} label={userId} />
+                        {users.map(([userId, points], index) => (
+                            <Checkbox 
+                                key={userId} 
+                                label={userId} 
+                                checked={isChecked[index]} 
+                                onChange={(event) => {
+                                    const newChecked = [...isChecked];
+                                    newChecked[index] = event.target.checked;
+                                    setIsChecked(newChecked);
+                                }} 
+                            />
                         ))}
                     </div>
 

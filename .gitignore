@@ -11,3 +11,5 @@ firebase.json
 **.cache
 
 serviceAccountKey.json
+.firebase/**
+

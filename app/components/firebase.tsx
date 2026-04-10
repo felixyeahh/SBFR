@@ -5,7 +5,7 @@ import type { User, Wager } from "./constants";
 import { initializeApp } from "firebase/app";
 
 
-// #TODO: Replace with environment variables
+// #TODO: secure
 const firebaseConfig = {
   apiKey: "AIzaSyB4xxp6nCR4pJlpGfDSpxVFja1h3",
   authDomain: "sbfr-47acd.firebaseapp.com",
@@ -62,7 +62,7 @@ export const addWager = async (users: string[], bet: number, betName: string) =>
     }
 
     try {
-        await addDoc(collection(db, Wagers.COLLECTION), _wager);
+        await setDoc(doc(db, Wagers.COLLECTION, _id), _wager);
     } catch (error) {
         throw new Error("Failed to add wager: " + error);
     }
@@ -79,8 +79,10 @@ export const updateWager = async (wager_id: string, field: string, value: any) =
 export const getAllWagers = async () => {
     const snapshot = await getDocs(collection(db, Wagers.COLLECTION));
     const wagers: Wager[] = [];
-    snapshot.forEach((doc) => {
-        wagers.push(doc.data() as Wager);
+    snapshot.forEach((firestoreDoc) => {
+        const data = firestoreDoc.data() as Wager;
+        data.id = firestoreDoc.id;
+        wagers.push(data);
     });
     return wagers;
 }

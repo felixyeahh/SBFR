@@ -34,10 +34,6 @@ export function OnSubmitPopupComponent(props: onSubmitPopupComponentProps) {
     </Popup>)
 }
 
-export function WinnerReward(winner: string, bet: number) {
-    
-}
-
 export async function OnSubmitHandler(event: FormEvent<HTMLFormElement>, 
     isOpen: boolean, 
     setIsOpen: Dispatch<SetStateAction<boolean>>, 
@@ -51,7 +47,7 @@ export async function OnSubmitHandler(event: FormEvent<HTMLFormElement>,
 
     Users.USERS.forEach((user) => { if (formData.get(user)) {users.push(user); } });
 
-    await addWager(users, bet, betName);
+    await addWager(users, bet * users.length, betName);
     
     // Use Promise.all to wait for all the updates to finish!
     await Promise.all(users.map(async (user) => {
