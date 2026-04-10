@@ -1,168 +1,197 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+@font-face {
+  font-family: Cyber;
+  src: "/assets/Blender-Pro-Bold.otf";
+  font-display: swap;
 }
 
+/* ────────────────────────── Layout ──────────────────────────────────────── */
 
-* {
-  box-sizing: border-box;
+.title {
+  grid-area: title;
 }
-*:before,
-*:after {
-    box-sizing: border-box;
-    transition: 0.5s ease-in-out;
+
+.leaderboard-h1 {
+  grid-area: leaderboard-h1;
 }
+
+.table {
+  grid-area: table;
+}
+
+.new-wager-h1 {
+  grid-area: new-wager-h1;
+}
+
+.input:nth-child(1) {
+  grid-area: input-1;
+}
+
+.input:nth-child(2) {
+  grid-area: input-2;
+}
+
+.input:nth-child(3) {
+  grid-area: input-3;
+}
+
+.bet {
+  grid-area: bet;
+}
+
+.submit {
+  grid-area: submit;
+}
+
+.wagers {
+  grid-area: wagers;
+}
+
+.button-1 {
+  grid-area: button-1;
+}
+
+.button-2 {
+  grid-area: button-2;
+}
+
+.button-3 {
+  grid-area: button-3;
+}
+
+.submit-popup-container {
+  grid-area: submit-popup-container;
+  display: contents;
+}
+
+/* ────────────────────────── Mobile ──────────────────────────────────────── */
+.page {
+  display: grid;
+  grid-template-areas:
+    "title"
+    "leaderboard-h1"
+    "table"
+    "new-wager-h1"
+    "input-1"
+    "input-2" 
+    "input-3"
+    "bet"
+    "submit"
+    "wagers"
+    "button-1"
+    "button-2"
+    "button-3";
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  padding: 16px;
+}
+
+/* span full width on mobile for most elements */
+.title,
+.leaderboard-h1,
+.table,
+.new-wager h1,
+.bet,
+.submit,
+.wagers,
+.button-1,
+.button-2,
+.button-3 {
+  grid-column: 1 / -1;
+}
+
+/* ────────────────────────── Desktop ──────────────────────────────────────── */
 
 @media (min-width: 600px) {
-    .wrap {
-        width: 50%;
-        float: left;
-    }
-}
+  .page {
+    grid-template-areas:
+      "title title title"
+      "leaderboard-h1 leaderboard-h1 leaderboard-h1"
+      "table   table   table"
+      "new-wager-h1 new-wager-h1 new-wager-h1"
+      "input-1 input-2 input-3"
+      "bet     bet     submit"
+      "wagers  wagers  wagers"
+      "button-1 button-2 button-3";
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    padding: 24px;
+  }
 
-@font-face {
-    font-family: Cyber;
-    src: "/assets/Blender-Pro-Bold.otf";
-    font-display: swap;
-}
+  /* input-1, input-2, input-3 span 1 column each */
+  .input:nth-child(1) {
+    grid-area: input-1;
+  }
 
-body {
-  font-size: 18px;
-  line-height: 1.0;
-  min-height: var(--viewport-height);
-  max-width: fit-content;
-  background-image: linear-gradient(to top, rgba(24, 13, 105, 0.471), rgba(24, 13, 105, 0.471));
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2rem;
-  /* min-height: 100vh;*/ 
-  font-family: 'Cyber', sans-serif;
-}
+  .input:nth-child(2) {
+    grid-area: input-2;
+  }
 
-html, div, span, iframe, h1, h2, h3, h4, h5, p, i, a, input{
-    padding: 0;
-    margin: 0;
-    border: 0;
-    font-size: 100%;
-    font-family: 'Nova Square', sans-serif;
-    vertical-align: baseline;
-}
+  .input:nth-child(3) {
+    grid-area: input-3;
+  }
 
-.text {
-  color: white;
-  margin-top: 20px;
-  position: relative;
-  background-color: #0000;
-  color: black;
-  text-align: center;
-  box-sizing: 45px;
-  font-size: 40px;
-  height: 60px;
-}
+  /* bet and submit share the row */
+  .bet {
+    grid-area: bet;
+  }
 
-.Table {
-  position:relative;
-  display: flex;
-  margin-top: -10%;
-  /*transform:translatex(60px) translatey(-15%);*/
-}
+  .submit {
+    grid-area: submit;
+  }
 
-.Input {
-  position:relative;
-  margin-left: 10%;
-  margin-right: 10%;
-}
+  /* buttons span 1 column each */
+  .button-1 {
+    grid-area: button-1;
+  }
 
-.main {
-  display: flex;
-  justify-content: left;
-  align-items: top;  
-  height: 100%;      
-  width: 100%;
-  transform:translatex(0) translatey(10%);
-  font-size: 30px;
-}
+  .button-2 {
+    grid-area: button-2;
+  }
 
-body {
-  width:100vh;
-  height:100vh;
- transform:translatex(0px) translatey(0px);
- text-align:center;
- letter-spacing:0.2px;
- background-image:linear-gradient(to right, #355c7d 0%, #6c5b7b 33%, #c06c84 100%);
- background-size: 400%;
-}
-
-#Bet input[type=number]{
-  display: flex;
- text-align:center;
- padding-top:3px;
- width: 300%;
- margin-bottom:6px;
-}
-input[type="checkbox"] {
-  transform: scale(2);
-  margin-top: 10px;
-}
-#Bet {
-  margin-top: 25px;
-  display: flex;
- transform:translatex(20px) translatey(130px);
-}
-
-#Table{
- margin-top:113px;
- transform:translatex(60px) translatey(117px);
-}
-
-@media (min-width: 1100px) {
-  .main {
-    display:flex;
-    align-content: left;
+  .button-3 {
+    grid-area: button-3;
   }
 }
 
-.main h1{
-  position:relative;
-  justify-content: center;
-  display: flex;
-  font-size:56px;
-  width: 100%;
-  /*transform:translatex(75%) translatey(-58px);*/
-}
-.main form{
-  position:relative;
+/* ────────────────────────── Main ──────────────────────────────────────── */
+
+
+body {
   margin: 0;
- /*transform:translatex(-4px) translatey(109px);*/
- width:100%;
- min-height:400px;
+  min-height: 100vh;
+  font-size: 18px;
+  background-image: linear-gradient(to bottom, rgba(24, 13, 105, 0.471), rgba(30, 133, 196, 0.471));
+  background-size: contain;
+  font-family: 'Nova Square', sans-serif;
 }
 
-.Submit {
-  margin-top: 20%;
-  transform:translatex(0%) translatey(400%);
-  align-items: center;
-}
-#Table .Submit{
- transform:translatex(-354px) translatey(105px);
-}
-#Bet > p:nth-child(1) {
-
-}
-#Bet input {
-  width:10%;
+.title {
+  font-size: 40px;
+  text-align: center;
+  background-color: rgba(203, 227, 248, 0.2);
 }
 
-#Leaderboard {
-  margin-top: auto;
-  display: block;
-  align-content: left;
-  transform:translatex(-60%) translatey(60%);
+.leaderboard-h1, .new-wager-h1{
+  text-shadow: 0 0 15px black;
+  color: gold;
+  text-align: center;
+  font-size: 25px;
 }
-.Leaderboard h1 {
-  transform:translatex(0) translatey(0);
+
+.new-wager-h1 {
+  color:rgb(169, 2, 2)
+}
+
+.input, .bet {
+  display: flex;
+}
+.input input {
+  margin-left: 10%;
+  size: 30px;
+}
+
+.bet input {
+  margin-left: 10%;
 }
