@@ -3,9 +3,13 @@ import express, { type Request, type Response, type Application } from 'express'
 const app: Application = express();
 const PORT = 3000;
 
-app.get('/', (req: Request, res: Response) => {
-    console.log(res, req);
-    res.send('Hello World!');
+app.get('/api/*s', (req: Request, res: Response) => {
+    console.log(req.body);
+    return res.send(req.body);
+});
+
+app.get('/api', (req: Request, res: Response) => {
+    return res.send("404");
 });
 
 app.listen(PORT, () => {

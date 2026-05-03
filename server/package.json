@@ -2,11 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
+  "outDir": "dist",
   "scripts": {
-    "start": "node dist/server/index.js",
+    "start": "node dist/index.js",
     "build": "tsc -p tsconfig.json",
-    "dev": "tsc -w -p tsconfig.json"
+    "dev": "nodemon --exec ts-node src/index.ts"
   },
   "keywords": [],
   "type": "module",
