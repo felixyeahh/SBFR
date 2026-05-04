@@ -12,4 +12,5 @@ firebase.json
 
 serviceAccountKey.json
 .firebase/**
-
+firestore.rules
+firestore.indexes.json
