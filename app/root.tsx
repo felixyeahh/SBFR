@@ -10,6 +10,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import "./styles/checkbox.css";
 import "./styles/wagers.css";
+import "./styles/quests.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

@@ -37,3 +37,18 @@ export interface Wager {
     winner?: string;
     date_finished?: Date;
 }
+
+export interface CurrentUserSession {
+    username: string;
+    session_id: string;
+}
+
+export class CurrentSession {
+    static readonly COLLECTION = "currentSession";
+    static readonly USERNAME = "username";
+    static readonly SESSION_ID = "session_id";
+}
+
+export interface Quest {
+
+}

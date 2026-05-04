@@ -5,7 +5,8 @@ import { Users } from "~/components/constants";
 import { readUser } from "~/components/firebase";
 import { Checkbox } from "./checkbox";
 import type { Wager } from "~/components/constants";
-
+import { useCookies } from "~/components/cookies";
+import { type CurrentUserSession, CurrentSession} from "~/components/constants";
 
 export function Main() {
     const [bet, setBet] = useState(0);
@@ -14,6 +15,7 @@ export function Main() {
     const [isChecked, setIsChecked] = useState([false, false, false]);
     const [currentWager, setCurrentWager] = useState<Wager | null>(null);
     const [users, setUsers] = useState<[string, number][]>([]);
+    const [currentSession, setCurrentSession] = useCookies(CurrentSession.COLLECTION);
 
     const fetchUsers = async () => {
         const promises = Users.USERS.map(async (user) => {
@@ -44,6 +46,8 @@ export function Main() {
 
     return (
         <div className="page">
+            <button className="back-btn" style={{display: (currentSession == undefined) ? "block" : "none"}} onClick={() => {window.location.href="/login"}}>Login</button>
+
             <h1 className="title">Sports Betting For Retards</h1>
 
             <Leaderboard users={users}/>
