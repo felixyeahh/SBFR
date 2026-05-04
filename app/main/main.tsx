@@ -4,13 +4,14 @@ import { Leaderboard } from "./leaderboard";
 import { Users } from "~/components/constants";
 import { readUser } from "~/components/firebase";
 import { Checkbox } from "./checkbox";
+import type { Wager } from "~/components/constants";
 
 export function Main() {
     const [bet, setBet] = useState(0);
     const [betName, setBetName] = useState("Default Wager");
     const {isOpen, setIsOpen} = useContext(onSubmitContext);
     const [isChecked, setIsChecked] = useState([false, false, false]);
-
+    const [currentWager, setCurrentWager] = useState<Wager | null>(null);
     const [users, setUsers] = useState<[string, number][]>([]);
 
     const fetchUsers = async () => {
@@ -31,7 +32,7 @@ export function Main() {
     }
 
     const _onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        await OnSubmitHandler(event, isOpen, setIsOpen, bet, betName);
+        setCurrentWager(await OnSubmitHandler(event, isOpen, setIsOpen, bet, betName));
         _cleanUp();
         await fetchUsers(); 
     }
@@ -69,12 +70,19 @@ export function Main() {
                     <div id="Bet" className="bet">
                         <p>Bet: </p><input type="number" value={bet} onChange={(event) => setBet(Number(event.target.value))} />
                     </div>
-                    <input type="text" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)} />
-                    <input type="submit" key={"submit-btn"} value="Submit Wager" className="liquid-button" onClick={() => {console.log("clicked")}} />
+                    <input type="text" id="betName" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)} />
+                    <input type="submit" id="submit-btn" key={"submit-btn"} value="Submit Wager" className="liquid-button"  />
                 </form>
             </div>
 
-            <OnSubmitPopupComponent open={isOpen} onClose={() => {setIsOpen(false)}} onSubmit={(event) => {console.log(event.target)}} />
+            <button className="wagers-button" onClick={() => {window.location.href="/wagers"}}>&gt;Wagers</button>
+
+            <OnSubmitPopupComponent 
+                open={isOpen} 
+                onClose={() => {setIsOpen(false)}} 
+                onSubmit={() => {}}
+                wager={currentWager}
+            />
         </div>
     );
 }

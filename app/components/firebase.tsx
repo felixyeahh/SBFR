@@ -4,7 +4,6 @@ import { Users, Wagers } from "./constants";
 import type { User, Wager } from "./constants";
 import { initializeApp } from "firebase/app";
 
-
 // #TODO: secure
 const firebaseConfig = {
   apiKey: "AIzaSyB4xxp6nCR4pJlpGfDSpxVFja1h3",

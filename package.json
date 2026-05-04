@@ -7,6 +7,7 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "devh": "react-router dev --host",
+    "deploy": "react-router build && firebase deploy --only hosting",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc"
   },

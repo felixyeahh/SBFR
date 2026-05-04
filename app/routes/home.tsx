@@ -3,13 +3,9 @@ import { Main } from "../main/main";
 import { useState } from "react";
 import { onSubmitContext } from "~/main/onSubmitHandler";
 
-export async function loader() {
-  return {};
-}
-
-export function HydrateFallback() {
+/*export function HydrateFallback() {
   return <p>Loading SBFR...</p>;
-}
+}*/
 
 
 export function meta({}: Route.MetaArgs) {

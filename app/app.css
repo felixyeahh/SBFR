@@ -6,7 +6,7 @@
   font-display: swap;
 }
 
-/* ────────────────────────── Layout ──────────────────────────────────────── */
+/* ────────────────────────── Main Layout ──────────────────────────────────────── */
 
 .title {
   grid-area: title;
@@ -48,8 +48,8 @@
   grid-area: wagers;
 }
 
-.button-1 {
-  grid-area: button-1;
+.wagers-button {
+  grid-area: wagers-button;
 }
 
 .button-2 {
@@ -65,7 +65,7 @@
   display: contents;
 }
 
-/* ────────────────────────── Mobile ──────────────────────────────────────── */
+/* ────────────────────────── Main Mobile ──────────────────────────────────────── */
 .page {
   display: grid;
   grid-template-areas:
@@ -79,7 +79,7 @@
     "bet"
     "submit"
     "wagers"
-    "button-1"
+    "wagers-button"
     "button-2"
     "button-3";
   grid-template-columns: 1fr 1fr 1fr;
@@ -95,13 +95,13 @@
 .bet,
 .submit,
 .wagers,
-.button-1,
+.wagers-button,
 .button-2,
 .button-3 {
   grid-column: 1 / -1;
 }
 
-/* ────────────────────────── Desktop ──────────────────────────────────────── */
+/* ────────────────────────── Main Desktop ──────────────────────────────────────── */
 
 @media (min-width: 600px) {
   .page {
@@ -113,7 +113,7 @@
       "input-1 input-2 input-3"
       "bet     bet     submit"
       "wagers  wagers  wagers"
-      "button-1 button-2 button-3";
+      "wagers-button button-2 button-3";
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
     padding: 24px;
@@ -142,8 +142,9 @@
   }
 
   /* buttons span 1 column each */
-  .button-1 {
-    grid-area: button-1;
+  .wagers-button
+  {
+    grid-area: wagers-button;
   }
 
   .button-2 {

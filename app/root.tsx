@@ -10,7 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import "./styles/checkbox.css";
-
+import "./styles/wagers.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -51,6 +51,16 @@ export default function App() {
   return <Outlet />;
 }
 
+function Handle404() {
+  return (
+    <main className="pt-16 p-4 container mx-auto">
+      <h1>404</h1>
+      <p>The requested page could not be found.</p>
+      <button className="btn-back" onClick={() => window.location.href="/"}>&lt;</button>
+    </main>
+  );
+}
+
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
@@ -69,13 +79,15 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
+      {message === "404" ? <Handle404 /> : <div>
+        <h1>{message}</h1>
+        <p>{details}</p>
+        {stack && (
+          <pre className="w-full p-4 overflow-x-auto">
+            <code>{stack}</code>
+          </pre>
       )}
+      </div>}
     </main>
   );
 }

@@ -1,0 +1,145 @@
+/* ────────────────────────── Wagers ──────────────────────────────────────── */
+.header-wagers {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+
+
+.title-wagers {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.btn-back {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  background-color: transparent;
+  transition: 1.5s ease;
+  &:hover {
+    background-color: #60fbcfcd;
+    background-position: 500% 100%;
+  }
+}
+
+.balance {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.wagers-button {
+  grid-area: wagers-button;
+  flex: 1;
+  padding: 10px 50px;
+  margin: 20px;
+  border-radius: 999px;
+  border: 1px solid black;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  text-shadow: 0 3px 5px rgba(#000, 0.25);
+  white-space: nowrap;
+  color: #000000;
+  background: transparent;
+  background-image: linear-gradient(red, url(https://web.archive.org/web/20160312084140im_/http://splatoon.nintendo.com/assets/img/nav-bg-fill-blue.png?1443460871));
+  background-repeat: repeat-x;
+  background-position: 0 -100%;
+  transition: 1.5s ease;
+  &:hover {
+    background-color: #60fbcf;
+    background-position: 500% 100%;
+  }
+}
+
+/* Wager grid — single column on mobile, 4 on desktop */
+.wager-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 0 1rem 1rem;
+}
+
+@media (min-width: 900px) {
+  .wager-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.wager-card {
+  background: rgba(120, 204, 240, 0.175);
+  border: 1px solid #313131;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wager-field {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 100%;
+}
+.wager-field.title {
+    font-weight: 800;
+    min-height: 48px;
+    text-align: center;
+    font-size: 24px;
+    background-color: #31313156;
+}
+.wager-field.active{
+    background: rgba(26, 255, 0, 0.316);
+}
+.wager-field.players {
+  min-height: 48px;
+}
+
+.wager-field.winner {
+  min-height: 48px;
+  align-items: center;
+}
+
+.wager-field.bet {
+  min-height: 48px;
+}
+
+.wager-field.status {
+  min-height: 48px;
+}
+
+select.wager-field {
+  cursor: pointer;
+  appearance: auto;
+  background-color: transparent;
+}
+
+.wager-field.winner-button {
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 4px 8px;
+  background-color: transparent;
+  transition: 1.5s ease;
+  &:hover {
+    background-color: #60fbcfcd;
+    background-position: 500% 100%;
+  }
+}
+  
