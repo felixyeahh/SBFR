@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 @font-face {
@@ -48,12 +49,12 @@
   grid-area: wagers;
 }
 
-.wagers-button {
+.goto-button.wagers {
   grid-area: wagers-button;
 }
 
-.button-2 {
-  grid-area: button-2;
+.goto-button.quests {
+  grid-area: quests-button;
 }
 
 .button-3 {
@@ -80,7 +81,7 @@
     "submit"
     "wagers"
     "wagers-button"
-    "button-2"
+    "quests-button"
     "button-3";
   grid-template-columns: 1fr 1fr 1fr;
   gap: 12px;
@@ -95,8 +96,8 @@
 .bet,
 .submit,
 .wagers,
-.wagers-button,
-.button-2,
+.goto-button.wagers,
+.goto-button.quests,
 .button-3 {
   grid-column: 1 / -1;
 }
@@ -113,7 +114,7 @@
       "input-1 input-2 input-3"
       "bet     bet     submit"
       "wagers  wagers  wagers"
-      "wagers-button button-2 button-3";
+      "wagers-button quests-button button-3";
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
     padding: 24px;
@@ -142,13 +143,13 @@
   }
 
   /* buttons span 1 column each */
-  .wagers-button
+  .goto-button.wagers
   {
     grid-area: wagers-button;
   }
 
-  .button-2 {
-    grid-area: button-2;
+  .goto-button.quests{
+    grid-area: quests-button;
   }
 
   .button-3 {
@@ -223,4 +224,29 @@ body {
   display:flex;
   flex-direction: column;
   max-width: 100 vh;
+}
+
+.goto-button {
+  background: transparent;  
+  transition: .5s ease-in;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.goto-button:hover {
+  background-color: #60fbcf;
+}
+
+/* Initial state (before/during transition start) */
+.fade-appear {
+  opacity: 0;
+}
+
+/* Final state (during/after transition) */
+.fade-appear-active {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
 }

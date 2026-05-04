@@ -6,7 +6,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
 import type { Route } from "./+types/root";
 import "./app.css";
 import "./styles/checkbox.css";
@@ -39,7 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+          {children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -53,10 +52,9 @@ export default function App() {
 
 function Handle404() {
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>404</h1>
+    <main className="pt-16 p-4 container mx-auto grid-flex">
+      <h1><button className="btn-back" onClick={() => window.location.href="/"}>&lt;</button>404</h1>
       <p>The requested page could not be found.</p>
-      <button className="btn-back" onClick={() => window.location.href="/"}>&lt;</button>
     </main>
   );
 }

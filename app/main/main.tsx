@@ -6,6 +6,7 @@ import { readUser } from "~/components/firebase";
 import { Checkbox } from "./checkbox";
 import type { Wager } from "~/components/constants";
 
+
 export function Main() {
     const [bet, setBet] = useState(0);
     const [betName, setBetName] = useState("Default Wager");
@@ -75,8 +76,8 @@ export function Main() {
                 </form>
             </div>
 
-            <button className="wagers-button" onClick={() => {window.location.href="/wagers"}}>&gt;Wagers</button>
-
+            <button className="goto-button wagers" onClick={() => {window.location.href="/wagers"}}>&gt; Wagers</button>
+            <button className="goto-button quests" onClick={() => {window.location.href="/quests"}}>&gt; Quests</button>
             <OnSubmitPopupComponent 
                 open={isOpen} 
                 onClose={() => {setIsOpen(false)}} 
