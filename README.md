@@ -21,6 +21,6 @@ npm run build
 
 ### Credits
 
-- [Login Page](https://codepen.io/marko-zub/pen/mzPeOV)
+- [Login Page Design](https://codepen.io/marko-zub/pen/mzPeOV)
 - [Title Font](https://www.fonts.com/font/blender-pro/bold)
 

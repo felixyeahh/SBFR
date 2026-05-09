@@ -11,6 +11,7 @@ import "./app.css";
 import "./styles/checkbox.css";
 import "./styles/wagers.css";
 import "./styles/quests.css";
+import "./styles/loginPage.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

@@ -6,12 +6,12 @@ import { readUser } from "~/components/firebase";
 import { Checkbox } from "./checkbox";
 import type { Wager } from "~/components/constants";
 import { useCookies } from "~/components/cookies";
-import { type CurrentUserSession, CurrentSession} from "~/components/constants";
+import { type CurrentUserSession, CurrentSession } from "~/components/constants";
 
 export function Main() {
     const [bet, setBet] = useState(0);
     const [betName, setBetName] = useState("Default Wager");
-    const {isOpen, setIsOpen} = useContext(onSubmitContext);
+    const { isOpen, setIsOpen } = useContext(onSubmitContext);
     const [isChecked, setIsChecked] = useState([false, false, false]);
     const [currentWager, setCurrentWager] = useState<Wager | null>(null);
     const [users, setUsers] = useState<[string, number][]>([]);
@@ -19,7 +19,7 @@ export function Main() {
 
     const fetchUsers = async () => {
         const promises = Users.USERS.map(async (user) => {
-            const data = await readUser(user);  
+            const data = await readUser(user);
             return [user, data.points] as [string, number];
         });
         const fetchedUsers = await Promise.all(promises);
@@ -37,55 +37,55 @@ export function Main() {
     const _onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         setCurrentWager(await OnSubmitHandler(event, isOpen, setIsOpen, bet, betName));
         _cleanUp();
-        await fetchUsers(); 
+        await fetchUsers();
     }
 
-    useEffect(() => {        
+    useEffect(() => {
         fetchUsers();
     }, []);
 
     return (
         <div className="page">
-            <button className="back-btn" style={{display: (currentSession == undefined) ? "block" : "none"}} onClick={() => {window.location.href="/login"}}>Login</button>
+            <div className="header-main">
+                <button className="button login" style={{ display: (currentSession == undefined) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
+                <h1 className="title">Sports Betting For Retards</h1>
+                <p className="balance">Balance: $TODO</p>
+            </div>
 
-            <h1 className="title">Sports Betting For Retards</h1>
+            <Leaderboard users={users} />
 
-            <Leaderboard users={users}/>
+            <div className="new-wager-grid">
+                <h1 className="new-wager">New Wager:</h1>
 
-            <div className="new-wager">
-                <h1 className="new-wager-h1">New Wager:</h1>
+                <form id="NewWager" key={"NewWager"} className="new-wager-grid" onSubmit={_onSubmit}>
 
-                <form id="NewWager" key={"NewWager"} onSubmit={_onSubmit}>
-
-                    <div id="names" className="names">
+                    <div id="checkbox-container" className="checkbox-container">
                         {users.map(([userId, points], index) => (
-                            <Checkbox 
-                                key={userId} 
-                                label={userId} 
-                                checked={isChecked[index]} 
+                            <Checkbox
+                                key={userId}
+                                label={userId}
+                                checked={isChecked[index]}
                                 onChange={(event) => {
                                     const newChecked = [...isChecked];
                                     newChecked[index] = event.target.checked;
                                     setIsChecked(newChecked);
-                                }} 
+                                }}
                             />
                         ))}
                     </div>
 
-                    <div id="Bet" className="bet">
-                        <p>Bet: </p><input type="number" value={bet} onChange={(event) => setBet(Number(event.target.value))} />
-                    </div>
-                    <input type="text" id="betName" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)} />
-                    <input type="submit" id="submit-btn" key={"submit-btn"} value="Submit Wager" className="liquid-button"  />
+                    <p id="Bet" className="bet">Bet: <input type="number" value={bet} onChange={(event) => setBet(Number(event.target.value))} /></p>
+                    <p>Bet Name: <input type="text" id="betName" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)} className="bet-name" /></p>
+                    <input type="submit" id="submit-btn" key={"submit-btn"} value="Submit Wager" className="button submit" />
                 </form>
             </div>
 
-            <button className="goto-button wagers" onClick={() => {window.location.href="/wagers"}}>&gt; Wagers</button>
-            <button className="goto-button quests" onClick={() => {window.location.href="/quests"}}>&gt; Quests</button>
-            <OnSubmitPopupComponent 
-                open={isOpen} 
-                onClose={() => {setIsOpen(false)}} 
-                onSubmit={() => {}}
+            <button className="button wagers" onClick={() => { window.location.href = "/wagers" }}>&gt; Wagers</button>
+            <button className="button quests" onClick={() => { window.location.href = "/quests" }}>&gt; Quests</button>
+            <OnSubmitPopupComponent
+                open={isOpen}
+                onClose={() => { setIsOpen(false) }}
+                onSubmit={() => { }}
                 wager={currentWager}
             />
         </div>

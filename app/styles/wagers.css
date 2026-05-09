@@ -1,4 +1,9 @@
 /* ────────────────────────── Wagers ──────────────────────────────────────── */
+.wagers-page {
+  display: grid;
+  
+}
+
 .header-wagers {
   display: flex;
   gap: 12px;
@@ -7,7 +12,6 @@
   padding: 1rem;
 }
 
-
 .title-wagers {
   flex: 1;
   padding: 10px 16px;
@@ -15,22 +19,6 @@
   border-radius: 8px;
   font-size: 18px;
   font-weight: 500;
-}
-
-.btn-back {
-  padding: 10px 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-  background-color: transparent;
-  transition: 1.5s ease;
-  &:hover {
-    background-color: #60fbcfcd;
-    background-position: 500% 100%;
-  }
 }
 
 .balance {
@@ -66,7 +54,6 @@
   }
 }
 
-/* Wager grid — single column on mobile, 4 on desktop */
 .wager-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -74,7 +61,7 @@
   padding: 0 1rem 1rem;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1081px) {
   .wager-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }

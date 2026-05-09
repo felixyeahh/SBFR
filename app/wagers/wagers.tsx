@@ -15,7 +15,7 @@ function _DateConverter(date: any) {
     let fdate = `${month}/${day}/${year}, ${hours}:${minutes}:${seconds}`;
     return fdate;
 }
-    
+
 
 export function Wagers() {
     const [winner, setWinner] = useState<string>("");
@@ -37,7 +37,7 @@ export function Wagers() {
         console.log(wager, winner);
 
         await WinnerReward(winner, wager.bet, wager.id as string);
-        
+
         setWagers(prevWagers => prevWagers.map(w => {
             if (w.id === wager.id) {
                 return { ...w, finished: true, winner: winner };
@@ -45,13 +45,13 @@ export function Wagers() {
             return w;
         }));
     }
-    
+
     const validWagers = wagers.filter(wager => wager.id !== undefined);
 
     return (
         <div id="page-wagers">
             <div className="header-wagers">
-                <button onClick={() => window.location.href="/"}className="btn-back">&lt;</button>
+                <button onClick={() => window.location.href = "/"} className="button back">&lt;</button>
                 <h1 className="title-wagers">Wagers</h1>
                 <p className="balance">Balance: $TODO</p>
             </div>
@@ -63,20 +63,20 @@ export function Wagers() {
                         <p className="wager-field bet">Bet: ${wager.bet}</p>
                         <p className="wager-field players">Players: {wager.players.join(", ")}</p>
                         <p className="wager-field">Date Created: {_DateConverter(wager.date_created)}</p>
-                    {wager.finished ? (
-                        <p className="wager-field winner">Winner: {wager.winner || "Unknown"}</p>
-                    ) : (
-                        <>
-                            <label className="wager-field" htmlFor={`winner-${wager.id}`}>Winner:
-                            <select name="winner" id={`winner-${wager.id}`} onChange={(e) => {setWinner(e.target.value)}}>
-                                <option value="">Select a winner</option>
-                                {wager.players.map((player) => (
-                                    <option key={player} value={player}>{player}</option>
-                                ))}
-                            </select> </label>
-                            <button className="wager-field winner-button" onClick={() => _WinnerReward(wager)}>✔</button>
-                        </>
-                    )}
+                        {wager.finished ? (
+                            <p className="wager-field winner">Winner: {wager.winner || "Unknown"}</p>
+                        ) : (
+                            <>
+                                <label className="wager-field" htmlFor={`winner-${wager.id}`}>Winner:
+                                    <select name="winner" id={`winner-${wager.id}`} onChange={(e) => { setWinner(e.target.value) }}>
+                                        <option value="">Select a winner</option>
+                                        {wager.players.map((player) => (
+                                            <option key={player} value={player}>{player}</option>
+                                        ))}
+                                    </select> </label>
+                                <button className="wager-field winner-button" onClick={() => _WinnerReward(wager)}>✔</button>
+                            </>
+                        )}
                         <br></br>
                         <br></br>
                     </div>
