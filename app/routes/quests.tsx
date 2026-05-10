@@ -3,7 +3,7 @@ import { Quests } from "../quests/quests";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Quests for Retards" },
+    { title: "SBFR | Baffu" },
     { name: "description", content: "Welcome to Sports Betting For Retards!" },
   ];
 }

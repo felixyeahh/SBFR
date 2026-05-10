@@ -48,7 +48,7 @@ export function Main() {
         <div className="page">
             <div className="header-main">
                 <button className="button login" style={{ display: (currentSession == undefined) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
-                <h1 className="title">Sports Betting For Retards</h1>
+                <h1 className="title">Sports Betting For ℛετα𝔯𝕕ˢ</h1>
                 <p className="balance">Balance: $TODO</p>
             </div>
 

@@ -3,14 +3,11 @@ import { Main } from "../main/main";
 import { useState } from "react";
 import { onSubmitContext } from "~/main/onSubmitHandler";
 
-/*export function HydrateFallback() {
-  return <p>Loading SBFR...</p>;
-}*/
 
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Sports Betting For Retards" },
+    { title: "SBFR | Baffu" },
     { name: "description", content: "Welcome to Sports Betting For Retards!" },
   ];
 }

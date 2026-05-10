@@ -52,7 +52,7 @@ export function Wagers() {
         <div id="page-wagers">
             <div className="header-wagers">
                 <button onClick={() => window.location.href = "/"} className="button back">&lt;</button>
-                <h1 className="title-wagers">Wagers</h1>
+                <h1 className="title-wagers">Wagers For ℛετα𝔯𝕕ˢ</h1>
                 <p className="balance">Balance: $TODO</p>
             </div>
 

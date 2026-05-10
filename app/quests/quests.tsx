@@ -4,7 +4,7 @@ export function Quests() {
         <div className="page">
             <div className="header-main">
                 <button className="button back" onClick={() => { window.location.href = "/" }}>&lt;</button>
-                <h1 className="title">Quests For Retards</h1>
+                <h1 className="title">Quests For ℛετα𝔯𝕕ˢ</h1>
                 <p className="balance">Balance: $TODO</p>
             </div>
             <div className="quests-container">
