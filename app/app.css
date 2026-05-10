@@ -6,9 +6,23 @@
   font-display: swap;
 }
 
+:root {
+  --default-text-color: rgb(172, 172, 172);
+  --default-border-color: rgb(188, 188, 188);
+  --default-border-radius: 8px;
+  --default-padding: 8px 12px;
+  --default-hover-color: #60fbcf;
+}
+
+p {
+  color: var(--default-text-color);
+}
+
 /* ────────────────────────── Main Layout ──────────────────────────────────────── */
 
 .header-main {
+  color: var(--default-text-color);
+  border-radius: var(--default-border-radius);
   grid-area: header-main;
 }
 
@@ -77,6 +91,7 @@
     "input-2"
     "input-3"
     "bet"
+    "bet-name"
     "submit"
     "wagers-button"
     "quests-button"
@@ -102,7 +117,7 @@
 
 /* ────────────────────────── Main Desktop ──────────────────────────────────────── */
 
-@media (min-width: 900px) {
+@media (orientation: landscape) {
   .page {
     grid-template-areas:
       "header-main header-main header-main"
@@ -152,10 +167,11 @@
 
 
 body {
+  display: block;
   margin: 0;
   min-height: 100vh;
   font-size: 18px;
-  background-image: linear-gradient(to bottom, rgba(24, 13, 105, 0.471), rgba(30, 133, 196, 0.471));
+  background-image: linear-gradient(to bottom, rgba(26, 0, 27, 0.745), rgba(25, 0, 109, 0.746));
   background-size: contain;
   font-family: 'Nova Square', sans-serif;
 }
@@ -173,8 +189,8 @@ body {
 .title {
   flex: 1;
   padding: 10px 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
   font-size: 18px;
   font-weight: 500;
 }
@@ -192,15 +208,14 @@ body {
 }
 
 .new-wager-grid {
+  display: grid;
   grid-template-areas:
     "check-container"
-    "bet" "betName" "submit";
-  display: grid;
-
-  align-items: center;
-  grid-template-columns: 1fr;
+    "bet"
+    "bet-name" "submit";
   gap: 16px;
   padding: 0 1rem 1rem;
+  align-items: center;
 }
 
 .checkbox-container {
@@ -213,6 +228,33 @@ body {
 .bet {
   grid-area: bet;
   display: flex;
+  justify-content: center;
+}
+
+.bet-name {
+  grid-area: bet-name;
+  display: flex;
+  justify-content: center;
+}
+.bet-name input{
+  transition: .5s ease-in;
+  margin-left: 5%;
+}
+.bet-name input:hover{
+  background: var(--default-hover-color);
+}
+
+.bet,
+.bet input,
+.bet-name,
+.bet-name input {
+  display: flex;
+  text-align: center;
+  background: transparent;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
+  padding: var(--default-padding);
+  align-self: center;
 }
 
 .bet-name {
@@ -228,49 +270,18 @@ body {
   margin-left: 10%;
 }
 
-/*
-.submit {
-  flex: 1;
-  grid-area: submit;
-  padding: 10px 50px;
-  margin: 20px;
-  border-radius: 999px;
-  border: 1px solid black;
-  font-family: 'VT323', monospace;
-  font-size: 18px;
-  text-shadow: 0 3px 5px rgba(#000, 0.25);
-  white-space: nowrap;
-  color: #000000;
-  background: transparent;
-  background-image: linear-gradient(red, url(https://web.archive.org/web/20160312084140im_/http://splatoon.nintendo.com/assets/img/nav-bg-fill-blue.png?1443460871));
-  background-repeat: repeat-x;
-  background-position: 0 -100%;
-  transition: 1.5s ease;
-
-  &:hover {
-    background-color: #60fbcf;
-    background-position: 500% 100%;
-  }
-}*/
-
-#WagerBox {
-  display: flex;
-  flex-direction: column;
-  max-width: 100 vh;
-}
-
 .button {
   background: transparent;
   transition: .5s ease-in;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 8px 12px;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
+  padding: var(--default-padding);
   font-size: 14px;
   width: 100%;
+  color: var(--default-text-color);
 }
-
 .button:hover {
-  background-color: #60fbcf;
+  background-color: var(--default-hover-color);
 }
 
 .button.back,
@@ -279,4 +290,24 @@ body {
   cursor: pointer;
   white-space: nowrap;
   width: fit-content;
+}
+
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+
+.leaderboard-item {
+  text-align: center;
+  background: transparent;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
+  padding: var(--default-padding);
+  color: var(--default-text-color);
+  font-size: 16px;
+  width: auto;
+  margin-bottom: 1rem;
 }

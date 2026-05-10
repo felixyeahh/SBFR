@@ -6,7 +6,7 @@ export function Leaderboard({users}: {users: [string, number][]}) {
             <h1>Leaderboard:</h1>
             <div className="table">
                 {users.map(([userId, points], index) => (
-                    <p key={userId}>{index + 1}. {userId}: {points}</p>
+                    <p className="leaderboard-item" key={userId}>{index + 1}. {userId}: {points}</p>
                 ))}
             </div>
         </div>

@@ -1,5 +1,13 @@
+import type { FormEvent } from "react";
 
 export function Login() {
+
+    const _onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        return;
+    }
+
     return (
         <div className="login-page">
             <div className="header-main">
@@ -8,7 +16,7 @@ export function Login() {
                 <p className="balance">Balance: $TODO</p>
             </div>
             <div className="login-container">
-                <form id="login-form" className="login-form">
+                <form id="login-form" className="login-form" onSubmit={(e) => {_onSubmit(e)}}>
                     <div className="control">
                         <h1>Login</h1>
 
@@ -36,7 +44,7 @@ export function Login() {
                                 <div className="bg-inner"></div>
                             </div>
                         </div>
-                        <button className="login-btn block-cube block-cube-hover" type="button">
+                        <div className="block-cube block-cube-hover">
                             <div className="bg-top">
                                 <div className="bg-inner"></div>
                             </div>
@@ -46,8 +54,10 @@ export function Login() {
                             <div className="bg">
                                 <div className="bg-inner"></div>
                             </div>
-                            <div className="text">Log In</div>
-                        </button>
+                            <div className="text">
+                                <input type="submit" value="Log In" className="login-btn" />
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

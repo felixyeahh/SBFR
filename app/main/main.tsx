@@ -75,7 +75,7 @@ export function Main() {
                     </div>
 
                     <p id="Bet" className="bet">Bet: <input type="number" value={bet} onChange={(event) => setBet(Number(event.target.value))} /></p>
-                    <p>Bet Name: <input type="text" id="betName" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)} className="bet-name" /></p>
+                    <p className="bet-name">Bet Name: <input type="text" id="betName" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)}/></p>
                     <input type="submit" id="submit-btn" key={"submit-btn"} value="Submit Wager" className="button submit" />
                 </form>
             </div>

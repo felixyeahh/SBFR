@@ -1,9 +1,9 @@
 .fancy-checkbox-container {
-    --text-color: #000000;
+    --text-color: var(--default-text-color);
     --text-line-scale: 0;
     --text-x: 0px;
-    --border-default: #7F7F85;
-    --border-hover: #E4E4E7;
+    --border-default: var(--default-border-color);
+    --border-hover: #60fbcf;
     --checkbox-active: #6E7BF2;
     position: relative;
     z-index: 1;
@@ -17,7 +17,7 @@
     overflow: hidden;
     mask-image: radial-gradient(white, black);
     -webkit-mask-image: -webkit-radial-gradient(white, black);
-    transition: background .15s linear;
+    transition: background .5s linear;
     &:not(.done) {
         &:hover {
             --blur-x: 372px;

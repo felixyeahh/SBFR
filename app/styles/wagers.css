@@ -4,27 +4,30 @@
   
 }
 
-.header-wagers {
+.header-wagers { 
   display: flex;
   gap: 12px;
   align-items: center;
   margin-bottom: 1.5rem;
   padding: 1rem;
+  border-radius: var(--default-border-radius);
 }
 
 .title-wagers {
   flex: 1;
+  color: var(--default-text-color);
   padding: 10px 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
   font-size: 18px;
   font-weight: 500;
 }
 
 .balance {
+  color: var(--default-text-color);
   padding: 10px 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
