@@ -3,8 +3,6 @@ import { Main } from "../main/main";
 import { useState } from "react";
 import { onSubmitContext } from "~/main/onSubmitHandler";
 
-
-
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "SBFR | Baffu" },

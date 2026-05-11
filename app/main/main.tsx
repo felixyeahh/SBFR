@@ -1,12 +1,10 @@
 import { useState, useContext, useEffect, type FormEvent } from "react";
 import { OnSubmitHandler, OnSubmitPopupComponent, onSubmitContext } from "~/main/onSubmitHandler";
 import { Leaderboard } from "./leaderboard";
-import { Users } from "~/components/constants";
-import { readUser } from "~/components/firebase";
+import { readUser, getAllUsers } from "~/components/firebase";
 import { Checkbox } from "./checkbox";
-import type { Wager } from "~/components/constants";
 import { useCookies } from "~/components/cookies";
-import { type CurrentUserSession, CurrentSession } from "~/components/constants";
+import { type User, type Wager, CurrentSession } from "~/components/constants";
 
 export function Main() {
     const [bet, setBet] = useState(0);
@@ -18,9 +16,9 @@ export function Main() {
     const [currentSession, setCurrentSession] = useCookies(CurrentSession.COLLECTION);
 
     const fetchUsers = async () => {
-        const promises = Users.USERS.map(async (user) => {
-            const data = await readUser(user);
-            return [user, data.points] as [string, number];
+        const promises = (await getAllUsers()).map(async (user: User) => {
+            const data = await readUser(user.name);
+            return [user.name, data.points] as [string, number];
         });
         const fetchedUsers = await Promise.all(promises);
 

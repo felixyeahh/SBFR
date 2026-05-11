@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 import { Popup } from "reactjs-popup";
 import type { FormEvent } from "react";
 import { Users, type Wager } from "~/components/constants";
-import { addWager, updateField, readUser } from "~/components/firebase";
+import { addWager, updateField, readUser, getAllUsers } from "~/components/firebase";
 import {WinnerReward} from "../wagers/winner";
 
 export type onSubmitContextType = {
@@ -66,7 +66,7 @@ export async function OnSubmitHandler(event: FormEvent<HTMLFormElement>,
     const formData = new FormData(event.currentTarget);
     const users: string[] = [];
 
-    Users.USERS.forEach((user) => { if (formData.get(user)) {users.push(user); } });
+    (await getAllUsers()).forEach((user) => { if (formData.get(user.name)) {users.push(user.name); } });
 
     await Promise.all(users.map(async (user) => {
         const current_points = (await readUser(user)).points;

@@ -2,10 +2,12 @@ export class Users {
     static readonly DANIEL = "Daniel";
     static readonly JUSTIN = "Justin";
     static readonly PARKER = "Parker";
-    static readonly USERS = [Users.DANIEL, Users.JUSTIN, Users.PARKER];
     static readonly COLLECTION = "players";
     static readonly POINTS = "points";
+    static readonly WAGERS = "wagers";
     static readonly WINS = "wins";
+    static readonly IS_ADMIN = "isAdmin";
+    static readonly PASSWORD = "password";
 }
 
 export interface User {
@@ -14,6 +16,7 @@ export interface User {
     wagers: number;
     wins: number;
     password: string;
+    isAdmin: boolean;
 }
 
 export class Wagers {
@@ -47,6 +50,10 @@ export class CurrentSession {
     static readonly COLLECTION = "currentSession";
     static readonly USERNAME = "username";
     static readonly SESSION_ID = "session_id";
+}
+
+export class Quests {
+    static readonly COLLECTION = "quests";
 }
 
 export interface Quest {

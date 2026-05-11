@@ -18,6 +18,17 @@ const firebaseConfig = {
 export const clientApp = initializeApp(firebaseConfig);
 export const db = getClientFirestore(clientApp);
 
+export const getAllUsers = async () => {
+  const snapshot = await getDocs(collection(db, Users.COLLECTION));
+  const users: User[] = [];
+  snapshot.forEach((firestoreDoc) => {
+    const data: User = firestoreDoc.data() as User;
+    data.name = firestoreDoc.id;
+    users.push(data);
+  });
+  return users;
+}
+
 export const readUser = async (user: string) => {
   const snapshot = await getDoc(doc(db, Users.COLLECTION, user));
   const data = snapshot.data();
@@ -27,14 +38,14 @@ export const readUser = async (user: string) => {
 }
 
 export const addUser = async (user: User) => {
-    const _user: User = {name: user.name, points: user.points, wagers: user.wagers, wins: user.wins, password: user.password};
+    const _user: User = {name: user.name, points: user.points, wagers: user.wagers, wins: user.wins, password: user.password, isAdmin: user.isAdmin};
     await addDoc(collection(db, Users.COLLECTION), _user);
 
     return _user;
 }
 
 export const setUser = async (user: User) => {
-    const _user: User = {name: user.name, points: user.points, wagers: user.wagers, wins: user.wins, password: user.password};
+    const _user: User = {name: user.name, points: user.points, wagers: user.wagers, wins: user.wins, password: user.password, isAdmin: user.isAdmin};
     await setDoc(doc(db, Users.COLLECTION, user.name), _user);
 
     return _user;
