@@ -5,4 +5,6 @@ export default [
   route("wagers", "routes/wagers.tsx"),
   route("quests", "routes/quests.tsx"),
   route("login", "routes/login.tsx"),
+  route("shop", "routes/shop.tsx"),
+  route("admin-panel", "routes/admin.tsx"),
 ] satisfies RouteConfig;
