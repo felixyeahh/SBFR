@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect, type FormEvent } from "react";
+import { useUser } from "~/components/userContext";
 import { OnSubmitHandler, OnSubmitPopupComponent, onSubmitContext } from "~/main/onSubmitHandler";
 import { Leaderboard } from "./leaderboard";
 import { readUser, getAllUsers } from "~/components/firebase";
@@ -15,7 +16,7 @@ export function Main() {
     const [users, setUsers] = useState<[string, number][]>([]);
     const [currentSession, setCurrentSession] = useCookies(CurrentSession.COLLECTION);
 
-    const [balance, setBalance] = useState(0);
+    const { balance, loading } = useUser();
 
     const fetchUsers = async () => {
         const promises = (await getAllUsers()).map(async (user: User) => {
@@ -28,12 +29,6 @@ export function Main() {
         setUsers(fetchedUsers);
     };
 
-    const fetchBalance = async () => {
-        if (currentSession != undefined) {
-            const user = await readUser(currentSession);
-            setBalance(user.points);
-        }
-    }
 
     const _cleanUp = () => {
         setBet(0);
@@ -49,7 +44,6 @@ export function Main() {
 
     useEffect(() => {
         fetchUsers();
-        fetchBalance();
     }, []);
 
     return (

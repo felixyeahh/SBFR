@@ -53,8 +53,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+import { UserProvider } from "~/components/userContext";
+
 export default function App() {
-  return <Outlet />;
+  return (
+    <UserProvider>
+      <Outlet />
+    </UserProvider>
+  );
 }
 
 function Handle404() {

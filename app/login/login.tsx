@@ -24,7 +24,6 @@ export function Login() {
             <div className="header-main">
                 <button className="button back" onClick={() => { window.location.href = "/" }}>&lt;</button>
                 <h1 className="title">Login</h1>
-                <p className="balance">Balance: $TODO</p>
             </div>
             <div className="login-container">
                 <form id="login-form" className="login-form" onSubmit={(e) => {_onSubmit(e)}}>
