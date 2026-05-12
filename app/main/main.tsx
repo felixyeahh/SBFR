@@ -15,6 +15,8 @@ export function Main() {
     const [users, setUsers] = useState<[string, number][]>([]);
     const [currentSession, setCurrentSession] = useCookies(CurrentSession.COLLECTION);
 
+    const [balance, setBalance] = useState(0);
+
     const fetchUsers = async () => {
         const promises = (await getAllUsers()).map(async (user: User) => {
             const data = await readUser(user.name);
@@ -25,6 +27,13 @@ export function Main() {
         fetchedUsers.sort((a, b) => b[1] - a[1]);
         setUsers(fetchedUsers);
     };
+
+    const fetchBalance = async () => {
+        if (currentSession != undefined) {
+            const user = await readUser(currentSession);
+            setBalance(user.points);
+        }
+    }
 
     const _cleanUp = () => {
         setBet(0);
@@ -40,14 +49,15 @@ export function Main() {
 
     useEffect(() => {
         fetchUsers();
+        fetchBalance();
     }, []);
 
     return (
         <div className="page">
             <div className="header-main">
                 <button className="button login" style={{ display: (currentSession == undefined) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
-                <h1 className="title">Sports Betting For ℛετα𝔯𝕕ˢ</h1>
-                <p className="balance">Balance: $TODO</p>
+                <h1 className="title"> ʂ𝓅Ｏ𝔯τ𝔰 𝔅εττ𝔦𝔫𝔤 𝔉𝔬𝔯 ℛετα𝔯δˢ</h1>
+                <p className="balance" style={{ display: (currentSession == undefined) ? "none" : "block" }}>Balance: ${balance}</p>
             </div>
 
             <Leaderboard users={users} />
