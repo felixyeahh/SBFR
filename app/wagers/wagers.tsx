@@ -2,6 +2,7 @@ import { getAllWagers } from "~/components/firebase";
 import { useEffect, useState } from "react";
 import type { Wager } from "~/components/constants";
 import { WinnerReward } from "./winner";
+import { useUser } from "~/components/userContext";
 
 function _DateConverter(date: any) {
     const newDate = new Date((date as any).seconds * 1000);
@@ -20,6 +21,7 @@ function _DateConverter(date: any) {
 export function Wagers() {
     const [winner, setWinner] = useState<string>("");
     const [wagers, setWagers] = useState<Wager[]>([]);
+    const { balance, loading } = useUser();
 
     useEffect(() => {
         const getWagers = async () => {
@@ -53,7 +55,7 @@ export function Wagers() {
             <div className="header-wagers">
                 <button onClick={() => window.location.href = "/"} className="button back">&lt;</button>
                 <h1 className="title-wagers">Wagers For ℛετα𝔯𝕕ˢ</h1>
-                <p className="balance">Balance: $TODO</p>
+                <p className="balance">Balance: ${loading ? '...' : balance}</p>
             </div>
 
             <div className="wager-grid">
