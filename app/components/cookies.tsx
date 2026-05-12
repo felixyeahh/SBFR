@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type Options = {
+export type Options = {
     expires?: Date;
     path?: string;
     domain?: string;

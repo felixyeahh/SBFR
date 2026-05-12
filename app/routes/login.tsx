@@ -4,7 +4,7 @@ import { Login } from "../login/login";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Login for People (Maybe)" },
-    { name: "description", content: "Welcome to Sports Betting For Retards!" },
+    { name: "description", content: "Welcome to ʂ𝓅Ｏ𝔯τ𝔰 𝔅εττ𝔦𝔫𝔤 𝔉𝔬𝔯 ℛετα𝔯𝕕ˢ" },
   ];
 }
 
