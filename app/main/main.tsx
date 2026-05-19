@@ -10,13 +10,11 @@ import { type User, type Wager, CurrentSession } from "~/components/constants";
 export function Main() {
     const [bet, setBet] = useState(0);
     const [betName, setBetName] = useState("Default Wager");
-    const { isOpen, setIsOpen } = useContext(onSubmitContext);
-    const [isChecked, setIsChecked] = useState([false, false, false]);
     const [currentWager, setCurrentWager] = useState<Wager | null>(null);
-    const [users, setUsers] = useState<[string, number][]>([]);
-    const [currentSession, setCurrentSession] = useCookies(CurrentSession.COLLECTION);
-
-    const { balance, loading } = useUser();
+    const [users, setUsers] = useState<[string, number][]>([]);    
+    const [isChecked, setIsChecked] = useState(new Array(users.length).fill(false));
+    const { isOpen, setIsOpen } = useContext(onSubmitContext);
+    const { user, balance, loading } = useUser();
 
     const fetchUsers = async () => {
         const promises = (await getAllUsers()).map(async (user: User) => {
@@ -49,47 +47,51 @@ export function Main() {
     return (
         <div className="page">
             <div className="header-main">
-                <button className="button login" style={{ display: (currentSession == undefined) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
                 <h1 className="title"> ʂ𝓅Ｏ𝔯τ𝔰 𝔅εττ𝔦𝔫𝔤 𝔉𝔬𝔯 ℛετα𝔯δˢ</h1>
-                <p className="balance" style={{ display: (currentSession == undefined) ? "none" : "block" }}>Balance: ${balance}</p>
+                <button className="button login" style={{ display: (user == null) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
+                <p className="balance" style={{ display: (user == null) ? "none" : "block" }}>Balance: ${loading ? "..." : balance}</p>
             </div>
 
-            <Leaderboard users={users} />
+            <div className="main-grid" style={{ display: (user == null) ? "none" : "grid" }}>
 
-            <div className="new-wager-grid">
-                <h1 className="new-wager">New Wager:</h1>
+                <Leaderboard users={users} />
 
-                <form id="NewWager" key={"NewWager"} className="new-wager-grid" onSubmit={_onSubmit}>
+                <div className="new-wager-grid">
+                    <h1 className="new-wager">New Wager:</h1>
 
-                    <div id="checkbox-container" className="checkbox-container">
-                        {users.map(([userId, points], index) => (
-                            <Checkbox
-                                key={userId}
-                                label={userId}
-                                checked={isChecked[index]}
-                                onChange={(event) => {
-                                    const newChecked = [...isChecked];
-                                    newChecked[index] = event.target.checked;
-                                    setIsChecked(newChecked);
-                                }}
-                            />
-                        ))}
-                    </div>
+                    <form id="NewWager" key={"NewWager"} className="new-wager-grid" onSubmit={_onSubmit}>
 
-                    <p id="Bet" className="bet">Bet: <input type="number" value={bet} onChange={(event) => setBet(Number(event.target.value))} /></p>
-                    <p className="bet-name">Bet Name: <input type="text" id="betName" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)}/></p>
-                    <input type="submit" id="submit-btn" key={"submit-btn"} value="Submit Wager" className="button submit" />
-                </form>
+                        <div id="checkbox-container" className="checkbox-container">
+                            {users.map(([userId, points], index) => (
+                                <Checkbox
+                                    key={userId}
+                                    label={userId}
+                                    checked={isChecked[index]}
+                                    onChange={(event) => {
+                                        const newChecked = [...isChecked];
+                                        newChecked[index] = event.target.checked;
+                                        setIsChecked(newChecked);
+                                    }}
+                                />
+                            ))}
+                        </div>
+
+                        <p id="Bet" className="bet">Bet: <input type="number" value={bet} onChange={(event) => setBet(Number(event.target.value))} /></p>
+                        <p className="bet-name">Bet Name: <input type="text" id="betName" key={"betName"} value={betName} onChange={(event) => setBetName(event.target.value)}/></p>
+                        <input type="submit" id="submit-btn" key={"submit-btn"} value="Submit Wager" className="button submit" style={{ display: (user == null) ? "none" : "block" }}/>
+                    </form>
+                </div>
+
+                <button className="button wagers" onClick={() => { window.location.href = "/wagers" }}>&gt; Wagers</button>
+                <button className="button quests" onClick={() => { window.location.href = "/quests" }}>&gt; Quests</button>
+                <OnSubmitPopupComponent
+                    open={isOpen}
+                    onClose={() => { setIsOpen(false) }}
+                    onSubmit={() => { }}
+                    wager={currentWager}
+                />
             </div>
-
-            <button className="button wagers" onClick={() => { window.location.href = "/wagers" }}>&gt; Wagers</button>
-            <button className="button quests" onClick={() => { window.location.href = "/quests" }}>&gt; Quests</button>
-            <OnSubmitPopupComponent
-                open={isOpen}
-                onClose={() => { setIsOpen(false) }}
-                onSubmit={() => { }}
-                wager={currentWager}
-            />
+            <iframe className="hider" src="https://en.wikipedia.org/wiki/Recursive_Bayesian_estimation" style={{ display: (user == null) ? "block" : "none" }}></iframe>
         </div>
     );
 }

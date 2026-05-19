@@ -24,11 +24,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
             return;
         }
 
-        // Setup real-time listener to automatically fetch user data and balance
         const unsubscribe = onSnapshot(doc(db, Users.COLLECTION, currentSession), (doc) => {
             if (doc.exists()) {
                 const userData = doc.data() as User;
-                // Keep the name property populated
                 userData.name = doc.id;
                 setUser(userData);
             } else {

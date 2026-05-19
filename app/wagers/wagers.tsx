@@ -21,7 +21,7 @@ function _DateConverter(date: any) {
 export function Wagers() {
     const [winner, setWinner] = useState<string>("");
     const [wagers, setWagers] = useState<Wager[]>([]);
-    const { balance, loading } = useUser();
+    const { user, balance, loading } = useUser();
 
     useEffect(() => {
         const getWagers = async () => {
@@ -54,8 +54,9 @@ export function Wagers() {
         <div id="page-wagers">
             <div className="header-wagers">
                 <button onClick={() => window.location.href = "/"} className="button back">&lt;</button>
-                <h1 className="title-wagers">Wagers For ℛετα𝔯𝕕ˢ</h1>
-                <p className="balance">Balance: ${loading ? '...' : balance}</p>
+                <h1 className="title-wagers">Wagers For ℛετα𝔯δˢ</h1>
+                <button className="button login" style={{ display: (user == null) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
+                <p className="balance" style={{ display: (user == null) ? "none" : "block" }}>Balance: ${loading ? '...' : balance}</p>
             </div>
 
             <div className="wager-grid">
@@ -76,7 +77,7 @@ export function Wagers() {
                                             <option key={player} value={player}>{player}</option>
                                         ))}
                                     </select> </label>
-                                <button className="wager-field winner-button" onClick={() => _WinnerReward(wager)}>✔</button>
+                                <button className="wager-field winner-button" onClick={() => _WinnerReward(wager)} style={{ display: (user == null) ? "none" : "block" }}>✔</button>
                             </>
                         )}
                         <br></br>

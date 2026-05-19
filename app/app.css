@@ -84,17 +84,26 @@ p {
   display: grid;
   grid-template-areas:
     "header-main"
-    "leaderboard"
+    "main-grid";
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 16px;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-areas:
+    "leaderboard" 
     "table"
     "new-wager-grid"
-    "input-1"
-    "input-2"
-    "input-3"
-    "bet"
-    "bet-name"
-    "submit"
-    "wagers-button"
-    "quests-button"
+    "input-1" 
+    "input-2" 
+    "input-3" 
+    "bet" 
+    "bet-name" 
+    "submit" 
+    "wagers-button" 
+    "quests-button" 
     "button-3";
   grid-template-columns: 1fr;
   gap: 12px;
@@ -118,9 +127,8 @@ p {
 /* ────────────────────────── Main Desktop ──────────────────────────────────────── */
 
 @media (orientation: landscape) {
-  .page {
+  .main-grid {
     grid-template-areas:
-      "header-main header-main header-main"
       "leaderboard leaderboard leaderboard"
       "table   table   table"
       "new-wager-grid new-wager-grid new-wager-grid"
@@ -310,4 +318,14 @@ body {
   font-size: 16px;
   width: auto;
   margin-bottom: 1rem;
+}
+
+.hider {
+  display:none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
