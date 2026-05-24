@@ -1,18 +1,18 @@
-import { getFirestore as getClientFirestore} from "firebase/firestore";
+import { getFirestore as getClientFirestore } from "firebase/firestore";
 import { collection, addDoc, setDoc, updateDoc, doc, getDoc, getDocs } from "firebase/firestore";
-import { Users, Wagers } from "./constants";
-import type { User, Wager } from "./constants";
+import { Wagers } from "./constants";
+import type { Wager } from "./constants";
 import { initializeApp } from "firebase/app";
+import { Users, type User } from "./userContext";
 
-// #TODO: secure
 const firebaseConfig = {
-  apiKey: "AIzaSyB4xxp6nCR4pJlpGfDSpxVFja1h3",
-  authDomain: "sbfr-47acd.firebaseapp.com",
-  projectId: "sbfr-47acd",
-  storageBucket: "sbfr-47acd.firebasestorage.app",
-  messagingSenderId: "517772983155",
-  appId: "1:517772983155:web:d78576ef118d9901f72306",
-  measurementId: "G-Z51RDBF33C"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 export const clientApp = initializeApp(firebaseConfig);
