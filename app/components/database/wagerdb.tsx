@@ -1,4 +1,4 @@
-import { Database } from "./database";
+import { Database, type DatabaseEntry } from "./database";
 
 export class Wagers {
     static readonly COLLECTION = "wagers";
@@ -11,8 +11,7 @@ export class Wagers {
     static readonly FINISHED = "finished";
 }
 
-export interface Wager {
-    id: string;
+export interface Wager extends DatabaseEntry {
     bet: number;
     betName: string;
     players: string[];
@@ -28,19 +27,15 @@ export class WagerDB extends Database<Wager> {
         super(db, "wagers");
     }
 
-    public async addWager (users: string[], bet: number, betName: string) {
-        const _id = String(globalThis.crypto.randomUUID());
-    
-        const wager: Wager = {
-            id: _id,
+    public async addWager (players: string[], bet: number, betName: string) {
+        return super.add ({
+            id: String(globalThis.crypto.randomUUID()),
             bet: bet,
-            players: users,
+            players: players,
             date_created: new Date(),
             betName: betName,
             finished: false
-        };
-    
-        return super.add(wager);
+        } as Wager);
     }
 }
 

@@ -1,4 +1,4 @@
-import { db, Database } from "./database";
+import { db, Database, type DatabaseEntry } from "./database";
 import type { Firestore } from "firebase/firestore";
 
 export class ActiveQuests {
@@ -12,10 +12,17 @@ export class ActiveQuests {
     static readonly COMPLETED_BY = "completedBy";
 }
 
+export class QuestLibrary {
+    static readonly COLLECTION = "questLibrary"
+}
+
+export class QuestArchive {
+    static readonly COLLECTION = "questArchive"
+}
+
 export type QuestRarity = "Common" | "Epic" | "Legendary";
 
-export interface ActiveQuest {
-    id: string;
+export interface ActiveQuest extends DatabaseEntry {
     questName: string;
     description: string;
     reward: number;
@@ -27,10 +34,10 @@ export interface ActiveQuest {
     completedBy?: string;
 }
 
-export interface QuestLibraryEntry {
-    id: string;
-    questRarity: QuestRarity;
+export interface QuestLibraryEntry extends DatabaseEntry {
+    questName: string;
     description: string;
+    questRarity: QuestRarity;
     reward: number;
     punishment: number;
 }
@@ -43,5 +50,5 @@ export interface QuestArchiveEntry extends ActiveQuest {
 }
 
 export const questsDb = new Database<ActiveQuest>(db, ActiveQuests.COLLECTION);
-export const questLibraryDb = new Database<QuestLibraryEntry>(db, "questLibrary");
-export const questArchiveDb = new Database<QuestArchiveEntry>(db, "questArchive");
+export const questLibraryDb = new Database<QuestLibraryEntry>(db, QuestLibrary.COLLECTION);
+export const questArchiveDb = new Database<QuestArchiveEntry>(db, QuestArchive.COLLECTION);

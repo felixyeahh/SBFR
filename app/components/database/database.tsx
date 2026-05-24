@@ -15,7 +15,11 @@ const firebaseConfig = {
 export const clientApp = initializeApp(firebaseConfig);
 export const db = getClientFirestore(clientApp);
 
-export class Database <T extends {id: string}>{
+export interface DatabaseEntry {
+    id: string;
+}
+
+export class Database <T extends DatabaseEntry>{
     protected db: Firestore;
     protected collection: string;
 
@@ -55,6 +59,5 @@ export class Database <T extends {id: string}>{
             [field]: value,
         });
     };
-    
 
 }
