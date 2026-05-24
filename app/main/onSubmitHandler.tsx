@@ -2,9 +2,10 @@ import type { Dispatch, SetStateAction } from "react";
 import { createContext, useState } from "react";
 import { Popup } from "reactjs-popup";
 import type { FormEvent } from "react";
-import { Users, type Wager } from "~/components/constants";
+import { type Wager } from "~/components/constants";
 import { addWager, updateField, readUser, getAllUsers } from "~/components/firebase";
-import {WinnerReward} from "../wagers/winner";
+import { WinnerReward } from "../wagers/winner";
+import { Users } from "~/components/userContext";
 
 export type onSubmitContextType = {
     isOpen: boolean,

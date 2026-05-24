@@ -1,3 +1,4 @@
+
 export function Checkbox({label, checked, onChange}: {label: string, checked: boolean, onChange: (event: React.ChangeEvent<HTMLInputElement>) => void}) {
     return (
         <div className="fancy-checkbox-container">

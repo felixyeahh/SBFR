@@ -1,5 +1,6 @@
-import { updateField, readUser, updateWager} from "~/components/firebase";
-import { Users, Wagers } from "~/components/constants";
+import { updateField, readUser, updateWager } from "~/components/firebase";
+import { Wagers } from "~/components/constants";
+import { Users } from "~/components/userContext";
 
 export async function WinnerReward(winner: string, bet: number, wager_id: string) {
     const user = await readUser(winner);

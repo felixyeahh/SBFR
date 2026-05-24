@@ -1,20 +1,3 @@
-export class Users {
-    static readonly COLLECTION = "players";
-    static readonly POINTS = "points";
-    static readonly WAGERS = "wagers";
-    static readonly WINS = "wins";
-    static readonly IS_ADMIN = "isAdmin";
-    static readonly PASSWORD = "password";
-}
-
-export interface User {
-    name: string;
-    points: number;
-    wagers: number;
-    wins: number;
-    password: string;
-    isAdmin: boolean;
-}
 
 export class Wagers {
     static readonly COLLECTION = "wagers";
@@ -49,10 +32,35 @@ export class CurrentSession {
     static readonly SESSION_ID = "session_id";
 }
 
-export class Quests {
-    static readonly COLLECTION = "quests";
+export class ActiveQuests {
+    static readonly COLLECTION = "activeQuests";
+    static readonly QUEST_NAME = "questName";
+    static readonly QUEST_RARITY = "questRarity";
+    static readonly IS_TAKEN = "isTaken";
+    static readonly IS_COMPLETED = "isCompleted";
+    static readonly TAKEN_DATE = "takenDate";
+    static readonly TAKEN_BY = "takenBy";
+    static readonly COMPLETED_BY = "completedBy";
+}
+export type QuestRarity = "Common" | "Epic" | "Legendary";
+
+export interface ActiveQuest {
+    id: string;
+    questName: string;
+    description: string;
+    reward: number;
+    questRarity: QuestRarity;
+    isTaken: boolean;
+    isCompleted: boolean;
+    takenDate?: Date;
+    takenBy?: string;
+    completedBy?: string;
 }
 
-export interface Quest {
+export interface QuestLibraryEntry {
+
+}
+
+export interface QuestArchiveEntry {
 
 }

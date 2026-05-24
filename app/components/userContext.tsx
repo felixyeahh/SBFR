@@ -2,7 +2,26 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "~/components/firebase";
 import { useCookies } from "~/components/cookies";
-import { CurrentSession, Users, type User } from "~/components/constants";
+import { CurrentSession } from "~/components/constants";
+
+export class Users {
+    static readonly COLLECTION = "players";
+    static readonly POINTS = "points";
+    static readonly WAGERS = "wagers";
+    static readonly WINS = "wins";
+    static readonly IS_ADMIN = "isAdmin";
+    static readonly PASSWORD = "password";
+}
+
+export interface User {
+    name: string;
+    points: number;
+    wagers: number;
+    wins: number;
+    password: string;
+    isAdmin: boolean;
+}
+
 
 type UserContextType = {
     user: User | null;

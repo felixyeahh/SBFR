@@ -1,11 +1,10 @@
 import { useState, useContext, useEffect, type FormEvent } from "react";
-import { useUser } from "~/components/userContext";
+import { useUser, type User } from "~/components/userContext";
 import { OnSubmitHandler, OnSubmitPopupComponent, onSubmitContext } from "~/main/onSubmitHandler";
 import { Leaderboard } from "./leaderboard";
 import { readUser, getAllUsers } from "~/components/firebase";
 import { Checkbox } from "./checkbox";
-import { useCookies } from "~/components/cookies";
-import { type User, type Wager, CurrentSession } from "~/components/constants";
+import { type Wager } from "~/components/constants";
 
 export function Main() {
     const [bet, setBet] = useState(0);
