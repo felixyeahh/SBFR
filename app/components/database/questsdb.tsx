@@ -1,23 +1,11 @@
 import { db, Database, type DatabaseEntry } from "./database";
 import type { Firestore } from "firebase/firestore";
 
-export class ActiveQuests {
-    static readonly COLLECTION = "activeQuests";
-    static readonly QUEST_NAME = "questName";
-    static readonly QUEST_RARITY = "questRarity";
-    static readonly IS_TAKEN = "isTaken";
-    static readonly IS_COMPLETED = "isCompleted";
-    static readonly TAKEN_DATE = "takenDate";
-    static readonly TAKEN_BY = "takenBy";
-    static readonly COMPLETED_BY = "completedBy";
-}
-
-export class QuestLibrary {
-    static readonly COLLECTION = "questLibrary"
-}
-
-export class QuestArchive {
-    static readonly COLLECTION = "questArchive"
+export class QuestsConst {
+    static readonly ACTIVE_QUESTS_COLLECTION = "activeQuests";
+    static readonly QUEST_LIBRARY_COLLECTION = "questLibrary";
+    static readonly QUEST_ARCHIVE_COLLECTION = "questArchive";
+    static readonly MIN_QUESTS_ACTIVE = 3;
 }
 
 export type QuestRarity = "Common" | "Epic" | "Legendary";
@@ -29,6 +17,7 @@ export interface ActiveQuest extends DatabaseEntry {
     questRarity: QuestRarity;
     isTaken: boolean;
     isCompleted: boolean;
+    dateCreated: Date;
     takenDate?: Date;
     takenBy?: string;
     completedBy?: string;
@@ -49,6 +38,6 @@ export interface QuestArchiveEntry extends ActiveQuest {
     verifiedDate?: Date;
 }
 
-export const questsDb = new Database<ActiveQuest>(db, ActiveQuests.COLLECTION);
-export const questLibraryDb = new Database<QuestLibraryEntry>(db, QuestLibrary.COLLECTION);
-export const questArchiveDb = new Database<QuestArchiveEntry>(db, QuestArchive.COLLECTION);
+export const questsDb = new Database<ActiveQuest>(db, QuestsConst.ACTIVE_QUESTS_COLLECTION);
+export const questLibraryDb = new Database<QuestLibraryEntry>(db, QuestsConst.QUEST_LIBRARY_COLLECTION);
+export const questArchiveDb = new Database<QuestArchiveEntry>(db, QuestsConst.QUEST_ARCHIVE_COLLECTION);

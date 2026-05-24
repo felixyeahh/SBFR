@@ -1,16 +1,15 @@
-
+import DefaultHeader from "~/components/defaultheader"
+import { useUser } from "~/components/userContext";
 
 export function Admin() {
+    const { user, loading, balance} = useUser();
+    
     return (
         <div>
-            <div className="header-main">
-                <button onClick={() => window.location.href = "/"} className="button back">&lt;</button>
-                <h1 className="title-main"> Admin Panel 𝔉𝔬𝔯 ℛετα𝔯δˢ</h1>
+            <DefaultHeader user={user} loading={loading} balance={balance} title="Admin Panel 𝔉𝔬𝔯 ℛετα𝔯δˢ" backbutton/>
 
-                {
-                // TODO: admin panel
-                }
-            </div>
+            
+            
         </div>
     )
 }

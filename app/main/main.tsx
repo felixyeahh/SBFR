@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect, type FormEvent } from "react";
 import { useUser, type User } from "~/components/userContext";
 import { OnSubmitHandler, OnSubmitPopupComponent, onSubmitContext } from "~/main/onSubmitHandler";
+import DefaultHeader from "~/components/defaultheader";
 import { MiniLeaderboard } from "./leaderboard";
 import { userdb } from "~/components/database/userdb";
 import { Checkbox } from "./checkbox";
@@ -16,15 +17,10 @@ export function Main() {
     const { user, balance, loading } = useUser();
 
     const fetchUsers = async () => {
-        const promises = (await userdb.getAll()).map(async (user: User) => {
-            console.log(user);
-            const data = await userdb.read(user.id);
-            return [user.id, data.points] as [string, number];
-        });
-        const fetchedUsers = await Promise.all(promises);
+        const users = await userdb.getAll();
 
-        fetchedUsers.sort((a, b) => b[1] - a[1]);
-        setUsers(fetchedUsers);
+        users.sort((a, b) => b.points - a.points);
+        setUsers(users.map((user) => [user.id, user.points]));
     };
 
     const _cleanUp = () => {
@@ -45,11 +41,7 @@ export function Main() {
 
     return (
         <div className="page">
-            <div className="header-main">
-                <h1 className="title"> ʂ𝓅Ｏ𝔯τ𝔰 𝔅εττ𝔦𝔫𝔤 𝔉𝔬𝔯 ℛετα𝔯δˢ</h1>
-                <button className="button login" style={{ display: (user == null) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
-                <p className="balance" style={{ display: (user == null) ? "none" : "block" }}>Balance: ${loading ? "..." : balance}</p>
-            </div>
+            <DefaultHeader user={user} loading={loading} balance={balance}/>
 
             <div className="main-grid" style={{ display: (user == null) ? "none" : "grid" }}>
 

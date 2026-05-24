@@ -1,21 +1,8 @@
 import { useEffect, useState } from "react";
+import DefaultHeader from "~/components/defaultheader";
 import { type Wager, wagerdb } from "~/components/database/wagerdb";
 import { WinnerReward } from "./winner";
 import { useUser } from "~/components/userContext";
-
-function _DateConverter(date: any) {
-    const newDate = new Date((date as any).seconds * 1000);
-    const month = String(newDate.getMonth());
-    const day = String(newDate.getDate());
-    const year = String(newDate.getFullYear());
-    const hours = String(newDate.getHours());
-    const minutes = String(newDate.getMinutes());
-    const seconds = String(newDate.getSeconds());
-
-    let fdate = `${month}/${day}/${year}, ${hours}:${minutes}:${seconds}`;
-    return fdate;
-}
-
 
 export function Wagers() {
     const [winner, setWinner] = useState<string>("");
@@ -51,12 +38,7 @@ export function Wagers() {
 
     return (
         <div id="page-wagers">
-            <div className="header-wagers">
-                <button onClick={() => window.location.href = "/"} className="button back">&lt;</button>
-                <h1 className="title-wagers">Wagers For ℛετα𝔯δˢ</h1>
-                <button className="button login" style={{ display: (user == null) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
-                <p className="balance" style={{ display: (user == null) ? "none" : "block" }}>Balance: ${loading ? '...' : balance}</p>
-            </div>
+            <DefaultHeader user={user} loading={loading} balance={balance} title="Wagers For ℛετα𝔯δˢ" backbutton/>
 
             <div className="wager-grid">
                 {validWagers.map((wager) => (
@@ -64,7 +46,7 @@ export function Wagers() {
                         <p className={"wager-field title " + (wager.finished ? "" : "active")}>"{wager.betName}"</p>
                         <p className="wager-field bet">Bet: ${wager.bet}</p>
                         <p className="wager-field players">Players: {wager.players.join(", ")}</p>
-                        <p className="wager-field">Date Created: {_DateConverter(wager.date_created)}</p>
+                        <p className="wager-field">Date Created: {(new Date((wager.date_created as any).seconds * 1000)).toLocaleString()}</p>
                         {wager.finished ? (
                             <p className="wager-field winner">Winner: {wager.winner || "Unknown"}</p>
                         ) : (
