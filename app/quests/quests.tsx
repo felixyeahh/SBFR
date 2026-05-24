@@ -1,15 +1,19 @@
 import { useUser } from "~/components/userContext";
 import { useEffect, useState } from "react";
-import type { ActiveQuest } from "~/components/constants";
+import { type ActiveQuest, questsDb } from "~/components/database/questsdb";
 
 export function Quests() {
     const { user, balance, loading } = useUser();
     const [quests, setQuests] = useState<ActiveQuest[]>([]);
 
-    useEffect(() => {
-        const getQuests = async () => {
-            // setQuests(await readQuest());
+    const getQuests = async () => {
+        const retrievedQuests = await questsDb.getAll();
+        if (retrievedQuests) {
+            setQuests(retrievedQuests);
         }
+    }
+
+    useEffect(() => {
         getQuests();
     }, []);
 
@@ -21,6 +25,7 @@ export function Quests() {
                 <button className="button login" style={{ display: (user == null) ? "block" : "none" }} onClick={() => { window.location.href = "/login" }}>&gt; Login &lt;</button>
                 <p className="balance" style={{ display: (user == null) ? "none" : "block" }}>Balance: ${loading ? '...' : balance}</p>
             </div>
+        
             <div className="quests-container" style={{ display: (user == null) ? "none" : "grid" }}>
                 {quests.map((_quest) => (
                     <div key={_quest.id} className="quest">
