@@ -11,11 +11,10 @@ const LoginSuccess = (username: string, [currentSession, setCurrentSession]: [st
             path: "/"
         }
     );
-    console.log("success");
-    console.log(currentSession);
+
     window.location.href = "/";
 
-    return currentSession;
+    return username;
 }
 
 const LoginFail = () => {
@@ -32,5 +31,3 @@ export const LoginHandler = async (username: string, password: string, [currentS
     }
     return LoginSuccess(username, [currentSession, setCurrentSession]);
 }
-
-
