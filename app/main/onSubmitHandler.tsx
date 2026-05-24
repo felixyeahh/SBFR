@@ -2,8 +2,8 @@ import type { Dispatch, SetStateAction } from "react";
 import { createContext, useState } from "react";
 import { Popup } from "reactjs-popup";
 import type { FormEvent } from "react";
-import { type Wager } from "~/components/constants";
-import { addWager, updateField, readUser, getAllUsers } from "~/components/firebase";
+import { type Wager, wagerdb } from "~/components/database/wagerdb";
+import { userdb } from "~/components/database/userdb";
 import { WinnerReward } from "../wagers/winner";
 import { Users } from "~/components/userContext";
 
@@ -67,14 +67,14 @@ export async function OnSubmitHandler(event: FormEvent<HTMLFormElement>,
     const formData = new FormData(event.currentTarget);
     const users: string[] = [];
 
-    (await getAllUsers()).forEach((user) => { if (formData.get(user.name)) {users.push(user.name); } });
+    (await userdb.getAll()).forEach((user) => { if (formData.get(user.id)) {users.push(user.id); } });
 
     await Promise.all(users.map(async (user) => {
-        const current_points = (await readUser(user)).points;
-        await updateField(user, Users.POINTS, current_points - bet);
+        const current_points = (await userdb.read(user)).points;
+        await userdb.updateField(user, Users.POINTS, current_points - bet);
     }));
 
     setIsOpen(!isOpen); 
-    const newWager = await addWager(users, bet * users.length, betName);
+    const newWager = await wagerdb.addWager(users, bet * users.length, betName);
     return newWager;
 }

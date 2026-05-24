@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "~/components/firebase";
+import { db } from "~/components/database/database";
 import { useCookies } from "~/components/cookies";
 import { CurrentSession } from "~/components/constants";
 
@@ -14,7 +14,7 @@ export class Users {
 }
 
 export interface User {
-    name: string;
+    id: string;
     points: number;
     wagers: number;
     wins: number;
@@ -46,7 +46,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         const unsubscribe = onSnapshot(doc(db, Users.COLLECTION, currentSession), (doc) => {
             if (doc.exists()) {
                 const userData = doc.data() as User;
-                userData.name = doc.id;
+                userData.id = doc.id;
                 setUser(userData);
             } else {
                 setUser(null);

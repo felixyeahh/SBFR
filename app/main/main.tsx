@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect, type FormEvent } from "react";
 import { useUser, type User } from "~/components/userContext";
 import { OnSubmitHandler, OnSubmitPopupComponent, onSubmitContext } from "~/main/onSubmitHandler";
-import { Leaderboard } from "./leaderboard";
-import { readUser, getAllUsers } from "~/components/firebase";
+import { MiniLeaderboard } from "./leaderboard";
+import { userdb } from "~/components/database/userdb";
 import { Checkbox } from "./checkbox";
-import { type Wager } from "~/components/constants";
+import { type Wager } from "~/components/database/wagerdb";
 
 export function Main() {
     const [bet, setBet] = useState(0);
@@ -16,16 +16,16 @@ export function Main() {
     const { user, balance, loading } = useUser();
 
     const fetchUsers = async () => {
-        const promises = (await getAllUsers()).map(async (user: User) => {
-            const data = await readUser(user.name);
-            return [user.name, data.points] as [string, number];
+        const promises = (await userdb.getAll()).map(async (user: User) => {
+            console.log(user);
+            const data = await userdb.read(user.id);
+            return [user.id, data.points] as [string, number];
         });
         const fetchedUsers = await Promise.all(promises);
 
         fetchedUsers.sort((a, b) => b[1] - a[1]);
         setUsers(fetchedUsers);
     };
-
 
     const _cleanUp = () => {
         setBet(0);
@@ -53,7 +53,7 @@ export function Main() {
 
             <div className="main-grid" style={{ display: (user == null) ? "none" : "grid" }}>
 
-                <Leaderboard users={users} />
+                <MiniLeaderboard users={users} maxLength={5} />
 
                 <div className="new-wager-grid">
                     <h1 className="new-wager">New Wager:</h1>

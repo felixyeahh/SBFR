@@ -1,5 +1,4 @@
 import { useUser } from "~/components/userContext";
-import  {} from "~/components/firebase";
 import { useEffect, useState } from "react";
 import type { ActiveQuest } from "~/components/constants";
 

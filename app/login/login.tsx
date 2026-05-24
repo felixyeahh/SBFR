@@ -26,7 +26,7 @@ export function Login() {
                 <h1 className="title">Login</h1>
             </div>
             <div className="login-container">
-                <form id="login-form" className="login-form" onSubmit={(e) => {_onSubmit(e)}}>
+                <form id="login-form" className="login-form" onSubmit={_onSubmit}>
                     <div className="control">
                         <h1>{isFailed ? "Login Failed: Incorrect Username/Password" : "Login"}</h1>
 

@@ -1,6 +1,5 @@
-import { getAllWagers } from "~/components/firebase";
 import { useEffect, useState } from "react";
-import type { Wager } from "~/components/constants";
+import { type Wager, wagerdb } from "~/components/database/wagerdb";
 import { WinnerReward } from "./winner";
 import { useUser } from "~/components/userContext";
 
@@ -25,7 +24,7 @@ export function Wagers() {
 
     useEffect(() => {
         const getWagers = async () => {
-            setWagers(await getAllWagers());
+            setWagers(await wagerdb.getAll());
         }
         getWagers();
     }, []);

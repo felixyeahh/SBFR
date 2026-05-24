@@ -1,6 +1,6 @@
 
-export function Leaderboard({users}: {users: [string, number][]}) {
-    const _users = users.slice(0, 10);
+export function MiniLeaderboard({users, maxLength = 10}: {users: [string, number][], maxLength?: number}) {
+    const _users = users.slice(0, maxLength);
 
     return (
         <div id="leaderboard" className="leaderboard">
@@ -11,7 +11,7 @@ export function Leaderboard({users}: {users: [string, number][]}) {
                 ))}
             </div>
             {
-                users.length > 10 ? (
+                users.length > maxLength ? (
                     <p onClick={() => { window.location.href = "/leaderboard"}} className="leaderboard-item">See More...</p>
                 ) : null
             }
