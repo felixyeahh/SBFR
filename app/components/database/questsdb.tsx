@@ -11,6 +11,7 @@ export class QuestsConst {
 export type QuestRarity = "Common" | "Epic" | "Legendary";
 
 export interface ActiveQuest extends DatabaseEntry {
+    lib_id: string;
     questName: string;
     description: string;
     reward: number;

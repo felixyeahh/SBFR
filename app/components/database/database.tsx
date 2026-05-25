@@ -16,7 +16,7 @@ export const clientApp = initializeApp(firebaseConfig);
 export const db = getClientFirestore(clientApp);
 
 export interface DatabaseEntry {
-    id: string;
+    id: string | null;
 }
 
 export class Database <T extends DatabaseEntry>{
@@ -50,6 +50,9 @@ export class Database <T extends DatabaseEntry>{
     }
     
     public async set (item: T) {
+        if (item.id == null) {
+           return await this.add(item);
+        }
         await setDoc(doc(this.db, this.collection, item.id), item);
         return item;
     }

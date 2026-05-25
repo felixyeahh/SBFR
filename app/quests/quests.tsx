@@ -29,7 +29,7 @@ export function Quests() {
         const retrievedQuests = await questsDb.getAll();
         if (retrievedQuests) {
             setQuests(retrievedQuests);
-            setQuestIds(new Set<string>(retrievedQuests.map((quest) => quest.id)));
+            setQuestIds(new Set<string>(retrievedQuests.map((quest) => quest.lib_id)));
         }
     }
 
@@ -41,17 +41,25 @@ export function Quests() {
     }
 
     const refillActiveQuests = async () => {
-        for (
-            let i = 0;
-            (i < QuestsConst.MIN_QUESTS_ACTIVE - quests.length) && (i < (questLibrary.length - quests.length));
-            i++
-        ) {
+        const updatedQuests = [...quests];
+        const updatedQuestIds = new Set(questIds);
+        let hasChanges = false;
+
+        for (let i = 0; i < questLibrary.length; i++) {
+            if (updatedQuests.length >= QuestsConst.MIN_QUESTS_ACTIVE) {
+                break;
+            }
+
             const quest = questLibrary[i];
+            if (updatedQuestIds.has(quest.id!)) {
+                continue;
+            }
 
-            if (questIds.has(quest.id)) continue;
+            console.log("refilling quest:", quest.questName); 
 
-            await questsDb.add({
-                id: quest.id,
+            const newQuest: ActiveQuest = {
+                id: String(globalThis.crypto.randomUUID()),
+                lib_id: quest.id!,
                 questName: quest.questName,
                 description: quest.description,
                 reward: quest.reward,
@@ -59,44 +67,52 @@ export function Quests() {
                 isTaken: false,
                 isCompleted: false,
                 dateCreated: new Date(),
-            });
+            };
 
-            questIds.add(quest.id);
+            await questsDb.set(newQuest);
+            updatedQuests.push(newQuest);
+            updatedQuestIds.add(quest.id!);
+            hasChanges = true;
         }
-    }
 
-    const archiveQuests = async () => {
-        
-    }
+        if (hasChanges) {
+            setQuests(updatedQuests);
+            setQuestIds(updatedQuestIds);
+        }
+    };
 
     useEffect(() => {
         getQuests();
     }, []);
-
-    if (quests.length < QuestsConst.MIN_QUESTS_ACTIVE) {
-        useEffect(() => {
-            getQuestLibrary();
-        }, []);
-
-        if (questLibrary.length > quests.length) {
-            useEffect(() => {
-                refillActiveQuests()
-            }, []);
+    
+    useEffect(() => {
+        if (quests.length < QuestsConst.MIN_QUESTS_ACTIVE) {
+            if (questLibrary.length === 0) {
+                getQuestLibrary();
+            } else {
+                const hasQuestsToRefill = questLibrary.some(q => !questIds.has(q.id!));
+                if (hasQuestsToRefill) {
+                    refillActiveQuests();
+                }
+            }
         }
-    }
-        return (
-            <div className="page">
-                <DefaultHeader user={user} loading={loading} balance={balance} title="Quests For ℛετα𝔯δˢ" backbutton/>
-        
-                <div className="quests-container" style={{ display: (user == null) ? "none" : "grid" }}>
-                    {quests.map((_quest) => (
-                        <div key={_quest.id} className="quest">
-                            <h2>{_quest.questName}</h2>
-                            <p>{_quest.description}</p>
-                            <button>Start Quest</button>
-                        </div>
-                    ))}
-                </div>
+    }, [quests, questLibrary, questIds]);
+
+    console.log(quests);
+
+    return (
+        <div className="page">
+            <DefaultHeader user={user} loading={loading} balance={balance} title="Quests For ℛετα𝔯δˢ" backbutton/>
+    
+            <div className="quests-container" style={{ display: (user == null) ? "none" : "grid" }}>
+                {quests.map((_quest) => (
+                    <div key={_quest.id} className="quest">
+                        <h2>{_quest.questName}</h2>
+                        <p>{_quest.description}</p>
+                        <button>Start Quest</button>
+                    </div>
+                ))}
             </div>
-        );
+        </div>
+    );
 }
