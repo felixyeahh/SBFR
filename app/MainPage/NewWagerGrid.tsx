@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { type FormEvent} from "react";
 import { onSubmitHandler } from "./OnSubmitComponent";

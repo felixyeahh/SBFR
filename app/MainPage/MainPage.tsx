@@ -2,7 +2,7 @@ import type { Route } from "./+types/MainPage";
 import DefaultHeader from "~/tools/DefaultHeader";
 import { MiniLeaderboard } from "./MiniLeaderboard";
 import { userdb } from "~/tools/database/userdb";
-import { ScrollRestoration, useLoaderData } from "react-router";
+import { ScrollRestoration, useLoaderData, Link } from "react-router";
 import { NewWagerCreationGrid } from "./NewWagerGrid";
 
 export function meta({}: Route.MetaArgs) {
@@ -24,13 +24,13 @@ export default function MainPage() {
         <div className="page">
             <DefaultHeader />
 
-            <div className="main-grid" style={{ display: (false) ? "none" : "grid" }}>
+            <div className="main-grid" style={{ display: "grid" }}>
 
                 <MiniLeaderboard users={users} maxLength={5} />
-                <NewWagerCreationGrid users={users.map((user) => [user.id, user.points])}/>
+                <NewWagerCreationGrid users={users.map((user, index) => [user.id, user.points])}/>
 
-                <button className="button wagers" onClick={() => { window.location.href = "/wagers" }}>&gt; Wagers</button>
-                <button className="button quests" onClick={() => { window.location.href = "/quests" }}>&gt; Quests</button>
+                <Link to="/wagers" className="button wagers">&gt; Wagers</Link>
+                <Link to="/quests" className="button quests">&gt; Quests</Link>
             </div>
 
             <ScrollRestoration />

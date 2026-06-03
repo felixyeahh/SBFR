@@ -309,6 +309,7 @@ body {
   font-size: var(--font-size-sm);
   width: 100%;
   color: var(--default-text-color);
+  text-align: center;
 }
 .button:hover {
   background-color: var(--default-hover-color);

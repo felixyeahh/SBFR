@@ -1,4 +1,3 @@
-"use client";
 import { type MouseEvent, useState } from "react";
 import { userdb } from "~/tools/database/userdb";
 import { useUser, type User } from "~/tools/userContext";
@@ -41,6 +40,7 @@ export function MiniLeaderboard({users, maxLength = 10}: {users: User[], maxLeng
     }
     
     console.log("loaded");
+
 
     return (
         <div id="leaderboard" className="leaderboard">
