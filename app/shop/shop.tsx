@@ -1,12 +1,12 @@
-import { useUser } from "~/components/userContext";
-import DefaultHeader from "~/components/defaultheader";
+import { useUser } from "~/tools/userContext";
+import DefaultHeader from "~/tools/DefaultHeader";
 
 export function Shop() {
     const { user, balance, loading } = useUser();
 
     return (
         <div>
-            <DefaultHeader user={user} loading={loading} balance={balance} title="Shop 𝔉𝔬𝔯 ℛετα𝔯δˢ" backbutton/>
+            <DefaultHeader title="Shop 𝔉𝔬𝔯 ℛετα𝔯δˢ" backbutton/>
 
             <div style={{ display: (user == null) ? "none" : "grid" }}>
                 <div className="shop-section">

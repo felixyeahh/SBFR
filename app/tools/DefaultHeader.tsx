@@ -1,6 +1,8 @@
-import { type User } from "~/components/userContext";
+import { useUser, type User } from "~/tools/userContext";
 
-export default function DefaultHeader({user, loading, balance, title, backbutton}: {user: User | null, loading: boolean, balance: number, title?: string | null, backbutton?: boolean}) {
+export default function DefaultHeader({ title: title, backbutton: backbutton}: {title?: string | null, backbutton?: boolean}) {
+    const { user, loading, balance } = useUser();
+    
     return (
         <div className="header-main">
             {backbutton ? (

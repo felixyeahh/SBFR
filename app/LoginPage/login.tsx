@@ -1,8 +1,8 @@
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { LoginHandler } from "./loginHandler";
-import { useCookies } from "~/components/cookies";
-import { CurrentSession } from "~/components/constants";
+import { useCookies } from "~/tools/cookies";
+import { CurrentSession } from "~/tools/constants";
 
 export function Login() {
     const [username, setUsername] = useState("");

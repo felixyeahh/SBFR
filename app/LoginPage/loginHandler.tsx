@@ -1,6 +1,6 @@
-import { userdb } from "~/components/database/userdb";
-import { useCookies, type Options } from "~/components/cookies";
-import { CurrentSession} from "~/components/constants";
+import { userdb } from "~/tools/database/userdb";
+import { useCookies, type Options } from "~/tools/cookies";
+import { CurrentSession} from "~/tools/constants";
 
 const LoginSuccess = (username: string, [currentSession, setCurrentSession]: [string | undefined, (value: string, options?: Options) => void]) => {    
     setCurrentSession(

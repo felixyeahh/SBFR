@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import DefaultHeader from "~/components/defaultheader";
-import { type Wager, wagerdb } from "~/components/database/wagerdb";
-import { userdb } from "~/components/database/userdb";
+import DefaultHeader from "~/tools/DefaultHeader";
+import { type Wager, wagerdb } from "~/tools/database/wagerdb";
+import { userdb } from "~/tools/database/userdb";
 import { WinnerReward } from "./winner";
-import { useUser, Users } from "~/components/userContext";
+import { useUser, Users } from "~/tools/userContext";
 
 export function Wagers() {
     const [winner, setWinner] = useState<string>("");
@@ -51,7 +51,7 @@ export function Wagers() {
 
     return (
         <div id="page-wagers">
-            <DefaultHeader user={user} loading={loading} balance={balance} title="Wagers For ℛετα𝔯δˢ" backbutton/>
+            <DefaultHeader title="Wagers For ℛετα𝔯δˢ" backbutton/>
 
             <div className="wager-grid">
                 {validWagers.map((wager) => (

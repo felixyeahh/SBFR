@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "~/components/database/database";
-import { useCookies } from "~/components/cookies";
-import { CurrentSession } from "~/components/constants";
+import { db } from "~/tools/database/database";
+import { useCookies } from "~/tools/cookies";
+import { CurrentSession } from "~/tools/constants";
 
 export class Users {
     static readonly COLLECTION = "players";

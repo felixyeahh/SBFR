@@ -1,7 +1,7 @@
-import { useUser } from "~/components/userContext";
+import { useUser } from "~/tools/userContext";
 import { useEffect, useState } from "react";
-import DefaultHeader from "~/components/defaultheader";
-import { type ActiveQuest, questsDb, QuestsConst, questLibraryDb, type QuestLibraryEntry } from "~/components/database/questsdb";
+import DefaultHeader from "~/tools/DefaultHeader";
+import { type ActiveQuest, questsDb, QuestsConst, questLibraryDb, type QuestLibraryEntry } from "~/tools/database/questsdb";
 
 function shuffle<T>(array: T[]) {
   let currentIndex = array.length;
@@ -102,7 +102,7 @@ export function Quests() {
 
     return (
         <div className="page">
-            <DefaultHeader user={user} loading={loading} balance={balance} title="Quests For ℛετα𝔯δˢ" backbutton/>
+            <DefaultHeader title="Quests For ℛετα𝔯δˢ" backbutton/>
     
             <div className="quests-container" style={{ display: (user == null) ? "none" : "grid" }}>
                 {quests.map((_quest) => (

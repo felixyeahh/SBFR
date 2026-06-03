@@ -1,5 +1,4 @@
 import { db, Database, type DatabaseEntry } from "./database";
-import type { Firestore } from "firebase/firestore";
 
 export class QuestsConst {
     static readonly ACTIVE_QUESTS_COLLECTION = "activeQuests";

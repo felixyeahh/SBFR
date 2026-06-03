@@ -67,7 +67,7 @@ export function HydrateFallback() {
   );
 }
 
-import { UserProvider } from "~/components/userContext";
+import { UserProvider } from "~/tools/userContext";
 
 export default function App() {
   return (

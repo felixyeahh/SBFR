@@ -1,6 +1,6 @@
-import { userdb } from "~/components/database/userdb";
-import { wagerdb, Wagers } from "~/components/database/wagerdb";
-import { Users } from "~/components/userContext";
+import { userdb } from "~/tools/database/userdb";
+import { wagerdb, Wagers } from "~/tools/database/wagerdb";
+import { Users } from "~/tools/userContext";
 
 export async function WinnerReward(winner: string, bet: number, wager_id: string) {
     const user = await userdb.read(winner);

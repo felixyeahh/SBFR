@@ -1,8 +1,9 @@
+"use client";
 import { type MouseEvent, useState } from "react";
-import { userdb } from "~/components/database/userdb";
-import { useUser } from "~/components/userContext";
+import { userdb } from "~/tools/database/userdb";
+import { useUser, type User } from "~/tools/userContext";
 
-export function MiniLeaderboard({users, maxLength = 10}: {users: [string, number][], maxLength?: number}) {
+export function MiniLeaderboard({users, maxLength = 10}: {users: User[], maxLength?: number}) {
     const _users = users.slice(0, maxLength);
     const [giftedPoints, setGiftedPoints] = useState<number>(0);
     const {user, balance} = useUser();
@@ -39,16 +40,17 @@ export function MiniLeaderboard({users, maxLength = 10}: {users: [string, number
         }
     }
     
+    console.log("loaded");
 
     return (
         <div id="leaderboard" className="leaderboard">
             <h1>Leaderboard:</h1>
             <div className="table">
-                {_users.map(([userId, points], index) => (
-                    <div className="leaderboard-item" id={userId}>
-                        <p>{index + 1}. {userId}: {points} </p> 
-                        <input id={userId + "points"} className="gift points" style={{display: "none"}}></input>
-                        <button id={userId + "gift"} className="gift" style={{display: "block"}} onClick={_gift}>🎁</button>
+                {_users.map((user, index) => (
+                    <div className="leaderboard-item" id={user.id} key={user.id}>
+                        <p>{index + 1}. {user.id}: {user.points} </p> 
+                        <input id={`${user.id}points`} className="gift points" style={{display: "none"}}></input>
+                        <button id={`${user.id}gift`} className="gift" style={{display: "block"}} onClick={_gift}>🎁</button>
                     </div>
                 ))}
             </div>

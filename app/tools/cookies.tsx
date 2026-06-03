@@ -9,6 +9,9 @@ export type Options = {
 
 export const useCookies = (key: string): [string | undefined, (value: string, options?: Options) => void] => {
     const [cookieValue, setCookieValue] = useState<string | undefined>(() => {
+        if (typeof document === "undefined") {
+            return undefined;
+        }
         const cookie = document.cookie
             .split("; ")
             .find((row) => row.startsWith(`${key}=`));

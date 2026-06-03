@@ -2,11 +2,13 @@ import type { Dispatch, SetStateAction } from "react";
 import { createContext, useState } from "react";
 import { Popup } from "reactjs-popup";
 import type { FormEvent } from "react";
-import { type Wager, wagerdb } from "~/components/database/wagerdb";
-import { userdb } from "~/components/database/userdb";
+import { type Wager, wagerdb } from "~/tools/database/wagerdb";
+import { userdb } from "~/tools/database/userdb";
 import { WinnerReward } from "../wagers/winner";
-import { Users } from "~/components/userContext";
+import { Users } from "~/tools/userContext";
+import { useContext } from "react";
 
+/*
 export type onSubmitContextType = {
     isOpen: boolean,
     setIsOpen: Dispatch<SetStateAction<boolean>> 
@@ -15,17 +17,15 @@ export type onSubmitContextType = {
 export const onSubmitContext = createContext<onSubmitContextType>({
     isOpen: false,
     setIsOpen: () => {}
-});
+});*/
 
 type onSubmitPopupComponentProps = {
     wager: Wager | null,
-    open: boolean, 
-    onClose : () => void,
-    onSubmit: (event: FormEvent<HTMLFormElement>) => void
 }
 
 
 export function OnSubmitPopupComponent(props: onSubmitPopupComponentProps) {
+    const [isOpen, setIsOpen] = useState(false);
     const [winner, setWinner] = useState<string>("");
     
     const _onOpen = () => {
@@ -38,25 +38,27 @@ export function OnSubmitPopupComponent(props: onSubmitPopupComponentProps) {
         event.preventDefault();
         if (!props.wager) return;
         WinnerReward(winner, props.wager.bet, props.wager.id as string);
-        props.onClose();
+        setIsOpen(false);
     }
 
-    return (<Popup open={props.open} onClose={props.onClose} onOpen={_onOpen}>
-        <div id="SubmitPopup" className="submit-popup-container" style={{display: props.open ? "block" : "none"}}>
-            <form onSubmit={(event) => {_onSubmit(event)}}> 
-                <label>Winner: <select name="winner" id={`winner-${props.wager?.id}`} onChange={(e) => {setWinner(e.target.value)}}>
-                    <option value="">Select a winner</option>
-                    {props.wager?.players.map((player) => (
-                        <option key={player} value={player}>{player}</option>
-                    ))}
-                </select></label>
-                <input type="submit" value={"✔"}/>
-            </form>
-        </div>
-    </Popup>)
+    return (
+        <Popup open={isOpen} onClose={() => {setIsOpen(false)}} onOpen={_onOpen}>
+            <div id="SubmitPopup" className="submit-popup-container" style={{display: isOpen ? "block" : "none"}}>
+                <form onSubmit={(event) => {_onSubmit(event)}}> 
+                    <label>Winner: <select name="winner" id={`winner-${props.wager?.id}`} onChange={(e) => {setWinner(e.target.value)}}>
+                        <option value="">Select a winner</option>
+                        {props.wager?.players.map((player) => (
+                            <option key={player} value={player}>{player}</option>
+                        ))}
+                    </select></label>
+                    <input type="submit" value={"✔"}/>
+                </form>
+            </div>
+        </Popup>
+    )
 }
 
-export async function OnSubmitHandler(event: FormEvent<HTMLFormElement>, 
+export async function onSubmitHandler(event: FormEvent<HTMLFormElement>, 
     isOpen: boolean, 
     setIsOpen: Dispatch<SetStateAction<boolean>>, 
     bet: number, 
