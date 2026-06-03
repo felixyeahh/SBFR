@@ -27,9 +27,10 @@ type UserContextType = {
     user: User | null;
     balance: number;
     loading: boolean;
+    isAdmin: boolean;
 };
 
-const UserContext = createContext<UserContextType>({ user: null, balance: 0, loading: true });
+const UserContext = createContext<UserContextType>({ user: null, balance: 0, loading: true, isAdmin: false });
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
@@ -61,9 +62,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     }, [currentSession]);
 
     const balance = user?.points || 0;
+    const isAdmin = user?.isAdmin || false;
 
     return (
-        <UserContext.Provider value={{ user, balance, loading }}>
+        <UserContext.Provider value={{ user, balance, loading, isAdmin }}>
             {children}
         </UserContext.Provider>
     );

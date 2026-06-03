@@ -23,7 +23,8 @@
     "react-dom": "^19.2.4",
     "react-router": "7.14.0",
     "react-transition-group": "^4.4.5",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "vite-plugin-mkcert": "^2.0.0"
   },
   "devDependencies": {
     "@react-router/dev": "7.14.0",

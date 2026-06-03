@@ -1,5 +1,5 @@
 import { getFirestore as getClientFirestore, type Firestore } from "firebase/firestore";
-import { collection, addDoc, setDoc, updateDoc, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, setDoc, updateDoc, doc, getDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -55,6 +55,10 @@ export class Database <T extends DatabaseEntry>{
         }
         await setDoc(doc(this.db, this.collection, item.id), item);
         return item;
+    }
+
+    public async delete (id: string) {
+        await deleteDoc(doc(this.db, this.collection, id));
     }
 
     public async updateField (id: string, field: string, value: any) {

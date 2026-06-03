@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import DefaultHeader from "~/components/defaultheader";
 import { type Wager, wagerdb } from "~/components/database/wagerdb";
+import { userdb } from "~/components/database/userdb";
 import { WinnerReward } from "./winner";
-import { useUser } from "~/components/userContext";
+import { useUser, Users } from "~/components/userContext";
 
 export function Wagers() {
     const [winner, setWinner] = useState<string>("");
     const [wagers, setWagers] = useState<Wager[]>([]);
-    const { user, balance, loading } = useUser();
+    const { user, balance, loading, isAdmin } = useUser();
 
     useEffect(() => {
         const getWagers = async () => {
@@ -33,6 +34,18 @@ export function Wagers() {
             return w;
         }));
     }
+    
+    const _CancelWager = async (wager: Wager) => {
+        if (!isAdmin) return alert("You are not authorized to cancel this wager.");
+
+        for (const player of wager.players) {
+            const _player = await userdb.read(player);
+            if (_player == null) continue;
+            await userdb.updateField(player, Users.POINTS, _player.points + (wager.bet / wager.players.length));
+        }
+        await wagerdb.delete(wager.id as string);
+        setWagers(prevWagers => prevWagers.filter(w => w.id !== wager.id));
+    }
 
     const validWagers = wagers.filter(wager => wager.id !== undefined);
 
@@ -43,7 +56,9 @@ export function Wagers() {
             <div className="wager-grid">
                 {validWagers.map((wager) => (
                     <div key={wager.id} className="wager-card">
-                        <p className={"wager-field title " + (wager.finished ? "" : "active")}>"{wager.betName}"</p>
+                        <div className={"wager-field title " + (wager.finished ? "" : "active")}>
+                            <button className="cancel" style={{ display: (wager.finished) ? "none" : "block" }} onClick={() => _CancelWager(wager)}>✗</button><p>"{wager.betName}"</p>
+                        </div> 
                         <p className="wager-field bet">Bet: ${wager.bet}</p>
                         <p className="wager-field players">Players: {wager.players.join(", ")}</p>
                         <p className="wager-field">Date Created: {(new Date((wager.date_created as any).seconds * 1000)).toLocaleString()}</p>

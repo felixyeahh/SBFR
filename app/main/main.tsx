@@ -6,6 +6,7 @@ import { MiniLeaderboard } from "./leaderboard";
 import { userdb } from "~/components/database/userdb";
 import { Checkbox } from "./checkbox";
 import { type Wager } from "~/components/database/wagerdb";
+import { ScrollRestoration } from "react-router";
 
 export function Main() {
     const [bet, setBet] = useState(0);
@@ -82,7 +83,8 @@ export function Main() {
                     wager={currentWager}
                 />
             </div>
-            <iframe className="hider" src="https://en.wikipedia.org/wiki/Recursive_Bayesian_estimation" style={{ display: (user == null) ? "block" : "none" }}></iframe>
+
+            <ScrollRestoration />
         </div>
     );
 }

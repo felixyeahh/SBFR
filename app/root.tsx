@@ -53,6 +53,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function loader( ){
+  return;
+}
+
 export function HydrateFallback() {
   return (
     <div className="fixed inset-0 flex items-center justify-center">
@@ -64,7 +68,6 @@ export function HydrateFallback() {
 }
 
 import { UserProvider } from "~/components/userContext";
-
 
 export default function App() {
   return (

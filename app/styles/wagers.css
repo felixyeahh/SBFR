@@ -1,10 +1,9 @@
 /* ────────────────────────── Wagers ──────────────────────────────────────── */
 .wagers-page {
   display: grid;
-  
 }
 
-.header-wagers { 
+.header-wagers {
   display: flex;
   gap: 12px;
   align-items: center;
@@ -41,7 +40,7 @@
   margin: 20px;
   border-radius: 999px;
   border: 1px solid black;
-  font-family: 'VT323', monospace;
+  font-family: "VT323", monospace;
   font-size: 18px;
   text-shadow: 0 3px 5px rgba(#000, 0.25);
   white-space: nowrap;
@@ -89,14 +88,14 @@
   width: 100%;
 }
 .wager-field.title {
-    font-weight: 800;
-    min-height: 48px;
-    text-align: center;
-    font-size: 24px;
-    background-color: #31313156;
+  font-size: clamp(1rem, 1vw, 3rem);
+  font-weight: 800;
+  min-height: 48px;
+  text-align: center;
+  background-color: #31313156;
 }
-.wager-field.active{
-    background: rgba(26, 255, 0, 0.316);
+.wager-field.active {
+  background: rgba(26, 255, 0, 0.316);
 }
 .wager-field.players {
   min-height: 48px;
@@ -133,4 +132,3 @@ select.wager-field {
     background-position: 500% 100%;
   }
 }
-  
