@@ -5,12 +5,8 @@ import devtoolsJson from "vite-plugin-devtools-json";
 import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig({
-  plugins: [devtoolsJson(), tailwindcss(), reactRouter(), mkcert()],
+  plugins: [devtoolsJson(), tailwindcss(), reactRouter(), mkcert({ savePath: "./.mkcert" })],
   resolve: {
     tsconfigPaths: true,
-  },
-  server: {
-    host: "10.0.0.100",
-    port: 5173
   }
 });

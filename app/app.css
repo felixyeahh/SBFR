@@ -10,9 +10,22 @@
   --default-text-color: rgb(172, 163, 163);
   --default-stroke-color: rgb(0, 0, 0);
   --default-border-color: rgba(194, 123, 199, 0.61);
-  --default-border-radius: 8px;
-  --default-padding: 8px 12px;
   --default-hover-color: #60fbcf;
+
+  --font-size-body: clamp(14px, 1.25vw, 18px);
+  --font-size-title: clamp(16px, 1.5vw, 22px);
+  --font-size-h1: clamp(20px, 2.2vw, 28px);
+  --font-size-sm: clamp(12px, 1vw, 15px);
+  --font-size-xs: clamp(10px, 0.8vw, 12px);
+
+  --spacing-xs: clamp(4px, 0.4vw, 8px);
+  --spacing-sm: clamp(8px, 0.8vw, 12px);
+  --spacing-md: clamp(12px, 1.1vw, 16px);
+  --spacing-lg: clamp(16px, 1.5vw, 24px);
+  --spacing-xl: clamp(24px, 2.5vw, 40px);
+
+  --default-border-radius: clamp(6px, 0.6vw, 10px);
+  --default-padding: var(--spacing-sm) var(--spacing-md);
 }
 
 p {
@@ -87,8 +100,8 @@ p {
     "header-main"
     "main-grid";
   grid-template-columns: 1fr;
-  gap: 12px;
-  padding: 16px;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
 }
 
 .main-grid {
@@ -107,8 +120,8 @@ p {
     "quests-button" 
     "button-3";
   grid-template-columns: 1fr;
-  gap: 12px;
-  padding: 16px;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
 }
 
 /* span full width on mobile for most elements */
@@ -135,8 +148,8 @@ p {
       "new-wager-grid new-wager-grid new-wager-grid"
       "wagers-button quests-button button-3";
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    padding: 24px;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
   }
 
   .input:nth-child(1) {
@@ -180,7 +193,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background-attachment: fixed;
-  font-size: 18px;
+  font-size: var(--font-size-body);
   background-image: linear-gradient(to bottom, rgba(26, 0, 27, 0.5), rgba(25, 0, 109, 0.5)), url('/assets/background.png');
   background-size: cover;
   background-position: center;
@@ -192,20 +205,20 @@ body {
 .header-main {
   -webkit-text-stroke-color: var(--default-stroke-color);
   display: flex;
-  gap: 12px;
+  gap: var(--spacing-sm);
   align-items: center;
   margin-bottom: 1.5rem;
-  padding: 1rem;
+  padding: var(--spacing-md);
   background-color: rgba(203, 227, 248, 0.2);
   z-index: 1;
 }
 
 .title {
   flex: 1;
-  padding: 10px 16px;
+  padding: var(--spacing-sm) var(--spacing-md);
   border: 1px solid var(--default-border-color);
   border-radius: var(--default-border-radius);
-  font-size: 18px;
+  font-size: var(--font-size-body);
   font-weight: 500;
   white-space: nowrap;
 }
@@ -215,7 +228,7 @@ body {
   text-shadow: 0 0 15px black;
   color: gold;
   text-align: center;
-  font-size: 25px;
+  font-size: var(--font-size-h1);
 }
 
 .new-wager-grid h1 {
@@ -228,7 +241,7 @@ body {
     "check-container"
     "bet"
     "bet-name" "submit";
-  gap: 16px;
+  gap: var(--spacing-md);
   padding: 0 1rem 1rem;
   align-items: center;
 }
@@ -236,7 +249,7 @@ body {
 .checkbox-container {
   grid-area: check-container;
   display: grid;
-  gap: 16px;
+  gap: var(--spacing-md);
   padding: 0 1rem 1rem;
 }
 
@@ -280,7 +293,7 @@ body {
 
 .input input {
   margin-left: 10%;
-  size: 30px;
+  width: clamp(120px, 15vw, 250px);
 }
 
 .bet input {
@@ -293,7 +306,7 @@ body {
   border: 1px solid var(--default-border-color);
   border-radius: var(--default-border-radius);
   padding: var(--default-padding);
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   width: 100%;
   color: var(--default-text-color);
 }
@@ -303,7 +316,7 @@ body {
 
 .button.back,
 .button.login {
-  padding: 10px 20px;
+  padding: var(--spacing-sm) var(--spacing-lg);
   cursor: pointer;
   white-space: nowrap;
   width: fit-content;
@@ -312,7 +325,7 @@ body {
 .leaderboard {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--spacing-sm);
   margin-bottom: 1.5rem;
   padding: 1rem;
 }
@@ -326,7 +339,7 @@ body {
   border-radius: var(--default-border-radius);
   padding: var(--default-padding);
   color: var(--default-text-color);
-  font-size: 16px;
+  font-size: var(--font-size-sm);
   width: auto;
   margin-bottom: 1rem;
 }
@@ -347,21 +360,21 @@ body {
   width: 100vh;
   max-width: 90%;
   justify-content: flex-start;
-  border-radius: 100px;
+  border-radius: 9999px;
   align-items: center;
   position: relative;
-  padding: 0 5px;
+  padding: 0 clamp(4px, 0.4vw, 6px);
   display: flex;
-  height: 40px;
-  width: 500px;
+  height: clamp(32px, 4.5vh, 48px);
+  width: min(90vw, 500px);
 }
 
 .progress-value {
   animation: load .5s normal forwards;
   box-shadow: 0 10px 40px -10px #fff;
-  border-radius: 100px;
+  border-radius: 9999px;
   background: #fff;
-  height: 30px;
+  height: 75%;
   width: 100%;
 }
 

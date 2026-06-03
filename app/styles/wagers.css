@@ -5,7 +5,7 @@
 
 .header-wagers {
   display: flex;
-  gap: 12px;
+  gap: var(--spacing-sm);
   align-items: center;
   margin-bottom: 1.5rem;
   padding: 1rem;
@@ -15,19 +15,19 @@
 .title-wagers {
   flex: 1;
   color: var(--default-text-color);
-  padding: 10px 16px;
+  padding: var(--spacing-sm) var(--spacing-md);
   border: 1px solid var(--default-border-color);
   border-radius: var(--default-border-radius);
-  font-size: 18px;
+  font-size: var(--font-size-body);
   font-weight: 500;
 }
 
 .balance {
   color: var(--default-text-color);
-  padding: 10px 20px;
+  padding: var(--spacing-sm) var(--spacing-lg);
   border: 1px solid var(--default-border-color);
   border-radius: var(--default-border-radius);
-  font-size: 15px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
@@ -36,12 +36,12 @@
 .wagers-button {
   grid-area: wagers-button;
   flex: 1;
-  padding: 10px 50px;
-  margin: 20px;
-  border-radius: 999px;
+  padding: var(--spacing-sm) clamp(24px, 5vw, 60px);
+  margin: var(--spacing-lg);
+  border-radius: 9999px;
   border: 1px solid black;
   font-family: "VT323", monospace;
-  font-size: 18px;
+  font-size: var(--font-size-body);
   text-shadow: 0 3px 5px rgba(#000, 0.25);
   white-space: nowrap;
   color: #000000;
@@ -59,7 +59,7 @@
 .wager-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: var(--spacing-md);
   padding: 0 1rem 1rem;
 }
 
@@ -72,46 +72,48 @@
 .wager-card {
   background: rgba(120, 204, 240, 0.175);
   border: 1px solid #313131;
-  border-radius: 12px;
+  border-radius: clamp(8px, 0.9vw, 14px);
   padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 
 .wager-field {
   border: 1px solid var(--default-border-color);
   background-color: #ffffff2a;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 14px;
+  border-radius: var(--default-border-radius);
+  padding: var(--default-padding);
+  font-size: var(--font-size-sm);
   width: 100%;
 }
 .wager-field.title {
-  font-size: clamp(1rem, 1vw, 3rem);
+  font-size: clamp(1rem, 1vw, 1rem);
   font-weight: 800;
-  min-height: 48px;
+  min-height: clamp(40px, 4.5vh, 52px);
   text-align: center;
   background-color: #31313156;
+  white-space: inherit;
 }
 .wager-field.active {
   background: rgba(26, 255, 0, 0.316);
 }
 .wager-field.players {
-  min-height: 48px;
+  min-height: clamp(40px, 4.5vh, 52px);
 }
 
 .wager-field.winner {
-  min-height: 48px;
+  min-height: clamp(40px, 4.5vh, 52px);
   align-items: center;
 }
 
 .wager-field.bet {
-  min-height: 48px;
+  min-height: clamp(40px, 4.5vh, 52px);
+  align-items: left;
 }
 
 .wager-field.status {
-  min-height: 48px;
+  min-height: clamp(40px, 4.5vh, 52px);
 }
 
 select.wager-field {
@@ -123,8 +125,8 @@ select.wager-field {
 .wager-field.winner-button {
   cursor: pointer;
   border: 1px solid var(--default-border-color);
-  border-radius: 8px;
-  padding: 4px 8px;
+  border-radius: var(--default-border-radius);
+  padding: var(--spacing-xs) var(--spacing-sm);
   background-color: transparent;
   transition: 1.5s ease;
   &:hover {
