@@ -342,6 +342,7 @@ body {
   font-size: var(--font-size-sm);
   width: auto;
   margin-bottom: 1rem;
+  display: flex;
 }
 
 .hider {
@@ -381,4 +382,10 @@ body {
 @keyframes load {
   0% { width: 0; }
   100% { width: 95%; }
+}
+
+.gift {
+  align-self: right;
+  margin-left: auto;
+  width: fit-content;
 }
