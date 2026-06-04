@@ -6,7 +6,7 @@ const LoginSuccess = (username: string, [currentSession, setCurrentSession]: [st
     setCurrentSession(
         username,
         {
-            expires: new Date(Date.now() + 60 * 60 * 24 * 7),
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 31),
             secure: true,
             path: "/"
         }
