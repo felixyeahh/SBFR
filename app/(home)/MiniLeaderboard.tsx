@@ -3,6 +3,7 @@ import { type MouseEvent, useState } from "react";
 import { userdb } from "../tools/database/userdb";
 import { useUser } from "../tools/userContext";
 import { type User } from "../tools/constants";
+import Link from "next/link";
 
 export function MiniLeaderboard({users, maxLength = 10}: {users: User[], maxLength?: number}) {
     const _users = users.slice(0, maxLength);
@@ -40,9 +41,6 @@ export function MiniLeaderboard({users, maxLength = 10}: {users: User[], maxLeng
             button.textContent = "📥";
         }
     }
-    
-    console.log("loaded");
-
 
     return (
         <div id="leaderboard" className="leaderboard">
@@ -58,7 +56,7 @@ export function MiniLeaderboard({users, maxLength = 10}: {users: User[], maxLeng
             </div>
             {
                 users.length > maxLength ? (
-                    <p onClick={() => { window.location.href = "/leaderboard"}} className="leaderboard-item">See More...</p>
+                    <Link href="/leaderboard" className="leaderboard-item">See More...</Link>
                 ) : null
             }
         </div>

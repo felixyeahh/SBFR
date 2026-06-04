@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Nova_Square } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "./tools/userContext";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
         <UserProvider>
           {children}
         </UserProvider>
+        <Analytics/>
       </body>
     </html>
   );

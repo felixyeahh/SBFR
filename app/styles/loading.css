@@ -1,0 +1,27 @@
+.progress {
+  background: rgba(255,255,255,0.1);
+  width: 100vh;
+  max-width: 90%;
+  justify-content: flex-start;
+  border-radius: 9999px;
+  align-items: center;
+  position: relative;
+  padding: 0 clamp(4px, 0.4vw, 6px);
+  display: flex;
+  height: clamp(32px, 4.5vh, 48px);
+  width: min(90vw, 500px);
+}
+
+.progress-value {
+  animation: load 1s normal forwards;
+  box-shadow: 0 10px 40px -10px #fff;
+  border-radius: 9999px;
+  background: #fff;
+  height: 75%;
+  width: 100%;
+}
+
+@keyframes load {
+  0% { width: 0; }
+  100% { width: 95%; }
+}

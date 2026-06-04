@@ -1,5 +1,5 @@
 
-export default function ShopPage() {
+export default function PokerPage() {
     return (
         <div>
         </div>

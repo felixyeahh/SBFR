@@ -116,9 +116,9 @@ p {
     "bet" 
     "bet-name" 
     "submit" 
-    "wagers-button" 
-    "quests-button" 
-    "button-3";
+    "navigation" 
+    "navigation" 
+    "navigation";
   grid-template-columns: 1fr;
   gap: var(--spacing-sm);
   padding: var(--spacing-md);
@@ -146,7 +146,7 @@ p {
       "leaderboard leaderboard leaderboard"
       "table   table   table"
       "new-wager-grid new-wager-grid new-wager-grid"
-      "wagers-button quests-button button-3";
+      "navigation navigation navigation";
     grid-template-columns: 1fr 1fr 1fr;
     gap: var(--spacing-md);
     padding: var(--spacing-lg);
@@ -236,7 +236,7 @@ body {
 .new-wager-grid {
   display: grid;
   grid-template-areas:
-    "check-container"
+    "checkbox-container"
     "bet"
     "bet-name" "submit";
   gap: var(--spacing-md);
@@ -245,7 +245,7 @@ body {
 }
 
 .checkbox-container {
-  grid-area: check-container;
+  grid-area: checkbox-container;
   display: grid;
   gap: var(--spacing-md);
   padding: 0 1rem 1rem;
@@ -367,37 +367,13 @@ body {
   z-index: 0;
 }
 
-
-.progress {
-  background: rgba(255,255,255,0.1);
-  width: 100vh;
-  max-width: 90%;
-  justify-content: flex-start;
-  border-radius: 9999px;
-  align-items: center;
-  position: relative;
-  padding: 0 clamp(4px, 0.4vw, 6px);
-  display: flex;
-  height: clamp(32px, 4.5vh, 48px);
-  width: min(90vw, 500px);
-}
-
-.progress-value {
-  animation: load .5s normal forwards;
-  box-shadow: 0 10px 40px -10px #fff;
-  border-radius: 9999px;
-  background: #fff;
-  height: 75%;
-  width: 100%;
-}
-
-@keyframes load {
-  0% { width: 0; }
-  100% { width: 95%; }
-}
-
 .gift {
   align-self: right;
   margin-left: auto;
   width: fit-content;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
 }

@@ -43,12 +43,12 @@ export function NewWagerCreationGrid ({users}: {users: [string, number][]}) {
     const [isOpen, setIsOpen] = useState(false);
     const [isChecked, setIsChecked] = useState(new Array(users.length).fill(false));
     const [bet, setBet] = useState(0);
-    const [betName, setBetName] = useState("");
+    const [betName, setBetName] = useState("Default Wager");
     const { user } = useUser();
 
     const _cleanUp = () => {
         setBet(0);
-        setBetName("");
+        setBetName("Default Wager");
         setIsChecked(new Array(users.length).fill(false));
     }
 
