@@ -2,7 +2,7 @@
 
 A web app for betting and having fun with the boys.
 
-Build with ❤️ using React Router and TypeScript.
+Build with ❤️ using Remix Router and Firebase.
 
 ## Running Locally
 
@@ -16,6 +16,14 @@ npm run dev
 ```bash
 npm install
 npm run build
+```
+
+## Deployment 
+
+```bash
+firebase login
+firebase init
+npm run deploy
 ```
 
 
