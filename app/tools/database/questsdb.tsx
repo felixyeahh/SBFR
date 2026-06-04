@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { db, Database, type DatabaseEntry } from "./database";
 
 export class QuestsConst {
@@ -17,8 +18,8 @@ export interface ActiveQuest extends DatabaseEntry {
     questRarity: QuestRarity;
     isTaken: boolean;
     isCompleted: boolean;
-    dateCreated: Date;
-    takenDate?: Date;
+    dateCreated: Timestamp;
+    takenDate?: Timestamp;
     takenBy?: string;
     completedBy?: string;
 }
@@ -34,8 +35,8 @@ export interface QuestLibraryEntry extends DatabaseEntry {
 export interface QuestArchiveEntry extends ActiveQuest {
     isVerified: boolean;
     isDenied: boolean;
-    verifiedBy?: string;
-    verifiedDate?: Date;
+    verifiedBy?: Timestamp;
+    verifiedDate?: Timestamp;
 }
 
 export const questsDb = new Database<ActiveQuest>(db, QuestsConst.ACTIVE_QUESTS_COLLECTION);

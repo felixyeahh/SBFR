@@ -1,7 +1,9 @@
+"use client";
 import { useState } from "react";
 import { type FormEvent} from "react";
-import { onSubmitHandler } from "./OnSubmitComponent";
-import { useUser, type User } from "../tools/userContext";
+import { handleWagerAdditionSubmit } from "./OnSubmitComponent";
+import { useUser} from "../tools/userContext";
+import {type User} from "../tools/constants";
 import { type Wager } from "../tools/database/wagerdb";
 import { OnSubmitPopupComponent } from "./OnSubmitComponent";
 
@@ -51,7 +53,7 @@ export function NewWagerCreationGrid ({users}: {users: [string, number][]}) {
     }
 
     const _onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        setCurrentWager(await onSubmitHandler(event, isOpen, setIsOpen, bet, betName));
+        setCurrentWager(await handleWagerAdditionSubmit(event, isOpen, setIsOpen, bet, betName));
         _cleanUp();
     }
 

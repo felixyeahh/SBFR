@@ -1,3 +1,22 @@
+import { Timestamp } from "firebase/firestore";
+
+export class Users {
+    static readonly COLLECTION = "players";
+    static readonly POINTS = "points";
+    static readonly WAGERS = "wagers";
+    static readonly WINS = "wins";
+    static readonly IS_ADMIN = "isAdmin";
+    static readonly PASSWORD = "password";
+}
+
+export interface User {
+    id: string;
+    points: number;
+    wagers: number;
+    wins: number;
+    password: string;
+    isAdmin: boolean;
+}
 
 export interface CurrentUserSession {
     username: string;
@@ -30,7 +49,7 @@ export interface ActiveQuest {
     questRarity: QuestRarity;
     isTaken: boolean;
     isCompleted: boolean;
-    takenDate?: Date;
+    takenDate?: Timestamp;
     takenBy?: string;
     completedBy?: string;
 }

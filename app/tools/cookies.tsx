@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
 
 export type Options = {
     expires?: Date;
@@ -8,18 +9,16 @@ export type Options = {
 };
 
 export const useCookies = (key: string): [string | undefined, (value: string, options?: Options) => void] => {
-    const [cookieValue, setCookieValue] = useState<string | undefined>(() => {
-        if (typeof document === "undefined") {
-            return undefined;
-        }
+    const [cookieValue, setCookieValue] = useState<string | undefined>(undefined);
+
+    useEffect(() => {
         const cookie = document.cookie
             .split("; ")
             .find((row) => row.startsWith(`${key}=`));
         if (cookie) {
-            return cookie.split("=")[1];
+            setCookieValue(cookie.split("=")[1]);
         }
-        return undefined;
-    });
+    }, [key]);
 
     const setCookie = (value: string, options?: Options) => {
         let cookie = `${key}=${value}`;

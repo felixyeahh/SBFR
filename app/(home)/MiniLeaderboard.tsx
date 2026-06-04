@@ -1,6 +1,8 @@
+"use client";
 import { type MouseEvent, useState } from "react";
-import { userdb } from "~/tools/database/userdb";
-import { useUser, type User } from "~/tools/userContext";
+import { userdb } from "../tools/database/userdb";
+import { useUser } from "../tools/userContext";
+import { type User } from "../tools/constants";
 
 export function MiniLeaderboard({users, maxLength = 10}: {users: User[], maxLength?: number}) {
     const _users = users.slice(0, maxLength);

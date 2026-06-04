@@ -1,27 +1,11 @@
+"use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "~/tools/database/database";
-import { useCookies } from "~/tools/cookies";
-import { CurrentSession } from "~/tools/constants";
+import { db } from "./database/database";
+import { useCookies } from "./cookies";
+import { CurrentSession } from "./constants";
 
-export class Users {
-    static readonly COLLECTION = "players";
-    static readonly POINTS = "points";
-    static readonly WAGERS = "wagers";
-    static readonly WINS = "wins";
-    static readonly IS_ADMIN = "isAdmin";
-    static readonly PASSWORD = "password";
-}
-
-export interface User {
-    id: string;
-    points: number;
-    wagers: number;
-    wins: number;
-    password: string;
-    isAdmin: boolean;
-}
-
+import { Users, type User } from "./constants";
 
 type UserContextType = {
     user: User | null;

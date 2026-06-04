@@ -1,86 +1,65 @@
-import { useEffect, useState } from "react";
-import DefaultHeader from "~/tools/DefaultHeader";
-import { type Wager, wagerdb } from "~/tools/database/wagerdb";
-import { userdb } from "~/tools/database/userdb";
-import { WinnerReward } from "./winner";
-import { useUser, Users } from "~/tools/userContext";
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { type Wager } from "../tools/database/wagerdb";
+import { rewardWagerWinner, cancelWager } from "./winnerHandling";
+import { useUser } from "../tools/userContext";
+import { Timestamp } from "firebase/firestore";
 
-export function Wagers() {
+interface _leanWager extends Omit<Wager, "date_created" | "date_finished"> {
+    date_created: number;
+    date_finished?: number;
+}
+
+export function WagersGrid({wagers}: {wagers: _leanWager[]}) {
     const [winner, setWinner] = useState<string>("");
-    const [wagers, setWagers] = useState<Wager[]>([]);
-    const { user, balance, loading, isAdmin } = useUser();
+    const { user, isAdmin } = useUser();
+    const router = useRouter();
 
-    useEffect(() => {
-        const getWagers = async () => {
-            setWagers(await wagerdb.getAll());
-        }
-        getWagers();
-    }, []);
+    const _WinnerReward = async (wager: _leanWager) => {
+        if (!winner) return alert("Please select a winner first.");
 
-    const _WinnerReward = async (wager: Wager) => {
-        if (!winner) {
-            alert("Please select a winner first.");
-            return;
-        }
-
-        console.log(wager, winner);
-
-        await WinnerReward(winner, wager.bet, wager.id as string);
-
-        setWagers(prevWagers => prevWagers.map(w => {
-            if (w.id === wager.id) {
-                return { ...w, finished: true, winner: winner };
-            }
-            return w;
-        }));
+        await rewardWagerWinner(winner, wager.bet, wager.id as string);
+        router.refresh();
     }
-    
+
     const _CancelWager = async (wager: Wager) => {
-        if (!isAdmin) return alert("You are not authorized to cancel this wager.");
-
-        for (const player of wager.players) {
-            const _player = await userdb.read(player);
-            if (_player == null) continue;
-            await userdb.updateField(player, Users.POINTS, _player.points + (wager.bet / wager.players.length));
-        }
-        await wagerdb.delete(wager.id as string);
-        setWagers(prevWagers => prevWagers.filter(w => w.id !== wager.id));
+        await cancelWager(wager, isAdmin);
+        router.refresh();
     }
 
-    const validWagers = wagers.filter(wager => wager.id !== undefined);
+    let validWagers = wagers.filter(wager => wager.id !== undefined);
+    validWagers = validWagers.sort((a, b) => b.date_created - a.date_created);
+
 
     return (
-        <div id="page-wagers">
-            <DefaultHeader title="Wagers For ℛετα𝔯δˢ" backbutton/>
-
-            <div className="wager-grid">
-                {validWagers.map((wager) => (
-                    <div key={wager.id} className="wager-card">
-                        <div className={"wager-field title " + (wager.finished ? "" : "active")}>
-                            <button className="cancel" style={{ display: (wager.finished) ? "none" : "block" }} onClick={() => _CancelWager(wager)}>✗</button><p>"{wager.betName}"</p>
-                        </div> 
-                        <p className="wager-field bet">Bet: ${wager.bet}</p>
-                        <p className="wager-field players">Players: {wager.players.join(", ")}</p>
-                        <p className="wager-field">Date Created: {(new Date((wager.date_created as any).seconds * 1000)).toLocaleString()}</p>
-                        {wager.finished ? (
-                            <p className="wager-field winner">Winner: {wager.winner || "Unknown"}</p>
-                        ) : (
-                            <>
-                                <label className="wager-field" htmlFor={`winner-${wager.id}`}>Winner:
-                                    <select name="winner" id={`winner-${wager.id}`} onChange={(e) => { setWinner(e.target.value) }}>
-                                        <option value="">Select a winner</option>
-                                        {wager.players.map((player) => (
-                                            <option key={player} value={player}>{player}</option>
-                                        ))}
-                                    </select> </label>
-                                <button className="wager-field winner-button" onClick={() => _WinnerReward(wager)} style={{ display: (user == null) ? "none" : "block" }}>✔</button>
-                            </>
-                        )}
-                        <br></br>
-                        <br></br>
-                    </div>
-                ))}
-            </div>
+        <div className="wager-grid">
+            {validWagers.map((wager) => (
+                <div key={wager.id} className="wager-card">
+                    <div className={"wager-field title " + (wager.finished ? "" : "active")}>
+                        <button className="cancel-wager" style={{ display: (wager.finished) ? "none" : "block" }} onClick={() => _CancelWager({...wager, date_created: Timestamp.fromMillis(wager.date_created), date_finished: wager.date_finished ? Timestamp.fromMillis(wager.date_finished) : undefined})}>✗</button><p>"{wager.betName}"</p>
+                    </div> 
+                    <p className="wager-field bet">Bet: ${wager.bet}</p>
+                    <p className="wager-field players">Players: {wager.players.join(", ")}</p>
+                    <p className="wager-field">Date Created: {new Date(wager.date_created).toLocaleString()}</p>
+                    {wager.finished ? (
+                        <p className="wager-field winner">Winner: {wager.winner || "Unknown"}</p>
+                    ) : (
+                        <>
+                            <label className="wager-field" htmlFor={`winner-${wager.id}`}>Winner:
+                                <select name="winner" id={`winner-${wager.id}`} onChange={(e) => { setWinner(e.target.value) }}>
+                                    <option value="">Select a winner</option>
+                                    {wager.players.map((player) => (
+                                        <option key={player} value={player}>{player}</option>
+                                    ))}
+                                </select> </label>
+                            <button className="wager-field winner-button" onClick={() => _WinnerReward(wager)} style={{ display: (user == null) ? "none" : "block" }}>✔</button>
+                        </>
+                    )}
+                    <br></br>
+                    <br></br>
+                </div>
+            ))}
         </div>
     )
 }

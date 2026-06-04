@@ -1,7 +1,9 @@
-import { useUser } from "~/tools/userContext";
+"use client"; // TODO
+import { useUser } from "../tools/userContext";
 import { useEffect, useState } from "react";
-import DefaultHeader from "~/tools/DefaultHeader";
-import { type ActiveQuest, questsDb, QuestsConst, questLibraryDb, type QuestLibraryEntry } from "~/tools/database/questsdb";
+import DefaultHeader from "../tools/DefaultHeader";
+import { type ActiveQuest, questsDb, QuestsConst, questLibraryDb, type QuestLibraryEntry } from "../tools/database/questsdb";
+import { Timestamp } from "firebase/firestore";
 
 function shuffle<T>(array: T[]) {
   let currentIndex = array.length;
@@ -66,7 +68,7 @@ export function Quests() {
                 questRarity: quest.questRarity,
                 isTaken: false,
                 isCompleted: false,
-                dateCreated: new Date(),
+                dateCreated: Timestamp.now(),
             };
 
             await questsDb.set(newQuest);

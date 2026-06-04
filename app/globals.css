@@ -187,19 +187,17 @@ p {
 
 /* ────────────────────────── Main ──────────────────────────────────────── */
 
-
 body {
   display: block;
   margin: 0;
   min-height: 100vh;
   background-attachment: fixed;
   font-size: var(--font-size-body);
-  background-image: linear-gradient(to bottom, rgba(51, 1, 52, 0.653), rgba(22, 0, 94, 0.809)), url('/assets/background.png');
+  background-image: linear-gradient(to bottom, rgba(51, 1, 52, 0.653), rgba(22, 0, 94, 0.809)), url('/background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   font-family: 'Nova Square', sans-serif;
-  z-index: -1;
 }
 
 .header-main {
@@ -321,6 +319,19 @@ body {
   cursor: pointer;
   white-space: nowrap;
   width: fit-content;
+}
+
+.balance {
+  color: var(--default-text-color);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--default-border-color);
+  border-radius: var(--default-border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .leaderboard {

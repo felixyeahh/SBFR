@@ -1,5 +1,5 @@
 import { Database } from "./database";
-import { Users, type User } from "../userContext";
+import { Users, type User } from "../constants";
 import { addDoc, setDoc, getDoc, doc, collection} from "firebase/firestore";
 import type { Firestore } from "firebase/firestore";
 

@@ -1,4 +1,6 @@
-import { useUser, type User } from "~/tools/userContext";
+"use client";
+
+import { useUser } from "./userContext";
 
 export default function DefaultHeader({ title: title, backbutton: backbutton}: {title?: string | null, backbutton?: boolean}) {
     const { user, loading, balance } = useUser();

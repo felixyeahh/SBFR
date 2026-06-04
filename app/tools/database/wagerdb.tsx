@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { Database, type DatabaseEntry } from "./database";
 
 export class Wagers {
@@ -15,10 +16,10 @@ export interface Wager extends DatabaseEntry {
     bet: number;
     betName: string;
     players: string[];
-    date_created: Date;
+    date_created: Timestamp;
     finished: boolean;
     winner?: string;
-    date_finished?: Date;
+    date_finished?: Timestamp;
 }
 
 
@@ -32,7 +33,7 @@ export class WagerDB extends Database<Wager> {
             id: String(globalThis.crypto.randomUUID()),
             bet: bet,
             players: players,
-            date_created: new Date(),
+            date_created: Timestamp.now(),
             betName: betName,
             finished: false
         } as Wager);

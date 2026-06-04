@@ -1,7 +1,7 @@
-import { useUser } from "~/tools/userContext";
-import DefaultHeader from "~/tools/DefaultHeader";
+import { useUser } from "../tools/userContext";
+import DefaultHeader from "../tools/DefaultHeader";
 
-export function Shop() {
+export default function Shop() {
     const { user, balance, loading } = useUser();
 
     return (

@@ -1,11 +1,12 @@
+"use client";
 import type { Dispatch, SetStateAction } from "react";
 import { createContext, useState } from "react";
-import { Popup } from "reactjs-popup";
+import Popup from "reactjs-popup";
 import type { FormEvent } from "react";
-import { type Wager, wagerdb } from "~/tools/database/wagerdb";
-import { userdb } from "~/tools/database/userdb";
-import { WinnerReward } from "../wagers/winner";
-import { Users } from "~/tools/userContext";
+import { type Wager, wagerdb } from "../tools/database/wagerdb";
+import { userdb } from "../tools/database/userdb";
+import { rewardWagerWinner } from "../wagers/winnerHandling";
+import { Users } from "../tools/constants";
 import { useContext } from "react";
 
 /*
@@ -37,7 +38,7 @@ export function OnSubmitPopupComponent(props: onSubmitPopupComponentProps) {
     const _onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!props.wager) return;
-        WinnerReward(winner, props.wager.bet, props.wager.id as string);
+        rewardWagerWinner(winner, props.wager.bet, props.wager.id as string);
         setIsOpen(false);
     }
 
@@ -58,7 +59,7 @@ export function OnSubmitPopupComponent(props: onSubmitPopupComponentProps) {
     )
 }
 
-export async function onSubmitHandler(event: FormEvent<HTMLFormElement>, 
+export async function handleWagerAdditionSubmit(event: FormEvent<HTMLFormElement>, 
     isOpen: boolean, 
     setIsOpen: Dispatch<SetStateAction<boolean>>, 
     bet: number, 
