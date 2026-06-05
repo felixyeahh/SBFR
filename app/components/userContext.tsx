@@ -1,11 +1,9 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "./database/database";
-import { useCookies } from "./cookies";
-import { CurrentSession } from "./constants";
-
-import { Users, type User } from "./constants";
+import { db } from "../tools/database/database";
+import { useCookies } from "../tools/cookies";
+import { CurrentSession, Users, type User } from "../tools/constants";
 
 type UserContextType = {
     user: User | null;

@@ -1,5 +1,5 @@
-import { useUser } from "../tools/userContext";
-import DefaultHeader from "../tools/DefaultHeader";
+import { useUser } from "../components/userContext";
+import DefaultHeader from "../components/DefaultHeader";
 
 export default function Shop() {
     const { user, balance, loading } = useUser();

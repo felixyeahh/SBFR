@@ -1,7 +1,7 @@
 import { MiniLeaderboard } from "./MiniLeaderboard";
 import { NewWagerCreationGrid } from "./NewWagerGrid";
 import { userdb } from "../tools/database/userdb";
-import DefaultHeader from "../tools/DefaultHeader";
+import DefaultHeader from "../components/DefaultHeader";
 import { Navigation } from "./Navigation";
 
 export default async function MainPage() {

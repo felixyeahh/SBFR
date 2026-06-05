@@ -40,24 +40,3 @@ export class ActiveQuests {
     static readonly COMPLETED_BY = "completedBy";
 }
 export type QuestRarity = "Common" | "Epic" | "Legendary";
-
-export interface ActiveQuest {
-    id: string;
-    questName: string;
-    description: string;
-    reward: number;
-    questRarity: QuestRarity;
-    isTaken: boolean;
-    isCompleted: boolean;
-    takenDate?: Timestamp;
-    takenBy?: string;
-    completedBy?: string;
-}
-
-export interface QuestLibraryEntry {
-
-}
-
-export interface QuestArchiveEntry {
-
-}

@@ -1,4 +1,4 @@
-import DefaultHeader from "../../tools/DefaultHeader"
+import DefaultHeader from "@/app/components/DefaultHeader"
 
 export default function PokerLayout({ children }: { children: React.ReactNode }) {
     return (

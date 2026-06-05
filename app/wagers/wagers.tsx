@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { type Wager } from "../tools/database/wagerdb";
 import { rewardWagerWinner, cancelWager } from "./winnerHandling";
-import { useUser } from "../tools/userContext";
+import { useUser } from "../components/userContext";
 import { Timestamp } from "firebase/firestore";
 
 interface _leanWager extends Omit<Wager, "date_created" | "date_finished"> {

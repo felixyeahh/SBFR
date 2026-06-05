@@ -12,3 +12,7 @@ export function shuffle<T>(array: T[]) {
 
   return array;
 }
+
+export function randomUUID() {
+    return String(globalThis.crypto.randomUUID());
+}

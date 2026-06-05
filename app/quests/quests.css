@@ -1,0 +1,45 @@
+
+.quests-container {
+    display:flex;
+    flex-direction: row;
+    align-self: center;
+    gap: var(--spacing-md);
+    padding: 0 1rem 1rem;
+    align-items: center;
+    color: var(--default-text-color);
+    width: 100%;
+}
+
+.quest {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    border-radius: var(--default-border-radius);
+    border: 1px solid var(--default-border-color);
+    margin-right:2vw;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+}
+
+.quests-container h2 {
+    font-size: var(--font-size-h1);
+    align-self: center;
+}
+
+
+.Common{
+    color: rgba(44, 255, 192, 0.677);
+    text-shadow: 0 0 10px rgba(172, 252, 255, 0.58);
+}
+
+.Epic{
+    color: rgba(90, 23, 208, 0.717);
+    text-shadow: 0 0 10px rgb(71, 0, 82);
+}
+
+.Legendary {
+    color: gold;
+    text-shadow: 0 0 10px rgba(255, 255, 173, 0.527);
+}

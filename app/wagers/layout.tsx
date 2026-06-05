@@ -1,5 +1,5 @@
-import "../styles/wagers.css";
-import DefaultHeader from "../tools/DefaultHeader";
+import "./wagers.css";
+import DefaultHeader from "../components/DefaultHeader";
 
 export default function WagerLayout({children}: {children: React.ReactNode}) {
     return (

@@ -1,9 +1,10 @@
-"use client"; // TODO
-import { useUser } from "../tools/userContext";
-import { useEffect, useState } from "react";
-import { type ActiveQuest, questsDb, QuestsConst, type QuestLibraryEntry } from "../tools/database/questsdb";
+"use client";
+import { useUser } from "../components/userContext";
+import { useEffect, useRef, useState } from "react";
+import { type ActiveQuest, QuestsConst, type QuestLibraryEntry } from "../tools/database/questsdb";
 import { refillActiveQuests } from "./questsManager";
 import { Timestamp } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 
 interface _leanActiveQuest extends Omit<ActiveQuest, "dateCreated" | "takenDate"> {
     dateCreated: number;
@@ -12,18 +13,28 @@ interface _leanActiveQuest extends Omit<ActiveQuest, "dateCreated" | "takenDate"
 
 export default function Quests({quests, questLibrary}: {quests: _leanActiveQuest[], questLibrary: QuestLibraryEntry[]}) {
     const { user } = useUser();
+    const router = useRouter();
 
-    const [questIds, setQuestIds] = useState<Set<string>>(new Set<string>(quests.map((quest) => quest.lib_id)));
+    const [questIds] = useState<Set<string>>(new Set<string>(quests.map((quest) => quest.lib_id)));
+    const isRefilling = useRef(false);
 
     const _refillActiveQuests = async () => {
-        await refillActiveQuests(quests.map((quest) => {
-            return {
-                ...quest,
-                dateCreated: Timestamp.fromMillis(quest.dateCreated),
-                takenDate: quest.takenDate ? Timestamp.fromMillis(quest.takenDate) : undefined,
-            } as ActiveQuest;
-        }), questLibrary, questIds);
+        if (isRefilling.current) return;
+        isRefilling.current = true;
 
+        try {
+            await refillActiveQuests(quests.map((quest) => {
+                return {
+                    ...quest,
+                    dateCreated: Timestamp.fromMillis(quest.dateCreated),
+                    takenDate: quest.takenDate ? Timestamp.fromMillis(quest.takenDate) : undefined,
+                } as ActiveQuest;
+            }), questLibrary, questIds);
+
+            router.refresh();
+        } finally {
+            isRefilling.current = false;
+        }
     };
 
     useEffect(() => {
@@ -33,17 +44,21 @@ export default function Quests({quests, questLibrary}: {quests: _leanActiveQuest
             const hasQuestsToRefill = questLibrary.some(q => !questIds.has(q.id!));
             if (hasQuestsToRefill) _refillActiveQuests();
         }
-    }, [quests, questLibrary, questIds]);
-
-    console.log(quests);
+    }, [questIds]);
 
     return (    
-        <div className="quests-container" style={{ display: (user == null) ? "none" : "grid" }}>
+        <div className="quests-container" style={{ display: (user == null) ? "none" : "flex" }}>
             {quests.map((_quest) => (
                 <div key={_quest.id} className="quest">
-                    <h2>{_quest.questName}</h2>
+                    <h2 className={`${_quest.questRarity}`}>{_quest.questName}</h2>
+                    <br></br>
                     <p>{_quest.description}</p>
-                    <button>Start Quest</button>
+                    <p>Rarity: {_quest.questRarity}</p>
+                    <p>Reward: ${_quest.reward}</p>
+                    <p>Punishment: ${_quest.punishment}</p>
+                    <br></br>
+                    <button className="button" onClick={()=>{}} style={{display: _quest.takenBy == null ? "block" : "none"}}>Start Quest</button>
+                    <button className="button" onClick={()=>{}} style={{display: _quest.takenBy == null || _quest.completedBy != null ? "none" : "block"}}>Verify Quest</button>
                 </div>
             ))}
         </div>

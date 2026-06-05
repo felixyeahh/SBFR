@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Nova_Square } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "./tools/userContext";
+import { UserProvider } from "./components/userContext";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
           {children}
         </UserProvider>
         <Analytics/>
+        <SpeedInsights/>
       </body>
     </html>
   );

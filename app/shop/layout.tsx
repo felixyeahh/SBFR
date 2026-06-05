@@ -1,4 +1,4 @@
-import DefaultHeader from "../tools/DefaultHeader";
+import DefaultHeader from "../components/DefaultHeader";
 
 export default function ShopLayout({ children }: { children: React.ReactNode }){
     return (

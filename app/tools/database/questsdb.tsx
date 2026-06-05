@@ -5,24 +5,10 @@ export class QuestsConst {
     static readonly ACTIVE_QUESTS_COLLECTION = "activeQuests";
     static readonly QUEST_LIBRARY_COLLECTION = "questLibrary";
     static readonly QUEST_ARCHIVE_COLLECTION = "questArchive";
-    static readonly MIN_QUESTS_ACTIVE = 3;
+    static readonly MIN_QUESTS_ACTIVE = 4;
 }
 
 export type QuestRarity = "Common" | "Epic" | "Legendary";
-
-export interface ActiveQuest extends DatabaseEntry {
-    lib_id: string;
-    questName: string;
-    description: string;
-    reward: number;
-    questRarity: QuestRarity;
-    isTaken: boolean;
-    isCompleted: boolean;
-    dateCreated: Timestamp;
-    takenDate?: Timestamp;
-    takenBy?: string;
-    completedBy?: string;
-}
 
 export interface QuestLibraryEntry extends DatabaseEntry {
     questName: string;
@@ -30,6 +16,16 @@ export interface QuestLibraryEntry extends DatabaseEntry {
     questRarity: QuestRarity;
     reward: number;
     punishment: number;
+}
+
+export interface ActiveQuest extends QuestLibraryEntry {
+    lib_id: string;
+    isTaken: boolean;
+    isCompleted: boolean;
+    dateCreated: Timestamp;
+    takenDate?: Timestamp;
+    takenBy?: string;
+    completedBy?: string;
 }
 
 export interface QuestArchiveEntry extends ActiveQuest {

@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 import { type ActiveQuest, questsDb, QuestsConst, type QuestLibraryEntry } from "../tools/database/questsdb";
+import { randomUUID } from "../tools/utils";
 
 export async function refillActiveQuests(quests: ActiveQuest[], questLibrary: QuestLibraryEntry[], questIds: Set<string>) {
     const updatedQuests = [...quests];
@@ -12,17 +13,18 @@ export async function refillActiveQuests(quests: ActiveQuest[], questLibrary: Qu
 
         const quest = questLibrary[i];
 
-        if (updatedQuestIds.has(quest.id!)) {
+        if (!quest.id || updatedQuestIds.has(quest.id)) {
             continue;
         }
         console.log("refilling quest:", quest.questName);
 
         const newQuest: ActiveQuest = {
-            id: String(globalThis.crypto.randomUUID()),
+            id: randomUUID(),
             lib_id: quest.id!,
             questName: quest.questName,
             description: quest.description,
             reward: quest.reward,
+            punishment: quest.punishment,
             questRarity: quest.questRarity,
             isTaken: false,
             isCompleted: false,
@@ -31,7 +33,7 @@ export async function refillActiveQuests(quests: ActiveQuest[], questLibrary: Qu
 
         await questsDb.set(newQuest);
         updatedQuests.push(newQuest);
-        updatedQuestIds.add(quest.id!);
+        updatedQuestIds.add(newQuest.lib_id);
     }
     return;
 }

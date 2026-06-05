@@ -1,4 +1,5 @@
-import DefaultHeader from "../tools/DefaultHeader";
+import DefaultHeader from "../components/DefaultHeader";
+import "./quests.css";
 
 export default function QuestsLayout({ children }: { children: React.ReactNode }) {
     return (

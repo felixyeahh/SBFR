@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 import { Database, type DatabaseEntry } from "./database";
+import { randomUUID } from "../utils";
 
 export class Wagers {
     static readonly COLLECTION = "wagers";
@@ -30,7 +31,7 @@ export class WagerDB extends Database<Wager> {
 
     public async addWager (players: string[], bet: number, betName: string) {
         return super.add ({
-            id: String(globalThis.crypto.randomUUID()),
+            id: randomUUID(),
             bet: bet,
             players: players,
             date_created: Timestamp.now(),

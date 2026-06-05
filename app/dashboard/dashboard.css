@@ -1,0 +1,72 @@
+
+
+
+
+/* Admin Dashboard Section */
+
+.nuke-button {
+  background: transparent;
+  transition: .5s ease-in;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
+  padding: var(--default-padding);
+  font-size: var(--font-size-sm);
+  width: 100%;
+  color: black;
+  text-align: center;
+  &:hover {
+    background: red;
+    color:white;
+  }
+}
+
+
+.NewQuestForLibraryMenu{
+    width: 100%;
+    border: 1px solid var(--default-border-color);
+    border-radius: var(--default-border-radius);
+    height:max-content;
+}
+.NewQuestForLibraryMenu .title-quests{
+    margin-left: 1vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.604);
+    color: rgba(187, 40, 79, 0.901);
+    font-size: var(--font-size-h1);
+    width: 100%;
+    text-align: center;
+}
+.NewQuestForLibraryMenu form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: 0 1rem 1rem;
+    align-items: center;
+}
+
+.NewQuestForLibraryMenu .quests-label {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+.NewQuestForLibraryMenu form input,
+.NewQuestForLibraryMenu form div,
+.NewQuestForLibraryMenu form button {
+    margin-left: 1vh;
+    width: 100%;
+    border: 1px solid var(--default-border-color);
+    border-radius: var(--default-border-radius);
+    padding: var(--default-padding);
+    cursor: pointer;
+    background-color: transparent;
+    transition: 1.5s ease;
+    text-align: center;
+    color: var(--default-text-color);
+    &:hover {
+        outline: none;
+        background-color: var(--default-hover-color);
+    }
+}

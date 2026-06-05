@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { type FormEvent} from "react";
 import { handleWagerAdditionSubmit } from "./OnSubmitComponent";
-import { useUser} from "../tools/userContext";
+import { useUser} from "../components/userContext";
 import {type User} from "../tools/constants";
 import { type Wager } from "../tools/database/wagerdb";
 import { OnSubmitPopupComponent } from "./OnSubmitComponent";

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useUser } from "../tools/userContext";
+import { useUser } from "../components/userContext";
 
 export function Navigation() {
     const { isAdmin } = useUser();
@@ -10,7 +10,7 @@ export function Navigation() {
             <Link href="/quests" className="button quests">&gt; Quests &lt;</Link>
             {isAdmin ? <Link href="/dashboard" className="button dashboard">&gt; Dashboard &lt;</Link> : null}
             <Link href="/shop" className="button shop">&gt; Shop &lt;</Link>
-            <Link href="/games/poker" className="button poker">&gt; Porker &lt;</Link>
+            <Link href="/games/poker" className="button poker">&gt; Poker &lt;</Link>
         </div>
     )
 }

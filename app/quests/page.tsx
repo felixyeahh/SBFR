@@ -7,7 +7,7 @@ export default async function QuestsPage() {
     const questLibrary = shuffle(await questLibraryDb.getAll());
 
     return (
-        <div className="page">
+        <div className="page" style={{display: "flex", alignItems: "center"}}>
             <Quests quests={retrievedQuests.map((quest) => {
                 return {
                     ...quest,

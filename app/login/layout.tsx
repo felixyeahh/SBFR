@@ -1,4 +1,4 @@
-import DefaultHeader from "../tools/DefaultHeader";
+import DefaultHeader from "../components/DefaultHeader";
 import LoginMenu from "./login";
 import "../styles/loginPage.css";
 
