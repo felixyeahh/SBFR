@@ -2,13 +2,14 @@
 import { useUser } from "../components/userContext";
 import { useEffect, useRef, useState } from "react";
 import { type ActiveQuest, QuestsConst, type QuestLibraryEntry } from "../tools/database/questsdb";
-import { refillActiveQuests } from "./questsManager";
+import { refillActiveQuests, setQuestTaken, setQuestCompleted, verifyQuest } from "./questsManager";
 import { Timestamp } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 
-interface _leanActiveQuest extends Omit<ActiveQuest, "dateCreated" | "takenDate"> {
+interface _leanActiveQuest extends Omit<ActiveQuest, "dateCreated" | "takenDate" | "completedDate"> {
     dateCreated: number;
     takenDate?: number;
+    completedDate?:number;
 }
 
 export default function Quests({quests, questLibrary}: {quests: _leanActiveQuest[], questLibrary: QuestLibraryEntry[]}) {
@@ -37,6 +38,27 @@ export default function Quests({quests, questLibrary}: {quests: _leanActiveQuest
         }
     };
 
+    const handleQuestTaken = async (questId: string) => {
+        if (user == null) return;
+        await setQuestTaken(questId, user.id);
+        router.refresh();
+    };
+
+    const handleQuestCompleted = async (questId: string) => {
+        if (user == null) return;
+        if (!confirm("Are you sure you compelted this quest?")) return;
+        await setQuestCompleted(questId, user.id);
+        router.refresh();
+    };
+
+    const handleQuestVerify = async (questId: string) => {
+        if (user == null) return;
+        if (!confirm("Are you sure you verified this quest?")) return;
+        await verifyQuest(questId, user.id);
+        
+        router.refresh();
+    };
+
     useEffect(() => {
         if (quests.length < QuestsConst.MIN_QUESTS_ACTIVE) {
             if (questLibrary.length === 0) return;
@@ -45,6 +67,8 @@ export default function Quests({quests, questLibrary}: {quests: _leanActiveQuest
             if (hasQuestsToRefill) _refillActiveQuests();
         }
     }, [questIds]);
+
+    if (user == null) return <></>;
 
     return (    
         <div className="quests-container" style={{ display: (user == null) ? "none" : "flex" }}>
@@ -56,9 +80,11 @@ export default function Quests({quests, questLibrary}: {quests: _leanActiveQuest
                     <p>Rarity: {_quest.questRarity}</p>
                     <p>Reward: ${_quest.reward}</p>
                     <p>Punishment: ${_quest.punishment}</p>
+                    <p style={{display: typeof _quest.takenBy != "undefined" &&typeof _quest.completedDate != "undefined" ? "block" : "none"}}>{ typeof _quest.completedDate != "undefined" ? "Completed by" : "Taken by"}: {_quest.takenBy ?? "none"}</p>
                     <br></br>
-                    <button className="button" onClick={()=>{}} style={{display: _quest.takenBy == null ? "block" : "none"}}>Start Quest</button>
-                    <button className="button" onClick={()=>{}} style={{display: _quest.takenBy == null || _quest.completedBy != null ? "none" : "block"}}>Verify Quest</button>
+                    <button className="button" onClick={()=>handleQuestTaken(_quest.id!)} style={{display: typeof _quest.takenBy == "undefined" ? "block" : "none"}}>Start Quest</button>
+                    <button className="button" onClick={()=>handleQuestCompleted(_quest.id!)} style={{display: typeof _quest.takenBy == "undefined" ||typeof _quest.completedDate != "undefined" ? "none" : "block"}}>Complete Quest</button>
+                    <button className="button" onClick={()=>{handleQuestVerify(_quest.id!)}} style={{display: typeof _quest.isCompleted != "undefined" && _quest.isCompleted ? "block" : "none"}}>Verify Quest</button>
                 </div>
             ))}
         </div>

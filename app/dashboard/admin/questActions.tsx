@@ -1,15 +1,25 @@
-import { type QuestLibraryEntry, questLibraryDb, questsDb } from "@/app/tools/database/questsdb";
+import { type QuestLibraryEntry, questLibraryDb, questsDb, questArchiveDb } from "@/app/tools/database/questsdb";
 
 export async function createNewLibraryQuest(quest: QuestLibraryEntry){
     await questLibraryDb.add(quest);
     alert("The quest has been created");
 }
 
-export async function nukeQuests(type: "active" | "library") {
+export async function nukeQuests(type: "active" | "library" | "archive") {
     let _db;
-
-    if (type === "active") _db = questsDb;
-    else _db = questLibraryDb;
+    switch (type) {
+        case "active":
+            _db = questsDb;
+            break;
+        case "library":
+            _db = questLibraryDb;
+            break;
+        case "archive":
+            _db = questArchiveDb;
+            break;
+        default:
+            return false;
+    }
 
     try {
         const quests = await _db.getAll();

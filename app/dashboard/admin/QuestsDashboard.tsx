@@ -8,7 +8,7 @@ export default function QuestsDashboard() {
 
     if (typeof user === "undefined" || !isAdmin) return <></>
 
-    const _nukeQuests = async (type: "active" | "library") => {
+    const _nukeQuests = async (type: "active" | "library" | "archive") => {
         if (!confirm(`Are you sure you want to nuke all ${type} quests?`)) return;
         const res = await nukeQuests(type);
         if (res) return alert("Nuked successfully");
@@ -20,6 +20,7 @@ export default function QuestsDashboard() {
             <NewQuestForLibraryMenu />
             <button className="nuke-button" onClick={() => _nukeQuests("active")}>Nuke Active Quests</button>
             <button className="nuke-button" onClick={() => _nukeQuests("library")}>Nuke Library Quests</button>
+            <button className="nuke-button" onClick={() => _nukeQuests("archive")}>Nuke Archive Quests</button>
         </div>
     </>
 }

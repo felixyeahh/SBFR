@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore";
-import { type ActiveQuest, questsDb, QuestsConst, type QuestLibraryEntry } from "../tools/database/questsdb";
+import { type ActiveQuest, questsDb, questArchiveDb, QuestsConst, type QuestLibraryEntry, type QuestArchiveEntry } from "../tools/database/questsdb";
 import { randomUUID } from "../tools/utils";
 
 export async function refillActiveQuests(quests: ActiveQuest[], questLibrary: QuestLibraryEntry[], questIds: Set<string>) {
@@ -36,4 +36,51 @@ export async function refillActiveQuests(quests: ActiveQuest[], questLibrary: Qu
         updatedQuestIds.add(newQuest.lib_id);
     }
     return;
+}
+
+export async function setQuestTaken(questId: string, username: string) {
+    const quest = await questsDb.read(questId);
+    if (quest) {
+        quest.isTaken = true;
+        quest.takenBy = username;
+        quest.takenDate = Timestamp.now();
+        await questsDb.set(quest);
+        return true;
+    }
+    return false;
+}
+
+export async function setQuestCompleted(questId: string, username: string) {
+    const quest = await questsDb.read(questId);
+    if (quest && typeof quest.takenBy != "undefined" && !quest.isCompleted) {
+        quest.isCompleted = true;
+        quest.completedDate = Timestamp.now();
+        await questsDb.set(quest);
+        return true;
+    }
+    return false;
+}
+
+export async function verifyQuest(questId: string, verifyingUserId: string) {
+    const quest = await questsDb.read(questId);
+
+    if (quest == null) return false;
+
+    if (quest.takenBy == verifyingUserId) {
+        alert("You can't verify your own quest :D");
+        return false;
+    }
+
+    const archivedQuest: QuestArchiveEntry = {
+        ...quest,
+        isVerified: true,
+        isDenied: false,
+        isFailed: false,
+        verifiedDate: Timestamp.now(),
+        verifiedBy: verifyingUserId,
+    }
+
+    await questArchiveDb.set(archivedQuest);
+    await questsDb.delete(questId);
+    return true;
 }

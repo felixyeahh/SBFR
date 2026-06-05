@@ -25,13 +25,14 @@ export interface ActiveQuest extends QuestLibraryEntry {
     dateCreated: Timestamp;
     takenDate?: Timestamp;
     takenBy?: string;
-    completedBy?: string;
+    completedDate?: Timestamp;
 }
 
 export interface QuestArchiveEntry extends ActiveQuest {
     isVerified: boolean;
     isDenied: boolean;
-    verifiedBy?: Timestamp;
+    isFailed: boolean;
+    verifiedBy?: string;
     verifiedDate?: Timestamp;
 }
 
