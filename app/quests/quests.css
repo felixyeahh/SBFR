@@ -6,8 +6,8 @@
 }
 
 .quests-container {
-    display:flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     align-self: center;
     gap: var(--spacing-md);
     padding: 0 1rem 1rem;
@@ -57,4 +57,23 @@
 .Legendary {
     color: gold;
     text-shadow: 0 0 10px rgba(255, 255, 173, 0.527);
+}
+
+/* Archive */
+
+.quests-archive-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: 0 1rem 1rem;
+    color: var(--default-text-color);
+}
+
+.quests-archive-container h1 {
+    font-size: var(--font-size-h1);
+    align-self: center;
+}
+.quest p {
+    align-self: left;
 }

@@ -377,3 +377,10 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.button.signout {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  cursor: pointer;
+  white-space: nowrap;
+  width: fit-content;
+}

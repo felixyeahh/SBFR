@@ -6,9 +6,15 @@ export class QuestsConst {
     static readonly QUEST_LIBRARY_COLLECTION = "questLibrary";
     static readonly QUEST_ARCHIVE_COLLECTION = "questArchive";
     static readonly MIN_QUESTS_ACTIVE = 4;
+    static readonly MAX_RARE_QUESTS = 1;
+
+    static readonly RARITY_COMMON = "Common";
+    static readonly RARITY_RARE = "Rare";
+    static readonly RARITY_EPIC = "Epic";
+    static readonly RARITY_LEGENDARY = "Legendary";
 }
 
-export type QuestRarity = "Common" | "Epic" | "Legendary";
+export type QuestRarity = "Common" | "Rare" | "Epic" | "Legendary";
 
 export interface QuestLibraryEntry extends DatabaseEntry {
     questName: string;

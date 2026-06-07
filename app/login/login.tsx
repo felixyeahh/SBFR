@@ -24,7 +24,7 @@ export default function LoginMenu() {
         <div className="login-container">
             <form id="login-form" className="login-form" onSubmit={_onSubmit}>
                 <div className="control">
-                    <h1>{isFailed ? "Login Failed: Incorrect Username/Password" : "Login"}</h1>
+                    <h1 className={isFailed ? "login-failed" : "login-success"}>{isFailed ? "Login Failed: Incorrect Username/Password" : "Login"}</h1>
 
                     <div className="block-cube block-input">
                         <input name="username" type="text" placeholder="Username" onChange={(e) => {setUsername(e.target.value)}}/>

@@ -6,7 +6,7 @@ import { type User } from "../tools/constants";
 import Link from "next/link";
 
 export function MiniLeaderboard({users, maxLength = 10}: {users: User[], maxLength?: number}) {
-    const _users = users.slice(0, maxLength);
+    const _users = users.slice(0, maxLength).sort((a,b)=> b.points - a.points);
     const [giftedPoints, setGiftedPoints] = useState<number>(0);
     const {user, balance} = useUser();
 

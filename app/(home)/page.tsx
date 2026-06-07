@@ -9,10 +9,7 @@ export default async function MainPage() {
 
     return (
         <div className="page">
-            <DefaultHeader />
-
             <div className="main-grid" style={{ display: "grid" }}>
-
                 <MiniLeaderboard users={users} maxLength={5} />
                 <NewWagerCreationGrid users={users.map((user) => [user.id, user.points])}/>
 

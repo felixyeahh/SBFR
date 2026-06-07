@@ -1,12 +1,11 @@
-import { Timestamp } from "firebase/firestore";
 
-export class Users {
-    static readonly COLLECTION = "players";
-    static readonly POINTS = "points";
-    static readonly WAGERS = "wagers";
-    static readonly WINS = "wins";
-    static readonly IS_ADMIN = "isAdmin";
-    static readonly PASSWORD = "password";
+export enum Users {
+    COLLECTION = "players",
+    POINTS = "points",
+    WAGERS = "wagers",
+    WINS = "wins",
+    IS_ADMIN = "isAdmin",
+    PASSWORD = "password"
 }
 
 export interface User {
@@ -23,20 +22,21 @@ export interface CurrentUserSession {
     session_id: string;
 }
 
-export class CurrentSession {
-    static readonly COLLECTION = "currentSession";
-    static readonly USERNAME = "username";
-    static readonly SESSION_ID = "session_id";
+export enum CurrentSession {
+    COLLECTION = "currentSession",
+    USERNAME = "username",
+    SESSION_ID = "session_id",
 }
 
-export class ActiveQuests {
-    static readonly COLLECTION = "activeQuests";
-    static readonly QUEST_NAME = "questName";
-    static readonly QUEST_RARITY = "questRarity";
-    static readonly IS_TAKEN = "isTaken";
-    static readonly IS_COMPLETED = "isCompleted";
-    static readonly TAKEN_DATE = "takenDate";
-    static readonly TAKEN_BY = "takenBy";
-    static readonly COMPLETED_BY = "completedBy";
+export enum ActiveQuests {
+    COLLECTION = "activeQuests",
+    QUEST_NAME = "questName",
+    QUEST_RARITY = "questRarity",
+    IS_TAKEN = "isTaken",
+    IS_COMPLETED = "isCompleted",
+    TAKEN_DATE = "takenDate",
+    TAKEN_BY = "takenBy",
+    COMPLETED_BY = "completedBy"
 }
+
 export type QuestRarity = "Common" | "Epic" | "Legendary";
