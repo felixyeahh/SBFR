@@ -1,7 +1,7 @@
 "use client";
-import { findBestHand } from "./cardManagement";
+import { findBestHand } from "./bestCard";
 import { generateDecks } from "./cardManagement";
-import type { Card, Rank } from "./cardManagement";
+import type { Card } from "@/app/tools/database/poker";
 import { useState } from "react";
 
 
@@ -19,8 +19,18 @@ export default function CardlessPokerPage () {
             </div>
 
             <div className="player-hand">
-                
+                <p>Your hand:</p>
+                <p>{hand.map((card, i) => (<p key={i}>{card.rank} {card.suit}</p>))}</p>
 
+            </div>
+            <div className="table-info">
+                <p className="ante text-glow">Ante: $<input className="ante text-glow" value={""} onChange={e => (Number(e.target.value))} /></p>
+                <p className="pot text-glow">Pot: ${}</p>
+                <p className="phase text-glow">{}</p>
+            </div>
+            
+            <div className="players-container">
+                <p>Players</p>
             </div>
 
 

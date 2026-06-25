@@ -26,6 +26,7 @@ export enum CurrentSession {
     COLLECTION = "currentSession",
     USERNAME = "username",
     SESSION_ID = "session_id",
+    POKER = "pokerSessionID",
 }
 
 export enum ActiveQuests {

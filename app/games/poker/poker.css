@@ -5,81 +5,14 @@
   font-weight: bold;
   color: black;
   letter-spacing: 4px;
+  animation: drop 1s; 
 }
 
 .text-drop div {
   opacity: 0;
 }
 
-.text-drop div:nth-child(1) {
-  animation: drop-d 1.6s linear forwards infinite;
-}
-
-.text-drop div:nth-child(2) {
-  animation: drop-r 1.6s linear forwards infinite;
-  animation-delay: 0.2s;
-}
-
-.text-drop div:nth-child(3) {
-  animation: drop-o 1.6s linear forwards infinite;
-  animation-delay: 0.4s;
-}
-
-.text-drop div:nth-child(4) {
-  animation: drop-p 1.6s linear forwards infinite;
-  animation-delay: 0.6s;
-}
-
-.text-drop div:nth-child(5) {
-  animation: drop-s 1.6s linear forwards infinite;
-  animation-delay: 0.8s;
-}
-
-@keyframes drop-d {
-  0% {
-    transform: translateY(-200px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
-
-@keyframes drop-r {
-  0% {
-    transform: translateY(-200px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
-
-@keyframes drop-o {
-  0% {
-    transform: translateY(-200px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
-
-@keyframes drop-p {
-  0% {
-    transform: translateY(-200px);
-    opacity: 0;
-  }
-  50% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
-
-@keyframes drop-s {
+@keyframes drop {
   0% {
     transform: translateY(-200px);
     opacity: 0;
@@ -165,4 +98,48 @@
   color: black;
   white-space: nowrap;
   font-size: var(--font-size-h1);
+}
+
+/* ------------------------------- ONLINE ----------------------------------------- */
+
+.create-session {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    border: 1px solid var(--default-border-color);
+    border-radius: var(--default-border-radius);
+    color: var(--default-text-color);
+    height: 5vh;
+}
+
+.sessions-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    border: 1px solid var(--default-border-color);
+    border-radius: var(--default-border-radius);
+}
+
+.sessions-list h1 {
+  color: var(--default-text-color);
+  font-size: var(--font-size-h1);
+}
+
+.sessions-list button {
+    margin-left: var(--spacing-sm);
+    width: auto;
+}
+
+.session {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
 }
