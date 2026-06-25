@@ -27,6 +27,7 @@ export enum PokerPhase {
 export interface PokerSession extends DatabaseEntry {
     players: Player[];
     community: Card[];
+    deck: Card[];
     phase: PokerPhase;
     pot: number;
     ante: number;

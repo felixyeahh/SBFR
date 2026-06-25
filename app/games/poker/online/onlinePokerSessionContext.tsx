@@ -4,27 +4,44 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/app/tools/database/database";
 import { useCookies } from "@/app/tools/cookies";
 import { CurrentSession } from "@/app/tools/constants";
-import { PokerConst, PokerSession, Player } from "@/app/tools/database/poker";
+import { PokerConst, PokerSession, Player, Card, PokerPhase } from "@/app/tools/database/poker";
 import { useUser } from "@/app/components/userContext";
+import { generateDecks } from "../cardManagement";
+
 
 type OnlinePokerSessionContextType = {
+    isOngoing: boolean;
     sessionId: string | undefined;
     isOwner: boolean;
     players: Player[];
     loading: boolean;
+    currentDeck: Card[];
+    community: Card[];
+    phase: PokerPhase;
+    pot: number;
+    ante: number;
 };
 
 const OnlinePokerSessionContext = createContext<OnlinePokerSessionContextType | null>(null);
 
 export function OnlinePokerSessionProvider({ children }: { children: React.ReactNode }) {
+    const [isOngoing, setIsOngoing] = useState(false);
     const {user}= useUser();
     const [loading, setLoading] = useState(true);
-    const [sessionId, setSessionId] = useCookies(CurrentSession.POKER);
+    const [sessionId] = useCookies(CurrentSession.POKER);
+    const [ante, setAnte] = useState(0);
     const [players, setPlayers] = useState<Player[]>([]);
     const [isOwner, setIsOwner] = useState(false);
+    const [currentDeck, setCurrentDeck] = useState<Card[]>(generateDecks(1));
+    const [community, setCommunity] = useState<Card[]>([]);
+    const [currentBet, setCurrentBet] = useState(0);
+    const [pot, setPot] = useState(0);
+    const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+    const [phase, setPhase] = useState<PokerPhase>(PokerPhase.PREFLOP);
+    const [wasRaised, setWasRaised] = useState(false);
+    const [foldedPlayerCount, setFoldedPlayerCount] = useState(0);
 
     useEffect(() => {
-        if (sessionId == "") {  }
         if (!sessionId) {
             setPlayers([]);
             setLoading(false);
@@ -37,6 +54,11 @@ export function OnlinePokerSessionProvider({ children }: { children: React.React
                 session.id = doc.id;
                 setPlayers(session.players);
                 setIsOwner(session.owner.user_id == user?.id);
+                setAnte(session.ante);
+                setCurrentDeck(session.deck);
+                setCommunity(session.community);
+                setPhase(session.phase);
+                setPot(session.pot);
             } else {
                 setPlayers([]);
             }
@@ -50,7 +72,7 @@ export function OnlinePokerSessionProvider({ children }: { children: React.React
     }, [sessionId]);
 
     return (
-        <OnlinePokerSessionContext.Provider value={{ sessionId, players, loading, isOwner }}>
+        <OnlinePokerSessionContext.Provider value={{ sessionId, players, loading, isOwner, currentDeck, community, phase, pot, ante, isOngoing }}>
             {children}
         </OnlinePokerSessionContext.Provider>
     );

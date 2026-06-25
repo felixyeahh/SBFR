@@ -1,14 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-
-export enum GamePhase {
-    PREFLOP = 0,
-    FLOP = 1,
-    TURN = 2,
-    RIVER = 3,
-    SHOWDOWN = 4
-}
-
+import { PokerPhase } from "@/app/tools/database/poker";
 type StandardPokerContextType = {
     isStarted: boolean;
     setIsStarted: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,8 +10,8 @@ type StandardPokerContextType = {
     setAnte: React.Dispatch<React.SetStateAction<number>>;
     currentPlayerIndex: number;
     setCurrentPlayerIndex: React.Dispatch<React.SetStateAction<number>>;
-    phase: GamePhase;
-    setPhase: React.Dispatch<React.SetStateAction<GamePhase>>;
+    phase: PokerPhase;
+    setPhase: React.Dispatch<React.SetStateAction<PokerPhase>>;
     pot: number;
     setPot: React.Dispatch<React.SetStateAction<number>>;
     currentBet: number;
@@ -45,7 +37,7 @@ export function StandardPokerProvider({ children }: { children: React.ReactNode 
     const [players, setPlayers] = useState<Player[]>([]);
     const [ante, setAnte] = useState<number>(0);
     const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0);
-    const [phase, setPhase] = useState<GamePhase>(GamePhase.PREFLOP);
+    const [phase, setPhase] = useState<PokerPhase>(PokerPhase.PREFLOP);
     const [pot, setPot] = useState<number>(0);
     const [currentBet, setCurrentBet] = useState<number>(0);
     const [wasRaised, setWasRaised] = useState<boolean>(false);
@@ -53,7 +45,7 @@ export function StandardPokerProvider({ children }: { children: React.ReactNode 
 
     const resetEverythingOtherThanPlayers = () => {
         setCurrentPlayerIndex(0);
-        setPhase(GamePhase.PREFLOP);
+        setPhase(PokerPhase.PREFLOP);
         setPot(0);
         setCurrentBet(0);
         setWasRaised(false);
@@ -96,7 +88,7 @@ export function StandardPokerProvider({ children }: { children: React.ReactNode 
 
     useEffect(() => {
         console.log(phase);
-        if (phase >= GamePhase.SHOWDOWN) {
+        if (phase >= PokerPhase.SHOWDOWN) {
             awardWinner();
         }
     }, [phase])

@@ -38,7 +38,9 @@ export default function DefaultHeader({ title: title, backbutton: backbutton, si
             </Link>
             <p 
                 className="balance" 
-                style={{ display: (user == null) ? "none" : "block" }}>
+                style={{ display: (user == null) ? "none" : "block" }}
+                onClick={() => {router.refresh();}}
+                >
                 Balance: ${loading ? "..." : balance}
             </p>
         </div>

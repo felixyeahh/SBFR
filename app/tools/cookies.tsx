@@ -11,13 +11,20 @@ export type Options = {
 export const useCookies = (key: string): [string | undefined, (value: string, options?: Options) => void] => {
     const [cookieValue, setCookieValue] = useState<string | undefined>(undefined);
 
-    useEffect(() => {
+    const readCookie = () => {
         const cookie = document.cookie
             .split("; ")
             .find((row) => row.startsWith(`${key}=`));
-        if (cookie) {
-            setCookieValue(cookie.split("=")[1]);
-        }
+        setCookieValue(cookie?.split("=")[1]);
+    };
+
+    useEffect(() => {
+        readCookie();
+        const handler = (e: Event) => {
+            if ((e as CustomEvent).detail?.key === key) readCookie();
+        };
+        window.addEventListener("cookie-change", handler);
+        return () => window.removeEventListener("cookie-change", handler);
     }, [key]);
 
     const setCookie = (value: string, options?: Options) => {
@@ -40,6 +47,7 @@ export const useCookies = (key: string): [string | undefined, (value: string, op
 
         document.cookie = cookie;
         setCookieValue(value);
+        window.dispatchEvent(new CustomEvent("cookie-change", { detail: { key } }));
     };
 
     return [cookieValue, setCookie] as const;

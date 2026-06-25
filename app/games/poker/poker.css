@@ -143,3 +143,30 @@
   border: 1px solid var(--default-border-color);
   border-radius: var(--default-border-radius);
 }
+
+.community {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-height: 10vh;
+  font-size: var(--font-size-h1);
+}
+
+.hand {
+  display: flex;
+  flex-direction: row;
+  background: transparent;
+  border: 1px solid var(--default-border-color);
+  border-radius: var(--default-border-radius);
+  padding: var(--default-padding);
+  font-size: var(--font-size-sm);
+  width: 100%;
+  color: var(--default-text-color);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}

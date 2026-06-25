@@ -1,34 +1,18 @@
 "use client";
+import { pokerPhaseToString } from "@/app/tools/utils";
 import {  Players } from "./standardPoker";
-import { useStandardPoker, GamePhase } from "./standardPokerContext";
+import { useStandardPoker } from "./standardPokerContext";
+import { PokerPhase } from "@/app/tools/database/poker";
 
 export default function PokerStandardPage() {
     const { isStarted, setIsStarted, pot, ante, setAnte, phase } = useStandardPoker();
 
-    let _phase = "";
-    switch (phase) {
-        case GamePhase.PREFLOP:
-            _phase = "Preflop";
-            break;
-        case GamePhase.FLOP:
-            _phase = "Flop";
-            break;
-        case GamePhase.TURN:
-            _phase = "Turn";
-            break;
-        case GamePhase.RIVER:
-            _phase = "River";
-            break;
-        case GamePhase.SHOWDOWN:
-            _phase = "Showdown";
-            break;
-    }
 
     return <>
         <div className="table-info">
             <p className="ante text-glow">Ante: $<input className="ante text-glow" value={ante} onChange={e => setAnte(Number(e.target.value))} /></p>
             <p className="pot text-glow">Pot: ${pot}</p>
-            <p className="phase text-glow">{_phase}</p>
+            <p className="phase text-glow">{pokerPhaseToString(phase)}</p>
         </div>
 
         <div className="players-container">
