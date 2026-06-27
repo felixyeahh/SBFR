@@ -23,7 +23,11 @@ export default async function createNewSession (user: User, setSession: (value: 
         phase: PokerPhase.PREFLOP,
         pot: 0,
         ante: 0,
-        owner: player
+        owner: player,
+        currentBet: 0,
+        wasRaised: false,
+        activePlayerIndex: 0,
+        isStarted: false
     };
     await pokerDb.set(pokerSession);
 
@@ -42,7 +46,7 @@ export async function joinNewSession (user: User, session: string, setSession: (
         return false;
     }
     const player: Player = {
-        id: 0,
+        id: pokerSession.players.length,
         user_id: user.id,
         chips: 1000,
         cards: [],

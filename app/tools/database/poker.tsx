@@ -14,6 +14,7 @@ export interface Player {
     chips: number;
     folded: boolean;
     cards: Card[];
+    lastAction?: string;
 }
 
 export enum PokerPhase {
@@ -32,6 +33,10 @@ export interface PokerSession extends DatabaseEntry {
     pot: number;
     ante: number;
     owner: Player;
+    activePlayerIndex: number;
+    currentBet: number;
+    wasRaised: boolean;
+    isStarted: boolean;
 }
 
 export enum PokerConst {

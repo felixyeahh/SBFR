@@ -12,6 +12,7 @@ import { generateDecks } from "../cardManagement";
 type OnlinePokerSessionContextType = {
     isOngoing: boolean;
     sessionId: string | undefined;
+    session: PokerSession | null;
     isOwner: boolean;
     players: Player[];
     loading: boolean;
@@ -40,6 +41,7 @@ export function OnlinePokerSessionProvider({ children }: { children: React.React
     const [phase, setPhase] = useState<PokerPhase>(PokerPhase.PREFLOP);
     const [wasRaised, setWasRaised] = useState(false);
     const [foldedPlayerCount, setFoldedPlayerCount] = useState(0);
+    const [session, setSession] = useState<PokerSession | null>(null)
 
     useEffect(() => {
         if (!sessionId) {
@@ -52,6 +54,7 @@ export function OnlinePokerSessionProvider({ children }: { children: React.React
             if (doc.exists()) {
                 const session = doc.data() as PokerSession;
                 session.id = doc.id;
+                setSession(session);
                 setPlayers(session.players);
                 setIsOwner(session.owner.user_id == user?.id);
                 setAnte(session.ante);
@@ -72,7 +75,7 @@ export function OnlinePokerSessionProvider({ children }: { children: React.React
     }, [sessionId]);
 
     return (
-        <OnlinePokerSessionContext.Provider value={{ sessionId, players, loading, isOwner, currentDeck, community, phase, pot, ante, isOngoing }}>
+        <OnlinePokerSessionContext.Provider value={{ sessionId, players, loading, isOwner, currentDeck, community, phase, pot, ante, isOngoing, session }}>
             {children}
         </OnlinePokerSessionContext.Provider>
     );

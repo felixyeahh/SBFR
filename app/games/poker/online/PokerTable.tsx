@@ -1,7 +1,7 @@
 "use client";
 import { pokerPhaseToString } from "@/app/tools/utils";
 import { useOnlinePokerSession } from "./onlinePokerSessionContext";
-import type { PokerSession, Player } from "@/app/tools/database/poker";
+import { Card, PokerPhase } from "@/app/tools/database/poker";
 import { Players } from "./Players";
 import { dealCards } from "./createNewSession";
 import { useUser } from "@/app/components/userContext";
@@ -12,8 +12,31 @@ function StartGame({sessionId}: {sessionId: string}) {
     return <button className="button" onClick={()=>{dealCards(sessionId, user)}}>Start Game</button>
 }
 
+function CommunityCards({phase, community}: {phase: PokerPhase, community: Card[]}) {
+    let numCardsToShow: number;
+
+    switch (phase) {
+        case PokerPhase.PREFLOP:
+            numCardsToShow = 0;
+            break;
+        case PokerPhase.FLOP:
+            numCardsToShow = 3;
+            break;
+        case PokerPhase.TURN:
+            numCardsToShow = 4;
+            break;
+        case PokerPhase.RIVER:
+            numCardsToShow = 5;
+            break;
+        default:
+            return <></>;
+    }
+
+    return community.slice(0, numCardsToShow).map((card, i) => (<p key={i}>{card.rank} {card.suit}</p>))
+}
+
 export default function PokerTable() {
-    const { sessionId, players, community, phase, pot, ante, isOngoing, isOwner} = useOnlinePokerSession();
+    const { sessionId, community, phase, pot, ante, isOngoing, isOwner} = useOnlinePokerSession();
     
     if (!sessionId) return <></>;
 
@@ -25,9 +48,7 @@ export default function PokerTable() {
             <p className="phase text-glow">{pokerPhaseToString(phase)}</p>
         </div>
         <div className="community">
-            {community.map((card, i) => (
-                <p key={i}>{card.rank} {card.suit}</p>
-            ))}
+            <CommunityCards phase={phase} community={community} />
         </div>
         <Players/>
     </div>
