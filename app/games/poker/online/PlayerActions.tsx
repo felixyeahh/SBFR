@@ -1,6 +1,8 @@
 import { PokerSession, Player, PokerSessionDatabase } from "@/app/tools/database/poker";
 import type { User } from "@/app/tools/constants";
 import updatePlayer from "./updatePlayer";
+import { dealCards } from "./sessionManagers";
+import { findBestHand } from "./bestCard";
 
 export default class PlayerActions {
     private session: PokerSession;
@@ -56,7 +58,14 @@ export default class PlayerActions {
 
     raise = async () => {
         await this.nextPlayer();
-        
     }
 
+    bestHand = () => {
+        try {
+            return findBestHand([...this.current_player.cards, ...this.session.community]);
+        } catch (error) {
+            console.error("Error finding best hand:", error);
+            return {name: "", rank: ""};
+        }
+    }
 }

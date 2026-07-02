@@ -1,5 +1,5 @@
 "use client";
-import { findBestHand } from "./bestCard";
+import { findBestHand } from "../online/bestCard";
 import { generateDecks } from "../cardManagement";
 import type { Card } from "@/app/tools/database/poker";
 import { useState } from "react";

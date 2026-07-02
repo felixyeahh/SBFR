@@ -1,8 +1,9 @@
 import { randomBytes } from "crypto";
-import { pokerDb } from "@/app/tools/database/poker";
+import { pokerDb, Card } from "@/app/tools/database/poker";
 import { type PokerSession, PokerPhase, type Player } from "@/app/tools/database/poker";
 import  { type User, CurrentSession} from "@/app/tools/constants";
 import { generateDecks, getCards } from "../cardManagement";
+import { EvaluatedHand, findBestHand, compareHands } from "./bestCard";
 
 export default async function createNewSession (user: User, setSession: (value: string, options?: any) => void) {
     const player: Player = {
@@ -87,19 +88,55 @@ export async function exitSession (playerId: string, sessionId: string, setSessi
     }
 }
 
-export async function dealCards (sessionId: string, user: User) {
+export async function dealCards (sessionId: string) {
     const session = await pokerDb.read(sessionId);
     if (!session) return;
 
     let {cards: community, remainingDeck: deck} = getCards(generateDecks(), 5);
     
     session.community = community;
+    let updatedPlayers: Player[] = session.players;
+    let updatedDeck: Card[] = deck;
+    
+    for (let player of session.players) {
+        const {cards: playerCards, remainingDeck: deck2} = getCards(updatedDeck, 2);
+        updatedPlayers[player.id].cards = playerCards;
+        updatedDeck = deck2;
+    }
 
-    const player_index = session.players.findIndex((player) => player.user_id === user.id);
-    const {cards: playerCards, remainingDeck: deck2} = getCards(deck, 2);
+    session.deck = updatedDeck;
+    session.players = updatedPlayers;
 
-    session.players[player_index].cards = playerCards;
-    session.deck = deck2;
+    await pokerDb.set(session);
+}
+
+export async function endRound(sessionId: string) {
+    const session = await pokerDb.read(sessionId);
+
+    if (!session) return;
+
+    let winnerHand: EvaluatedHand | null = null;
+    let winnerIndex: number | null = null;
+
+    for (let i = 0; i < session.players.length; i++) {
+        const player = session.players[i];
+        if (player.folded) continue;
+        const bestHandForPlayer = findBestHand([...player.cards, ...session.community]);
+        if (!winnerHand || compareHands(bestHandForPlayer, winnerHand) > 0) {
+            winnerHand = bestHandForPlayer;
+            winnerIndex = i;
+        }
+    }
+
+    if (!winnerHand || !winnerIndex) return;
+
+    session.players[winnerIndex].chips += session.pot;
+    session.pot = 0;
+    session.phase = PokerPhase.PREFLOP;
+    session.activePlayerIndex = 0;
+    session.currentBet = 0;
+    session.wasRaised = false;
+    session.isStarted = false;
 
     await pokerDb.set(session);
 }

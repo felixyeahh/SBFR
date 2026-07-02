@@ -12,6 +12,7 @@ enum HandRank {
   StraightFlush = 8, 
   RoyalFlush = 9
 }
+
 export const HAND_NAMES: Record<HandRank, string> = {
   0: "High card",
   1: "One pair",

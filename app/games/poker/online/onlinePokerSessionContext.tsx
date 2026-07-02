@@ -10,7 +10,6 @@ import { generateDecks } from "../cardManagement";
 
 
 type OnlinePokerSessionContextType = {
-    isOngoing: boolean;
     sessionId: string | undefined;
     session: PokerSession | null;
     isOwner: boolean;
@@ -21,12 +20,12 @@ type OnlinePokerSessionContextType = {
     phase: PokerPhase;
     pot: number;
     ante: number;
+    isStarted: boolean;
 };
 
 const OnlinePokerSessionContext = createContext<OnlinePokerSessionContextType | null>(null);
 
 export function OnlinePokerSessionProvider({ children }: { children: React.ReactNode }) {
-    const [isOngoing, setIsOngoing] = useState(false);
     const {user}= useUser();
     const [loading, setLoading] = useState(true);
     const [sessionId] = useCookies(CurrentSession.POKER);
@@ -37,11 +36,11 @@ export function OnlinePokerSessionProvider({ children }: { children: React.React
     const [community, setCommunity] = useState<Card[]>([]);
     const [currentBet, setCurrentBet] = useState(0);
     const [pot, setPot] = useState(0);
-    const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+    const [activePlayerIndex, setActivePlayerIndex] = useState(0);
     const [phase, setPhase] = useState<PokerPhase>(PokerPhase.PREFLOP);
     const [wasRaised, setWasRaised] = useState(false);
-    const [foldedPlayerCount, setFoldedPlayerCount] = useState(0);
     const [session, setSession] = useState<PokerSession | null>(null)
+    const [isStarted, setIsStarted] = useState(false);
 
     useEffect(() => {
         if (!sessionId) {
@@ -62,6 +61,9 @@ export function OnlinePokerSessionProvider({ children }: { children: React.React
                 setCommunity(session.community);
                 setPhase(session.phase);
                 setPot(session.pot);
+                setIsStarted(session.isStarted);
+                setCurrentBet(session.currentBet);
+                setActivePlayerIndex(session.activePlayerIndex);
             } else {
                 setPlayers([]);
             }
@@ -75,7 +77,19 @@ export function OnlinePokerSessionProvider({ children }: { children: React.React
     }, [sessionId]);
 
     return (
-        <OnlinePokerSessionContext.Provider value={{ sessionId, players, loading, isOwner, currentDeck, community, phase, pot, ante, isOngoing, session }}>
+        <OnlinePokerSessionContext.Provider value={
+            { sessionId, 
+                players, 
+                loading, 
+                isOwner, 
+                currentDeck, 
+                community, 
+                phase, 
+                pot, 
+                ante, 
+                session, 
+                isStarted
+            }}>
             {children}
         </OnlinePokerSessionContext.Provider>
     );

@@ -1,7 +1,6 @@
 import { useUser } from "@/app/components/userContext";
 import { useOnlinePokerSession } from "./onlinePokerSessionContext";
 import { pokerDb } from "@/app/tools/database/poker";
-import updatePlayer from "./updatePlayer";
 import PlayerActions from "./PlayerActions";
 
 export function Players () {
@@ -27,7 +26,6 @@ export function Actions () {
     const {user} = useUser()
 
     if (!session || !user) return;
-
     const actions = new PlayerActions(session, user, pokerDb);
 
     let isActive = session.activePlayerIndex === players.findIndex(p => p.user_id === user?.id);
@@ -53,7 +51,8 @@ export function Actions () {
             ) : (
                 null
             )}
-            <p className="hand">Your Hand: {players.find(p => p.user_id === user?.id)?.cards.map((card, i) => (<div key={i}>{card.rank} {card.suit}</div>))}</p>
+            <div className="hand">Your Hand: {players.find(p => p.user_id === user?.id)?.cards.map((card, i) => (<p key={i}>{card.rank} {card.suit}</p>))}</div>
+            <div className="best-hand">Best Hand: {actions.bestHand().name}</div>
         </>
     )
 }

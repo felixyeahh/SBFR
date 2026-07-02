@@ -1,8 +1,8 @@
 "use client";
 import { useOnlinePokerSession } from "./onlinePokerSessionContext";
 import type { PokerSession } from "@/app/tools/database/poker";
-import createNewSession from "./createNewSession";
-import { joinNewSession, exitSession } from "./createNewSession";
+import createNewSession from "./sessionManagers";
+import { joinNewSession, exitSession } from "./sessionManagers";
 import { useCookies } from "@/app/tools/cookies";
 import { CurrentSession } from "@/app/tools/constants";
 import { useUser } from "@/app/components/userContext";

@@ -41,6 +41,8 @@ export interface PokerSession extends DatabaseEntry {
 
 export enum PokerConst {
     COLLECTION = "poker",
+    IS_STARTED = "isStarted",
+    PHASE = "phase",
 }
 
 export class PokerSessionDatabase extends Database<PokerSession> {
